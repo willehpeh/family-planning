@@ -36,10 +36,7 @@
       "plugin": "@nx/jest/plugin",
       "options": {
         "targetName": "test"
-      },
-      "exclude": [
-        "apps/family-planning-api-e2e/**/*"
-      ]
+      }
     }
   ]
 }
