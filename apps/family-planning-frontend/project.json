@@ -56,7 +56,8 @@
           "buildTarget": "family-planning-frontend:build:production"
         },
         "development": {
-          "buildTarget": "family-planning-frontend:build:development"
+          "buildTarget": "family-planning-frontend:build:development",
+          "proxyConfig": "src/proxy.conf.json"
         }
       },
       "defaultConfiguration": "development"
