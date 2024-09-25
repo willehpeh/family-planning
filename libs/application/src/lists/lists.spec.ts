@@ -10,13 +10,29 @@ describe('Lists', () => {
   beforeEach(() => {
     listsRepository = new InMemoryListsRepository();
     listsService = new ListsService(listsRepository);
-  })
+  });
 
-  it('should create and persist one new empty list', async () => {
-    await listsService.createNewList('New list');
-    const lists: List[] = await listsRepository.find();
-    expect(lists.length).toBe(1);
-    expect(lists[0].name()).toBe('New list');
-    expect(lists[0].isEmpty()).toBe(true);
+  describe('List creation', () => {
+
+    const listName = 'New list';
+
+    beforeEach(async () => {
+      await listsService.createNewList(listName);
+    });
+
+    it('should create one list', async () => {
+      const lists: List[] = await listsRepository.find();
+      expect(lists.length).toBe(1);
+    });
+
+    it('should create the list with the right name', async () => {
+      const lists: List[] = await listsRepository.find();
+      expect(lists[0].name()).toBe(listName);
+    });
+
+    it('should create the list with no items', async () => {
+      const lists: List[] = await listsRepository.find();
+      expect(lists[0].isEmpty()).toBe(true);
+    });
   });
 });
