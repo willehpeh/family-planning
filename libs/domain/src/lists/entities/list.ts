@@ -1,4 +1,4 @@
-import { ListItem } from './ListItem';
+import { ListItem } from './list-item';
 import { ListName } from '../value-objects';
 
 export class List {

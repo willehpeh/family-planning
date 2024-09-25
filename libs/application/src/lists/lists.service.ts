@@ -1,11 +1,11 @@
-import { List, ListsRepository } from '@family-planning/domain';
+import { ListBuilder, ListsRepository } from "@family-planning/domain";
 
 export class ListsService {
-  constructor(private listsRepository: ListsRepository) {
-  }
+  constructor(private listsRepository: ListsRepository) {}
 
   createNewList(name: string): Promise<void> {
-    const list = new List(name);
+    const builder = new ListBuilder(name);
+    const list = builder.build();
     return this.listsRepository.save(list);
   }
 }
