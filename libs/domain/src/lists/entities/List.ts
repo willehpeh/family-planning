@@ -1,5 +1,5 @@
 import { ListItem } from './ListItem';
-import { ListName } from './ListName';
+import { ListName } from '../value-objects';
 
 export class List {
 

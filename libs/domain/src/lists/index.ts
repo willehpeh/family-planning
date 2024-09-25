@@ -1,2 +1,3 @@
-export * from './lists.repository';
-export * from './List';
+export * from './repository';
+export * from './entities';
+export * from './value-objects';

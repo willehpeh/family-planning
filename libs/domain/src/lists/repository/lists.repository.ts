@@ -1,4 +1,4 @@
-import { List } from './List';
+import { List } from '../entities';
 
 export interface ListsRepository {
   find(): Promise<List[]>;
