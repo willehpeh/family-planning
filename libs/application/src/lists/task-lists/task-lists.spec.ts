@@ -12,11 +12,13 @@ describe("Task lists", () => {
   });
 
   describe("Creation", () => {
-    const listId = "list-id";
-    const listName = "New list";
+    const createListProperties = {
+      id: 'list-id',
+      name: 'New list'
+    };
 
     beforeEach(async () => {
-      await taskListsService.createNewTaskList({ id: listId, name: listName });
+      await taskListsService.createNewTaskList(createListProperties);
     });
 
     it("should create one list", async () => {
@@ -28,7 +30,7 @@ describe("Task lists", () => {
       const lists: TaskList[] = await listsRepository.find();
       const list = lists[0];
       const snapshot = list.snapshot();
-      expect(snapshot.name()).toBe(listName);
+      expect(snapshot.name()).toBe(createListProperties.name);
     });
 
     it("should create the list with no items", async () => {
