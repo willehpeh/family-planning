@@ -1,5 +1,5 @@
 import { ListsService } from "./lists.service";
-import { List } from "@family-planning/domain";
+import { List, TaskList } from "@family-planning/domain";
 import { InMemoryListsRepository } from "./in-memory.lists.repository";
 
 describe("Lists", () => {
@@ -12,27 +12,29 @@ describe("Lists", () => {
   });
 
   describe("Task List creation", () => {
+    const listId = "list-id";
     const listName = "New list";
 
     beforeEach(async () => {
-      await listsService.createNewTaskList(listName);
+      await listsService.createNewTaskList(listId, listName);
     });
 
     it("should create one list", async () => {
-      const lists: List[] = await listsRepository.find();
+      const lists: List[] = (await listsRepository.find()) as TaskList[];
       expect(lists.length).toBe(1);
     });
 
     it("should create the list with the right name", async () => {
       const lists: List[] = await listsRepository.find();
-      const list = lists[0];
+      const list = lists[0] as TaskList;
       const snapshot = list.snapshot();
       expect(snapshot.name()).toBe(listName);
     });
 
     it("should create the list with no items", async () => {
       const lists: List[] = await listsRepository.find();
-      expect(lists[0].isEmpty()).toBe(true);
+      const list = lists[0] as TaskList;
+      expect(list.isEmpty()).toBe(true);
     });
   });
 });
