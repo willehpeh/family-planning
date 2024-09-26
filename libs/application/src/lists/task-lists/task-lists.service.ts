@@ -1,7 +1,7 @@
-import { ListsRepository, TaskListBuilder } from '@family-planning/domain';
+import { TaskListsRepository, TaskListBuilder } from '@family-planning/domain';
 
-export class ListsService {
-  constructor(private listsRepository: ListsRepository) {}
+export class TaskListsService {
+  constructor(private listsRepository: TaskListsRepository) {}
 
   createNewTaskList(id: string, name: string): Promise<void> {
     const builder = new TaskListBuilder(id, name);

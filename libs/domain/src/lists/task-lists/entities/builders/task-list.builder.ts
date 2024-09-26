@@ -1,5 +1,5 @@
 import { TaskList } from '../task-list';
-import { ListId, ListName } from '../../value-objects';
+import { ListId, ListName } from '../../../value-objects';
 
 export class TaskListBuilder {
 

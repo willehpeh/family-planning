@@ -1,5 +1,5 @@
-import { List } from "./";
-import { ListId, ListName } from '../value-objects';
+import { List } from "../../entities";
+import { ListId, ListName } from '../../value-objects';
 import { TaskListSnapshot } from "./task-list.snapshot";
 
 export class TaskList implements List {

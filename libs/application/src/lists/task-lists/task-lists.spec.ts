@@ -1,14 +1,14 @@
-import { ListsService } from "./lists.service";
+import { TaskListsService } from "./task-lists.service";
 import { List, TaskList } from "@family-planning/domain";
-import { InMemoryListsRepository } from "./in-memory.lists.repository";
+import { InMemoryTaskListsRepository } from "./in-memory.task-lists.repository";
 
 describe("Lists", () => {
-  let listsService: ListsService;
-  let listsRepository: InMemoryListsRepository;
+  let taskListsService: TaskListsService;
+  let listsRepository: InMemoryTaskListsRepository;
 
   beforeEach(() => {
-    listsRepository = new InMemoryListsRepository();
-    listsService = new ListsService(listsRepository);
+    listsRepository = new InMemoryTaskListsRepository();
+    taskListsService = new TaskListsService(listsRepository);
   });
 
   describe("Task List creation", () => {
@@ -16,7 +16,7 @@ describe("Lists", () => {
     const listName = "New list";
 
     beforeEach(async () => {
-      await listsService.createNewTaskList(listId, listName);
+      await taskListsService.createNewTaskList(listId, listName);
     });
 
     it("should create one list", async () => {
