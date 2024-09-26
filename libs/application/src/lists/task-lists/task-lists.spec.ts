@@ -16,7 +16,7 @@ describe("Task lists", () => {
     const listName = "New list";
 
     beforeEach(async () => {
-      await taskListsService.createNewTaskList(listId, listName);
+      await taskListsService.createNewTaskList({ id: listId, name: listName });
     });
 
     it("should create one list", async () => {
