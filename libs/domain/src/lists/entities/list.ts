@@ -1,6 +1,7 @@
 import { ListItem } from "./list-item";
 import { ListName } from "../value-objects";
 import { ListType, ListTypeString } from '../value-objects';
+import { ListSnapshot } from './list-snapshot';
 
 export class List {
   private readonly _name: ListName;
@@ -12,15 +13,11 @@ export class List {
     this._type = new ListType(type);
   }
 
-  name(): string {
-    return this._name.value();
-  }
-
   isEmpty(): boolean {
     return this._items.length === 0;
   }
 
-  type(): ListTypeString {
-    return this._type.value();
+  snapshot(): ListSnapshot {
+    return new ListSnapshot(this._name.value());
   }
 }

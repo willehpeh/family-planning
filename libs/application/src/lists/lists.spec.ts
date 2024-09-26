@@ -25,17 +25,14 @@ describe("Lists", () => {
 
     it("should create the list with the right name", async () => {
       const lists: List[] = await listsRepository.find();
-      expect(lists[0].name()).toBe(listName);
+      const list = lists[0];
+      const snapshot = list.snapshot();
+      expect(snapshot.name()).toBe(listName);
     });
 
     it("should create the list with no items", async () => {
       const lists: List[] = await listsRepository.find();
       expect(lists[0].isEmpty()).toBe(true);
-    });
-
-    it("should create a task list", async () => {
-      const lists: List[] = await listsRepository.find();
-      expect(lists[0].type()).toBe("task");
     });
   });
 });
