@@ -1,8 +1,8 @@
 import { TaskListsService } from "./task-lists.service";
-import { List, TaskList } from "@family-planning/domain";
+import { TaskList } from "@family-planning/domain";
 import { InMemoryTaskListsRepository } from "./in-memory.task-lists.repository";
 
-describe("Lists", () => {
+describe("Task lists", () => {
   let taskListsService: TaskListsService;
   let listsRepository: InMemoryTaskListsRepository;
 
@@ -11,7 +11,7 @@ describe("Lists", () => {
     taskListsService = new TaskListsService(listsRepository);
   });
 
-  describe("Task List creation", () => {
+  describe("Creation", () => {
     const listId = "list-id";
     const listName = "New list";
 
@@ -20,20 +20,20 @@ describe("Lists", () => {
     });
 
     it("should create one list", async () => {
-      const lists: List[] = (await listsRepository.find()) as TaskList[];
+      const lists: TaskList[] = await listsRepository.find();
       expect(lists.length).toBe(1);
     });
 
     it("should create the list with the right name", async () => {
-      const lists: List[] = await listsRepository.find();
-      const list = lists[0] as TaskList;
+      const lists: TaskList[] = await listsRepository.find();
+      const list = lists[0];
       const snapshot = list.snapshot();
       expect(snapshot.name()).toBe(listName);
     });
 
     it("should create the list with no items", async () => {
-      const lists: List[] = await listsRepository.find();
-      const list = lists[0] as TaskList;
+      const lists: TaskList[] = await listsRepository.find();
+      const list = lists[0];
       expect(list.isEmpty()).toBe(true);
     });
   });
