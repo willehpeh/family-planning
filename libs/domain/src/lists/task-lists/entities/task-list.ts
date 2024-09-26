@@ -8,11 +8,11 @@ export class TaskList implements List {
   constructor(private _id: ListId,
               private _name: ListName) {}
 
-  isEmpty(): boolean {
-    return this._items.length === 0;
+  snapshot(): TaskListSnapshot {
+    return new TaskListSnapshot(this._id.value(), this._name.value(), this._items.slice());
   }
 
-  snapshot(): TaskListSnapshot {
-    return new TaskListSnapshot(this._id.value(), this._name.value());
+  is(other: TaskList): boolean {
+    return this._id.equals(other._id);
   }
 }
