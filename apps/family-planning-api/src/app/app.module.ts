@@ -1,11 +1,21 @@
 import { Module } from '@nestjs/common';
 
 import { AppController } from './app.controller';
-import { AppService } from './app.service';
+import { InMemoryTaskListsRepository, TaskListsService } from '@family-planning/application';
 
 @Module({
   imports: [],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [
+    {
+      provide: InMemoryTaskListsRepository,
+      useFactory: () => new InMemoryTaskListsRepository(),
+    },
+    {
+      provide: TaskListsService,
+      useFactory: (repo: InMemoryTaskListsRepository) => new TaskListsService(repo),
+      inject: [InMemoryTaskListsRepository]
+    }
+  ],
 })
 export class AppModule {}

@@ -1,1 +1,1 @@
-export * from './lists/task-lists/task-lists.service';
+export * from './lists';
