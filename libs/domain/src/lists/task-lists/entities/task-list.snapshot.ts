@@ -3,7 +3,7 @@ import { EntitySnapshot } from '../../../common';
 export class TaskListSnapshot implements EntitySnapshot {
   constructor(private _id: string,
               private _name: string,
-              private _tasks: never[]) {
+              private _tasks: any[]) {
   }
 
   id(): string {
@@ -14,7 +14,7 @@ export class TaskListSnapshot implements EntitySnapshot {
     return this._name;
   }
 
-  tasks(): never[] {
+  tasks(): any[] {
     return this._tasks.slice();
   }
 }

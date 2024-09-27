@@ -1,5 +1,5 @@
 import { TaskListsService } from "./task-lists.service";
-import { TaskList } from "@family-planning/domain";
+import { TaskList, TaskListBuilder } from "@family-planning/domain";
 import { InMemoryTaskListsRepository } from "./in-memory.task-lists.repository";
 
 describe("Task lists", () => {
@@ -13,8 +13,8 @@ describe("Task lists", () => {
 
   describe("Creation", () => {
     const createListProperties = {
-      id: 'list-id',
-      name: 'New list'
+      id: "list-id",
+      name: "New list",
     };
 
     beforeEach(async () => {
@@ -36,6 +36,27 @@ describe("Task lists", () => {
       const lists: TaskList[] = await listsRepository.find();
       const snapshot = lists[0].snapshot();
       expect(snapshot.tasks()).toEqual([]);
+    });
+  });
+
+  describe("Adding tasks", () => {
+    let list: TaskList;
+    const listId = "list-id";
+
+    beforeEach(async () => {
+      const newList = new TaskListBuilder(listId, "list-name").build();
+      await listsRepository.save(newList);
+      list = await listsRepository.findById(listId);
+    });
+
+    it("should add one task to the list", async () => {
+      const createTaskProperties = {
+        id: "task-id",
+        name: "task-name",
+      };
+      await taskListsService.addTaskToList(listId, createTaskProperties);
+      const snapshot = list.snapshot();
+      expect(snapshot.tasks().length).toBe(1);
     });
   });
 });
