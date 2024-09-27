@@ -1,14 +1,14 @@
 import { TaskList } from './task-list';
-import { ListId, ListName } from '../../../value-objects';
+import { TaskListId, TaskListName } from '../../value-objects';
 
 export class TaskListBuilder {
 
-  private readonly _id: ListId;
-  private readonly _name: ListName;
+  private readonly _id: TaskListId;
+  private readonly _name: TaskListName;
 
   constructor(id: string, name: string) {
-    this._id = new ListId(id);
-    this._name = new ListName(name);
+    this._id = new TaskListId(id);
+    this._name = new TaskListName(name);
   }
 
   build(): TaskList {

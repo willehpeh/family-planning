@@ -1,6 +1,6 @@
-import { ValueObject } from '../../common';
+import { ValueObject } from '../../../common';
 
-export class ListName implements ValueObject<string> {
+export class TaskListName implements ValueObject<string> {
 
   private readonly _value: string;
 
@@ -12,7 +12,7 @@ export class ListName implements ValueObject<string> {
     return this._value;
   }
 
-  equals(other: ListName): boolean {
+  equals(other: TaskListName): boolean {
     return this._value === other._value;
   }
 }

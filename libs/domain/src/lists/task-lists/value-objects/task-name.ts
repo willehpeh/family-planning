@@ -1,4 +1,4 @@
-import { ValueObject } from '../../common';
+import { ValueObject } from '../../../common';
 
 export class TaskName implements ValueObject<string> {
   private readonly _name: string;

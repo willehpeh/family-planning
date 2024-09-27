@@ -1,12 +1,12 @@
-import { ListId, ListName, TaskId, TaskName } from '../../../value-objects';
 import { TaskListSnapshot } from './task-list.snapshot';
 import { CreateTaskProperties, Task } from '../task';
 import { Entity } from '../../../../common';
+import { TaskId, TaskListId, TaskListName, TaskName } from '../../value-objects';
 
 export class TaskList implements Entity {
   private readonly _tasks: Task[] = [];
 
-  constructor(private _id: ListId, private _name: ListName) {}
+  constructor(private _id: TaskListId, private _name: TaskListName) {}
 
   snapshot(): TaskListSnapshot {
     return new TaskListSnapshot(
