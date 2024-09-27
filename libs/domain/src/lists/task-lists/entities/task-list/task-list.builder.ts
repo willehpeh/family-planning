@@ -1,4 +1,4 @@
-import { TaskList } from '../task-list';
+import { TaskList } from './task-list';
 import { ListId, ListName } from '../../../value-objects';
 
 export class TaskListBuilder {

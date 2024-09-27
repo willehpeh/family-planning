@@ -1,4 +1,4 @@
-import { EntitySnapshot } from '../../../common';
+import { EntitySnapshot } from '../../../../common';
 
 export class TaskSnapshot implements EntitySnapshot {
   constructor(private _id: string,

@@ -40,8 +40,14 @@ describe("Task lists", () => {
   });
 
   describe("Adding tasks", () => {
+
     let list: TaskList;
     const listId = "list-id";
+
+    const createTaskProperties = {
+      id: 'task-id',
+      name: 'task-name',
+    };
 
     beforeEach(async () => {
       const newList = new TaskListBuilder(listId, "list-name").build();
@@ -50,20 +56,12 @@ describe("Task lists", () => {
     });
 
     it("should add one task to the list", async () => {
-      const createTaskProperties = {
-        id: "task-id",
-        name: "task-name",
-      };
       await taskListsService.addTaskToList(listId, createTaskProperties);
       const snapshot = list.snapshot();
       expect(snapshot.tasks().length).toBe(1);
     });
 
     it('should add a task with the right name', async () => {
-      const createTaskProperties = {
-        id: 'task-id',
-        name: 'task-name',
-      };
       await taskListsService.addTaskToList(listId, createTaskProperties);
       const snapshot = list.snapshot();
       expect(snapshot.tasks()[0].name()).toBe(createTaskProperties.name);

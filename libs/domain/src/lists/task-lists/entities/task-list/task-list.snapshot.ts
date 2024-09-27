@@ -1,5 +1,5 @@
-import { EntitySnapshot } from "../../../common";
-import { TaskSnapshot } from "./task-snapshot";
+import { EntitySnapshot } from "../../../../common";
+import { TaskSnapshot } from "../task";
 
 export class TaskListSnapshot implements EntitySnapshot {
   constructor(

@@ -1,13 +1,7 @@
-import {
-  CreateTaskProperties,
-  ListId,
-  ListName,
-  TaskId,
-  TaskName,
-} from "../../value-objects";
+import { ListId, ListName, TaskId, TaskName } from "../../../value-objects";
 import { TaskListSnapshot } from "./task-list.snapshot";
-import { Task } from "./task";
-import { Entity } from "../../../common";
+import { CreateTaskProperties, Task } from "../task";
+import { Entity } from "../../../../common";
 
 export class TaskList implements Entity {
   private readonly _tasks: Task[] = [];
