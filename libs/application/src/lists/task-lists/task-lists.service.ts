@@ -2,7 +2,7 @@ import {
   CreateListProperties,
   CreateTaskProperties,
   TaskListBuilder,
-  TaskListsRepository
+  TaskListsRepository,
 } from '@family-planning/domain';
 
 export class TaskListsService {

@@ -1,4 +1,4 @@
-import { TaskList } from "../entities";
+import { TaskList } from '../entities';
 
 export interface TaskListsRepository {
   find(): Promise<TaskList[]>;

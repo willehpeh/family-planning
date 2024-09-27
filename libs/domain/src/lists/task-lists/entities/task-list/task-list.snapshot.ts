@@ -1,12 +1,10 @@
-import { EntitySnapshot } from "../../../../common";
-import { TaskSnapshot } from "../task";
+import { EntitySnapshot } from '../../../../common';
+import { TaskSnapshot } from '../task';
 
 export class TaskListSnapshot implements EntitySnapshot {
-  constructor(
-    private _id: string,
-    private _name: string,
-    private _tasks: TaskSnapshot[]
-  ) {}
+  constructor(private _id: string,
+              private _name: string,
+              private _tasks: TaskSnapshot[]) {}
 
   id(): string {
     return this._id;

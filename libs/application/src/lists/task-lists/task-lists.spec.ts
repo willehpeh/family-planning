@@ -1,6 +1,6 @@
-import { TaskListsService } from "./task-lists.service";
-import { TaskList, TaskListBuilder } from "@family-planning/domain";
-import { InMemoryTaskListsRepository } from "./in-memory.task-lists.repository";
+import { TaskListsService } from './task-lists.service';
+import { TaskList, TaskListBuilder } from '@family-planning/domain';
+import { InMemoryTaskListsRepository } from './in-memory.task-lists.repository';
 
 describe("Task lists", () => {
   let taskListsService: TaskListsService;

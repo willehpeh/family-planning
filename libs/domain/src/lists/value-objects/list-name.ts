@@ -1,4 +1,4 @@
-import { ValueObject } from '../../common/value-object';
+import { ValueObject } from '../../common';
 
 export class ListName implements ValueObject<string> {
 

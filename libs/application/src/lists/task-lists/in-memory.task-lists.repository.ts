@@ -1,4 +1,4 @@
-import { TaskList, TaskListsRepository } from "@family-planning/domain";
+import { TaskList, TaskListsRepository } from '@family-planning/domain';
 
 export class InMemoryTaskListsRepository implements TaskListsRepository {
   private readonly lists: TaskList[] = [];
@@ -9,11 +9,7 @@ export class InMemoryTaskListsRepository implements TaskListsRepository {
 
   findById(id: string): Promise<TaskList> {
     const list = this.lists.find(list => list.snapshot().id() === id);
-    if (list) {
-      return Promise.resolve(list);
-    } else {
-      return Promise.reject(new Error('List not found'));
-    }
+    return list ? Promise.resolve(list) : Promise.reject(new Error('List not found'));
   }
 
   save(list: TaskList): Promise<void> {
