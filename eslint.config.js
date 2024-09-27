@@ -31,6 +31,7 @@ module.exports = [
             {
               sourceTag: 'family-planning:api',
               onlyDependOnLibsWithTags: [
+                'family-planning:domain',
                 'family-planning:application',
                 'family-planning:infrastructure'
               ],

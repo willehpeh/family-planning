@@ -1,21 +1,14 @@
 import { Module } from '@nestjs/common';
 
 import { AppController } from './app.controller';
-import { InMemoryTaskListsRepository, TaskListsService } from '@family-planning/application';
+import { ConfigModule } from '@nestjs/config';
+import { ListsModule } from './lists/lists.module';
 
 @Module({
-  imports: [],
-  controllers: [AppController],
-  providers: [
-    {
-      provide: InMemoryTaskListsRepository,
-      useFactory: () => new InMemoryTaskListsRepository(),
-    },
-    {
-      provide: TaskListsService,
-      useFactory: (repo: InMemoryTaskListsRepository) => new TaskListsService(repo),
-      inject: [InMemoryTaskListsRepository]
-    }
+  imports: [
+    ConfigModule.forRoot(),
+    ListsModule
   ],
+  controllers: [AppController],
 })
 export class AppModule {}

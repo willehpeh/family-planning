@@ -3,7 +3,9 @@
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "projectType": "application",
   "sourceRoot": "apps/family-planning-frontend-e2e/src",
-  "implicitDependencies": ["family-planning-frontend"],
+  "implicitDependencies": [
+    "family-planning-frontend"
+  ],
   "// targets": "to see all targets run: nx show project family-planning-frontend-e2e --web",
   "targets": {}
 }
