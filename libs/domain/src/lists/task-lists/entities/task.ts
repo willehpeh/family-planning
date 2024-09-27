@@ -14,4 +14,8 @@ export class Task implements Entity {
   snapshot(): TaskSnapshot {
     return new TaskSnapshot(this._id.value(), this._name.value());
   }
+
+  is(other: Task): boolean {
+    return this._id.equals(other._id);
+  }
 }

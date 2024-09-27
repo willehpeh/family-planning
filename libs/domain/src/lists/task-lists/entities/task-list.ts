@@ -1,15 +1,15 @@
-import { List } from '../../entities';
 import {
   CreateTaskProperties,
   ListId,
   ListName,
   TaskId,
   TaskName,
-} from '../../value-objects';
-import { TaskListSnapshot } from './task-list.snapshot';
-import { Task } from './task';
+} from "../../value-objects";
+import { TaskListSnapshot } from "./task-list.snapshot";
+import { Task } from "./task";
+import { Entity } from "../../../common";
 
-export class TaskList implements List {
+export class TaskList implements Entity {
   private readonly _tasks: Task[] = [];
 
   constructor(private _id: ListId, private _name: ListName) {}
@@ -18,7 +18,7 @@ export class TaskList implements List {
     return new TaskListSnapshot(
       this._id.value(),
       this._name.value(),
-      this._tasks.map(task => task.snapshot())
+      this._tasks.map((task) => task.snapshot())
     );
   }
 
