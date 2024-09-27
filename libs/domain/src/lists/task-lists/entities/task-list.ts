@@ -1,15 +1,25 @@
-import { List } from "../../entities";
-import { CreateTaskProperties, ListId, ListName } from '../../value-objects';
-import { TaskListSnapshot } from "./task-list.snapshot";
+import { List } from '../../entities';
+import {
+  CreateTaskProperties,
+  ListId,
+  ListName,
+  TaskId,
+  TaskName,
+} from '../../value-objects';
+import { TaskListSnapshot } from './task-list.snapshot';
+import { Task } from './task';
 
 export class TaskList implements List {
-  private readonly _tasks: any[] = [];
+  private readonly _tasks: Task[] = [];
 
-  constructor(private _id: ListId,
-              private _name: ListName) {}
+  constructor(private _id: ListId, private _name: ListName) {}
 
   snapshot(): TaskListSnapshot {
-    return new TaskListSnapshot(this._id.value(), this._name.value(), this._tasks.slice());
+    return new TaskListSnapshot(
+      this._id.value(),
+      this._name.value(),
+      this._tasks.slice()
+    );
   }
 
   is(other: TaskList): boolean {
@@ -17,6 +27,13 @@ export class TaskList implements List {
   }
 
   addTask(props: CreateTaskProperties): void {
-    this._tasks.push(props);
+    const task = this.createTask(props);
+    this._tasks.push(task);
+  }
+
+  private createTask(props: CreateTaskProperties): Task {
+    const taskId = new TaskId(props.id);
+    const taskName = new TaskName(props.name);
+    return new Task(taskId, taskName);
   }
 }
