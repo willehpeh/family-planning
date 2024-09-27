@@ -1,6 +1,6 @@
-import { Entity } from "../../../common";
-import { TaskSnapshot } from "./task-snapshot";
-import { TaskId, TaskName } from "../../value-objects";
+import { Entity } from '../../../common';
+import { TaskSnapshot } from './task-snapshot';
+import { TaskId, TaskName } from '../../value-objects';
 
 export class Task implements Entity {
   private _id: TaskId;
@@ -12,6 +12,6 @@ export class Task implements Entity {
   }
 
   snapshot(): TaskSnapshot {
-    return new TaskSnapshot("");
+    return new TaskSnapshot(this._id.value(), this._name.value());
   }
 }

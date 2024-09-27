@@ -58,5 +58,15 @@ describe("Task lists", () => {
       const snapshot = list.snapshot();
       expect(snapshot.tasks().length).toBe(1);
     });
+
+    it('should add a task with the right name', async () => {
+      const createTaskProperties = {
+        id: 'task-id',
+        name: 'task-name',
+      };
+      await taskListsService.addTaskToList(listId, createTaskProperties);
+      const snapshot = list.snapshot();
+      expect(snapshot.tasks()[0].name()).toBe(createTaskProperties.name);
+    });
   });
 });

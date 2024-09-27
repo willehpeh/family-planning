@@ -18,7 +18,7 @@ export class TaskList implements List {
     return new TaskListSnapshot(
       this._id.value(),
       this._name.value(),
-      this._tasks.slice()
+      this._tasks.map(task => task.snapshot())
     );
   }
 
