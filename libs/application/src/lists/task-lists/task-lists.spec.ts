@@ -72,5 +72,11 @@ describe("Task lists", () => {
       const snapshot = list.snapshot();
       expect(snapshot.tasks()[0].status()).toBe('pending');
     });
+
+    it('should create a task with today as created date', async () => {
+      await taskListsService.addTaskToList(listId, createTaskProperties);
+      const snapshot = list.snapshot();
+      expect(snapshot.tasks()[0].createdAt()).toBe(new Date().toISOString().split('T')[0]);
+    });
   });
 });
