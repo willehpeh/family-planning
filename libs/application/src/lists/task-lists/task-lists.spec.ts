@@ -66,5 +66,11 @@ describe("Task lists", () => {
       const snapshot = list.snapshot();
       expect(snapshot.tasks()[0].name()).toBe(createTaskProperties.name);
     });
+
+    it('should create a task with status "pending"', async () => {
+      await taskListsService.addTaskToList(listId, createTaskProperties);
+      const snapshot = list.snapshot();
+      expect(snapshot.tasks()[0].status()).toBe('pending');
+    });
   });
 });
