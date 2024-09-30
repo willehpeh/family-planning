@@ -26,7 +26,7 @@ export class TaskList implements Entity {
   }
 
   private createTask(props: CreateTaskProperties): Task {
-    const taskId = new TaskId(props.id);
+    const taskId = TaskId.fromString(props.id);
     const taskName = new TaskName(props.name);
     return new Task(taskId, taskName);
   }
