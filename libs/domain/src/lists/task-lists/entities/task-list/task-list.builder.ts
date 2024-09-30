@@ -6,8 +6,8 @@ export class TaskListBuilder {
   private readonly _id: TaskListId;
   private readonly _name: TaskListName;
 
-  constructor(id: string, name: string) {
-    this._id = TaskListId.fromString(id);
+  constructor(name: string) {
+    this._id = TaskListId.new();
     this._name = new TaskListName(name);
   }
 

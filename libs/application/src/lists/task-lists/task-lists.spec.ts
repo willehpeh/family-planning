@@ -1,5 +1,5 @@
 import { TaskListsService } from './task-lists.service';
-import { TaskList, TaskListBuilder } from '@family-planning/domain';
+import { CreateListProperties, CreateTaskProperties, TaskList, TaskListBuilder } from '@family-planning/domain';
 import { InMemoryTaskListsRepository } from './in-memory.task-lists.repository';
 
 describe("Task lists", () => {
@@ -12,8 +12,7 @@ describe("Task lists", () => {
   });
 
   describe("Creation", () => {
-    const createListProperties = {
-      id: "list-id",
+    const createListProperties: CreateListProperties = {
       name: "New list",
     };
 
@@ -42,17 +41,17 @@ describe("Task lists", () => {
   describe("Adding tasks", () => {
 
     let list: TaskList;
-    const listId = "list-id";
+    let listId: string;
 
-    const createTaskProperties = {
-      id: 'task-id',
+    const createTaskProperties: CreateTaskProperties = {
       name: 'task-name',
     };
 
     beforeEach(async () => {
-      const newList = new TaskListBuilder(listId, "list-name").build();
+      const newList = new TaskListBuilder("list-name").build();
       await listsRepository.save(newList);
-      list = await listsRepository.findById(listId);
+      list = (await listsRepository.find())[0];
+      listId = list.snapshot().id();
     });
 
     it("should add one task to the list", async () => {

@@ -9,7 +9,7 @@ export class Task implements Entity {
   private _status: TaskStatus;
   private _createdAt: TaskCreatedAt;
 
-  constructor(id: TaskId, name: TaskName) {
+  private constructor(id: TaskId, name: TaskName) {
     this._id = id;
     this._name = name;
     this._status = new TaskStatus('pending');
@@ -27,6 +27,11 @@ export class Task implements Entity {
 
   is(other: Task): boolean {
     return this._id.equals(other._id);
+  }
+
+  static new(taskName: TaskName): Task {
+    const taskId = TaskId.new();
+    return new Task(taskId, taskName);
   }
 
   static fromSnapshot(snapshot: TaskSnapshot): Task {

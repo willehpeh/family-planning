@@ -8,8 +8,8 @@ import {
 export class TaskListsService {
   constructor(private listsRepository: TaskListsRepository) {}
 
-  createNewTaskList({ id, name }: CreateListProperties): Promise<void> {
-    const builder = new TaskListBuilder(id, name);
+  createNewTaskList({ name }: CreateListProperties): Promise<void> {
+    const builder = new TaskListBuilder(name);
     const list = builder.build();
     return this.listsRepository.save(list);
   }

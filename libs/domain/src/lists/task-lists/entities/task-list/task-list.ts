@@ -1,7 +1,7 @@
 import { TaskListSnapshot } from './task-list.snapshot';
 import { CreateTaskProperties, Task } from '../task';
 import { Entity } from '../../../../common';
-import { TaskId, TaskListId, TaskListName, TaskName } from '../../value-objects';
+import { TaskListId, TaskListName, TaskName } from '../../value-objects';
 
 export class TaskList implements Entity {
   private _tasks: Task[] = [];
@@ -26,9 +26,8 @@ export class TaskList implements Entity {
   }
 
   private createTask(props: CreateTaskProperties): Task {
-    const taskId = TaskId.fromString(props.id);
     const taskName = new TaskName(props.name);
-    return new Task(taskId, taskName);
+    return Task.new(taskName);
   }
 
   static fromSnapshot(snapshot: TaskListSnapshot): TaskList {
