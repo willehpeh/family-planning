@@ -1,6 +1,6 @@
 import { ValueObject } from '../../../common';
 
-type TaskStatusString = 'pending' | 'completed';
+export type TaskStatusString = 'pending' | 'completed';
 
 export class TaskStatus implements ValueObject<string> {
   private readonly _value: TaskStatusString;

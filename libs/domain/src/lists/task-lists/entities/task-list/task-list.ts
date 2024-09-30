@@ -4,7 +4,7 @@ import { Entity } from '../../../../common';
 import { TaskId, TaskListId, TaskListName, TaskName } from '../../value-objects';
 
 export class TaskList implements Entity {
-  private readonly _tasks: Task[] = [];
+  private _tasks: Task[] = [];
 
   constructor(private _id: TaskListId, private _name: TaskListName) {}
 
@@ -29,5 +29,14 @@ export class TaskList implements Entity {
     const taskId = TaskId.fromString(props.id);
     const taskName = new TaskName(props.name);
     return new Task(taskId, taskName);
+  }
+
+  static fromSnapshot(snapshot: TaskListSnapshot): TaskList {
+    const taskListId = TaskListId.fromString(snapshot.id());
+    const taskListName = new TaskListName(snapshot.name());
+    const taskList = new TaskList(taskListId, taskListName);
+    taskList._tasks = snapshot.tasks()
+      .map((taskSnapshot) => Task.fromSnapshot(taskSnapshot));
+    return taskList;
   }
 }

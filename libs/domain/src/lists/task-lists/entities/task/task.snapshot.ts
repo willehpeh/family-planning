@@ -1,9 +1,10 @@
 import { EntitySnapshot } from '../../../../common';
+import { TaskStatusString } from '../../value-objects';
 
 export class TaskSnapshot implements EntitySnapshot {
   constructor(private _id: string,
               private _name: string,
-              private _status: string,
+              private _status: TaskStatusString,
               private _createdAt: string) {
   }
 
@@ -15,7 +16,7 @@ export class TaskSnapshot implements EntitySnapshot {
     return this._name;
   }
 
-  status(): string {
+  status(): TaskStatusString {
     return this._status;
   }
 
