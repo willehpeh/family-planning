@@ -16,10 +16,14 @@
     "@nestjs/common": "^10.0.2",
     "@nestjs/config": "^3.3.0",
     "@nestjs/core": "^10.0.2",
+    "@nestjs/cqrs": "^10.2.7",
     "@nestjs/platform-express": "^10.0.2",
+    "@nestjs/typeorm": "^10.0.2",
     "axios": "^1.6.0",
+    "pg": "^8.13.1",
     "reflect-metadata": "^0.1.13",
     "rxjs": "^7.8.0",
+    "typeorm": "^0.3.20",
     "zone.js": "~0.14.3"
   },
   "devDependencies": {
