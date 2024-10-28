@@ -42,3 +42,9 @@ Thumbs.db
 .nx/workspace-data
 
 .angular
+
+# Environment files
+.env
+.env.*
+**/.env
+**/.env.*
