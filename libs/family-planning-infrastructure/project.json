@@ -1,0 +1,9 @@
+{
+  "name": "family-planning-infrastructure",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/family-planning-infrastructure/src",
+  "projectType": "library",
+  "tags": [],
+  "// targets": "to see all targets run: nx show project family-planning-infrastructure --web",
+  "targets": {}
+}

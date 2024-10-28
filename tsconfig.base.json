@@ -14,7 +14,17 @@
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
-    "paths": {}
+    "paths": {
+      "@family-planning/family-planning-application": [
+        "libs/family-planning-application/src/index.ts"
+      ],
+      "@family-planning/family-planning-domain": [
+        "libs/family-planning-domain/src/index.ts"
+      ],
+      "@family-planning/family-planning-infrastructure": [
+        "libs/family-planning-infrastructure/src/index.ts"
+      ]
+    }
   },
   "exclude": ["node_modules", "tmp"]
 }
