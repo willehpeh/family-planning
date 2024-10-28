@@ -3,7 +3,9 @@
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "apps/family-planning/src",
   "projectType": "application",
-  "tags": [],
+  "tags": [
+    "family-planning/api"
+  ],
   "targets": {
     "serve": {
       "executor": "@nx/js:node",

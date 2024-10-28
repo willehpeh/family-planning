@@ -4,7 +4,9 @@
   "projectType": "application",
   "prefix": "app",
   "sourceRoot": "apps/family-planning-web/src",
-  "tags": [],
+  "tags": [
+    "family-planning/web-frontend"
+  ],
   "targets": {
     "build": {
       "executor": "@angular-devkit/build-angular:application",

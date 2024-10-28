@@ -17,8 +17,26 @@ module.exports = [
           allow: ['^.*/eslint(\\.base)?\\.config\\.[cm]?js$'],
           depConstraints: [
             {
-              sourceTag: '*',
-              onlyDependOnLibsWithTags: ['*'],
+              sourceTag: 'family-planning/application',
+              onlyDependOnLibsWithTags: ['family-planning/domain'],
+            },
+            {
+              sourceTag: 'family-planning/domain',
+              onlyDependOnLibsWithTags: ['family-planning/domain'],
+            },
+            {
+              sourceTag: 'family-planning/infrastructure',
+              onlyDependOnLibsWithTags: [
+                'family-planning/domain',
+                'family-planning/application'
+              ],
+            },
+            {
+              sourceTag: 'family-planning/api',
+              onlyDependOnLibsWithTags: [
+                'family-planning/application',
+                'family-planning/infrastructure'
+              ],
             },
           ],
         },
