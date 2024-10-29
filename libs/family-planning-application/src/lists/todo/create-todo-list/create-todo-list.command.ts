@@ -1,3 +1,6 @@
 export class CreateTodoListCommand {
-  constructor(public readonly name: string) {}
+  public readonly name: string;
+  constructor({ name }: { name: string }) {
+    this.name = name;
+  }
 }

@@ -1,4 +1,4 @@
-import { TodoList, TodoListsRepository } from '@family-planning/domain';
+import { TodoListFactory, TodoListsRepository } from '@family-planning/domain';
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
 import { CreateTodoListCommand } from './create-todo-list.command';
 
@@ -8,7 +8,8 @@ export class CreateTodoListCommandHandler implements ICommandHandler<CreateTodoL
   }
 
   async execute({ name }: CreateTodoListCommand): Promise<void> {
-    const list = new TodoList(name);
+    const listFactory = new TodoListFactory();
+    const list = listFactory.createEmptyList(name);
     return this.todoListsRepository.save(list);
   }
 }
