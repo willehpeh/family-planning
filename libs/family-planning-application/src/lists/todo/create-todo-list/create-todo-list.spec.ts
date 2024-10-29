@@ -24,8 +24,8 @@ describe('Todo list creation', () => {
     expect(snapshot.id()).toMatch(/^TODOLIST:[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/);
   });
 
-  it('should create a new list with the name "My List"', () => {
+  it('should create a new list with the provided name', () => {
     const snapshot = inMemoryTodoListsRepository.listSnapshots()[0];
-    expect(snapshot.name()).toBe('My List');
+    expect(snapshot.name()).toBe(command.name);
   });
 });
