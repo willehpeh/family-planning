@@ -1,1 +1,2 @@
-export * from './lib/family-planning-application.module';
+export * from './lists';
+

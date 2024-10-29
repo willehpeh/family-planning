@@ -1,14 +1,19 @@
 import { TodoListsService } from './todo-lists.service';
-import { Test } from '@nestjs/testing';
+import { InMemoryTodoListsRepository } from './in-memory-todo-lists.repository';
 
 describe('Todo Lists', () => {
   let todoListsService: TodoListsService;
+  let inMemoryTodoListsRepository: InMemoryTodoListsRepository;
 
-  beforeEach(async () => {
-    const module = await Test.createTestingModule({
-      providers: [TodoListsService],
-    }).compile();
-
-    todoListsService = module.get<TodoListsService>(TodoListsService);
+  beforeEach(() => {
+    inMemoryTodoListsRepository = new InMemoryTodoListsRepository();
+    todoListsService = new TodoListsService(inMemoryTodoListsRepository);
   });
+
+  describe('List creation', () => {
+    it('should create a new list', () => {
+      todoListsService.createNewList('My List');
+      expect(inMemoryTodoListsRepository.totalLists()).toBe(1);
+    });
+  })
 });

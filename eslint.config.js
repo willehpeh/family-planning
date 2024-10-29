@@ -13,29 +13,29 @@ module.exports = [
       '@nx/enforce-module-boundaries': [
         'error',
         {
-          enforceBuildableLibDependency: true,
+          enforceBuildableLibDependency: false,
           allow: ['^.*/eslint(\\.base)?\\.config\\.[cm]?js$'],
           depConstraints: [
             {
-              sourceTag: 'family-planning/application',
-              onlyDependOnLibsWithTags: ['family-planning/domain'],
+              sourceTag: 'family-planning:application',
+              onlyDependOnLibsWithTags: ['family-planning:domain'],
             },
             {
-              sourceTag: 'family-planning/domain',
-              onlyDependOnLibsWithTags: ['family-planning/domain'],
+              sourceTag: 'family-planning:domain',
+              onlyDependOnLibsWithTags: ['family-planning:domain'],
             },
             {
-              sourceTag: 'family-planning/infrastructure',
+              sourceTag: 'family-planning:infrastructure',
               onlyDependOnLibsWithTags: [
-                'family-planning/domain',
-                'family-planning/application'
+                'family-planning:domain',
+                'family-planning:application'
               ],
             },
             {
-              sourceTag: 'family-planning/api',
+              sourceTag: 'family-planning:api',
               onlyDependOnLibsWithTags: [
-                'family-planning/application',
-                'family-planning/infrastructure'
+                'family-planning:application',
+                'family-planning:infrastructure'
               ],
             },
           ],

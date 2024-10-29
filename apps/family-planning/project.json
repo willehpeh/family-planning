@@ -4,7 +4,7 @@
   "sourceRoot": "apps/family-planning/src",
   "projectType": "application",
   "tags": [
-    "family-planning/api"
+    "family-planning:api"
   ],
   "targets": {
     "serve": {
