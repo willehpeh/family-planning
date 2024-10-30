@@ -53,6 +53,9 @@
     },
     "serve": {
       "executor": "@angular-devkit/build-angular:dev-server",
+      "options": {
+        "proxyConfig": "src/proxy.conf.json"
+      },
       "configurations": {
         "production": {
           "buildTarget": "family-planning-web:build:production"
