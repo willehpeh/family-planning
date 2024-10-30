@@ -1,0 +1,11 @@
+services:
+  nginx:
+    image: family-planning-web:0.0.0
+    container_name: server
+    ports:
+      - "80:80"
+  api:
+    image: family-planning:0.0.0
+    container_name: fp_api
+    ports:
+      - "3000:3000"
