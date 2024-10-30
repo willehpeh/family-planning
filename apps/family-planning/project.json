@@ -25,12 +25,6 @@
           "buildTarget": "family-planning:build:production"
         }
       }
-    },
-    "docker-build": {
-      "dependsOn": [
-        "build"
-      ],
-      "command": "docker build -f apps/family-planning/Dockerfile . -t family-planning"
     }
   }
 }
