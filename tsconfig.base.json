@@ -18,9 +18,7 @@
       "@family-planning/application": [
         "libs/family-planning-application/src/index.ts"
       ],
-      "@family-planning/domain": [
-        "libs/family-planning-domain/src/index.ts"
-      ],
+      "@family-planning/domain": ["libs/family-planning-domain/src/index.ts"],
       "@family-planning/infrastructure": [
         "libs/family-planning-infrastructure/src/index.ts"
       ]
