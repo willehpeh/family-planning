@@ -1,17 +1,20 @@
 import { CreateTodoListCommandHandler } from '.';
 import { InMemoryTodoListsRepository } from '../in-memory-todo-lists.repository';
 import { CreateTodoListCommand } from './create-todo-list.command';
+import { CreateTodoListDto } from './create-todo-list.dto';
 
 describe('Todo list creation', () => {
   let createTodoListCommandHandler: CreateTodoListCommandHandler;
   let inMemoryTodoListsRepository: InMemoryTodoListsRepository;
   let command: CreateTodoListCommand;
+  let dto: CreateTodoListDto;
 
   beforeEach(() => {
     inMemoryTodoListsRepository = new InMemoryTodoListsRepository();
     createTodoListCommandHandler = new CreateTodoListCommandHandler(inMemoryTodoListsRepository);
 
-    command = new CreateTodoListCommand({ name: 'My List' });
+    dto = { name: 'My List' };
+    command = new CreateTodoListCommand(dto);
     createTodoListCommandHandler.execute(command);
   });
 
@@ -26,6 +29,11 @@ describe('Todo list creation', () => {
 
   it('should create a new list with the provided name', () => {
     const snapshot = inMemoryTodoListsRepository.listSnapshots()[0];
-    expect(snapshot.name()).toBe(command.name);
+    expect(snapshot.name()).toBe(dto.name);
+  });
+
+  it('should create a new list that is empty', () => {
+    const snapshot = inMemoryTodoListsRepository.listSnapshots()[0];
+    expect(snapshot.todos()).toEqual([]);
   });
 });
