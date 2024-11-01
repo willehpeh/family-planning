@@ -12,12 +12,25 @@ export class InMemoryTodoListsRepository implements TodoListsRepository {
     return Promise.resolve();
   }
 
+  findById(listId: string): Promise<TodoList> {
+    const found = this._lists.get(listId);
+    if (!found) {
+      return Promise.reject(new Error(`List with id ${listId} not found`));
+    }
+    return Promise.resolve(TodoList.fromSnapshot(found));
+  }
+
   totalLists(): number {
     return this._lists.size;
   }
 
   listSnapshots(): TodoListSnapshot[] {
     return Array.from(this._lists.values());
+  }
+
+  withSnapshots(snapshots: TodoListSnapshot[]): InMemoryTodoListsRepository {
+    this._lists = new Map(snapshots.map(snapshot => [snapshot.id(), snapshot]));
+    return this;
   }
 
 }

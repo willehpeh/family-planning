@@ -18,4 +18,11 @@ export class TodoListId implements ValueObject<string> {
     const id = `${TodoListId.PREFIX}:${ crypto.randomUUID() }`;
     return new TodoListId(id);
   }
+
+  static fromString(id: string): TodoListId {
+    if (!id.match(/^TODOLIST:[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/)) {
+      throw new Error(`Invalid id ${id}`);
+    }
+    return new TodoListId(id);
+  }
 }

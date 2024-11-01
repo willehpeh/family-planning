@@ -1,5 +1,4 @@
-import { TodoListName } from '../value-objects/todo-list-name';
-import { TodoListId } from '../value-objects/todo-list-id';
+import { TodoListId, TodoListItemId, TodoListItemName, TodoListName } from '../value-objects';
 import { TodoListSnapshot } from './snapshots';
 import { Entity } from '../../../common';
 import { TodoListItem } from './todo-list-item';
@@ -14,5 +13,22 @@ export class TodoList implements Entity<TodoListSnapshot> {
 
   snapshot(): TodoListSnapshot {
     return new TodoListSnapshot(this._id, this._name, this._items);
+  }
+
+  addNewItem(itemName: string): void {
+    const item = this.createItem(itemName);
+    this._items.push(item);
+  }
+
+  private createItem(itemName: string): TodoListItem {
+    const id = TodoListItemId.new();
+    const name = new TodoListItemName(itemName);
+    return new TodoListItem(id, name);
+  }
+
+  static fromSnapshot(snapshot: TodoListSnapshot): TodoList {
+    const list = new TodoList(TodoListId.fromString(snapshot.id()), new TodoListName(snapshot.name()));
+    list._items = snapshot.todos().map(itemSnapshot => TodoListItem.fromSnapshot(itemSnapshot));
+    return list;
   }
 }

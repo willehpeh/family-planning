@@ -1,5 +1,5 @@
 import { CreateTodoListCommandHandler } from '.';
-import { InMemoryTodoListsRepository } from '../in-memory-todo-lists.repository';
+import { InMemoryTodoListsRepository } from '../test-fixtures';
 import { CreateTodoListCommand } from './create-todo-list.command';
 import { CreateTodoListDto } from './create-todo-list.dto';
 
