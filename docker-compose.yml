@@ -4,6 +4,9 @@ services:
       context: .
       dockerfile: web.Dockerfile
     container_name: server
+    depends_on:
+      - fp_db
+      - api
     ports:
       - "80:80"
   api:
@@ -11,5 +14,25 @@ services:
       context: .
       dockerfile: api.Dockerfile
     container_name: fp_api
+    depends_on:
+      - fp_db
     ports:
       - "3000:3000"
+    env_file:
+      - .env
+  fp_db:
+    image: postgres:17.0
+    restart: always
+    ports:
+      - "5432:5432"
+    env_file:
+      - .env
+    environment:
+      - POSTGRES_USER
+      - POSTGRES_PASSWORD
+      - POSTGRES_DB
+    volumes:
+      - db:/var/lib/postgresql/data
+volumes:
+  db:
+    driver: local
