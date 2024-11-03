@@ -2,4 +2,16 @@
 @tailwind components;
 @tailwind utilities;
 
-/* You can add global styles to this file, and also import other style files */
+body {
+  background: rgb(2,0,36);
+  background: linear-gradient(48deg, rgba(2,0,36,1) 0%, rgb(7, 7, 84) 55%, rgb(1, 13, 81) 100%);
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  font-family: "Roboto Mono", monospace;
+}
+
+@layer base {
+  h1, h2, h3, h4, h5, h6, p, span {
+    @apply text-blue-300;
+  }
+}
