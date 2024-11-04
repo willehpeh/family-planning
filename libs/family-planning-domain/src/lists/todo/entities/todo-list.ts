@@ -28,7 +28,7 @@ export class TodoList implements Entity<TodoListSnapshot> {
 
   static fromSnapshot(snapshot: TodoListSnapshot): TodoList {
     const list = new TodoList(TodoListId.fromString(snapshot.id()), new TodoListName(snapshot.name()));
-    list._items = snapshot.todos().map(itemSnapshot => TodoListItem.fromSnapshot(itemSnapshot));
+    list._items = snapshot.items().map(itemSnapshot => TodoListItem.fromSnapshot(itemSnapshot));
     return list;
   }
 }

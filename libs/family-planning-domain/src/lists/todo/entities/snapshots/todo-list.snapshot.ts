@@ -1,5 +1,4 @@
-import { TodoListId } from '../../value-objects/todo-list-id';
-import { TodoListName } from '../../value-objects/todo-list-name';
+import { TodoListId, TodoListName } from '../../value-objects';
 import { EntitySnapshot } from '../../../../common';
 import { TodoListItem } from '../todo-list-item';
 import { TodoListItemSnapshot } from './todo-list-item.snapshot';
@@ -22,7 +21,7 @@ export class TodoListSnapshot implements EntitySnapshot {
     return this._name.value();
   }
 
-  todos() {
+  items() {
     return this._items;
   }
 }

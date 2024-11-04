@@ -34,6 +34,6 @@ describe('Todo list creation', () => {
 
   it('should create a new list that is empty', () => {
     const snapshot = inMemoryTodoListsRepository.listSnapshots()[0];
-    expect(snapshot.todos()).toEqual([]);
+    expect(snapshot.items()).toEqual([]);
   });
 });

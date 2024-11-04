@@ -1,0 +1,13 @@
+services:
+  fp_dev_db:
+    image: postgres:17.0
+    restart: always
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_PASSWORD=pass1234
+    volumes:
+      - db:/var/lib/postgresql/data
+volumes:
+  db:
+    driver: local

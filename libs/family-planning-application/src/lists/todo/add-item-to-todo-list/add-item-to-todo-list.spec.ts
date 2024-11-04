@@ -25,6 +25,6 @@ describe('Adding items to Todo List', () => {
 
   it('should add one item to the todo list', () => {
     const listSnapshot = inMemoryTodoListsRepository.listSnapshots()[0];
-    expect(listSnapshot.todos().length).toBe(1);
+    expect(listSnapshot.items().length).toBe(1);
   });
 });
