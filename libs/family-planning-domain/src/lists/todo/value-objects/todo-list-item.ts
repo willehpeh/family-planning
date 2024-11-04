@@ -1,13 +1,12 @@
 import { ValueObject } from '../../../common';
 import { TodoListItemName } from './index';
-import { SerializedTodoListItem } from './serialized/todo-list-item.serialized';
 
-export class TodoListItem implements ValueObject<SerializedTodoListItem> {
+export class TodoListItem implements ValueObject<{ name: string }> {
 
   constructor(private readonly _name: TodoListItemName) {
   }
 
-  value(): SerializedTodoListItem {
+  value(): { name: string } {
     return {
       name: this._name.value()
     };
