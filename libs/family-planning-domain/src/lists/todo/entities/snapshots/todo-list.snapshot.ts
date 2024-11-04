@@ -1,15 +1,17 @@
-import { TodoListId, TodoListItem, TodoListName } from '../../value-objects';
+import { TodoListId } from '../../value-objects/todo-list-id';
+import { TodoListName } from '../../value-objects/todo-list-name';
 import { EntitySnapshot } from '../../../../common';
-import { SerializedTodoListItem } from '../../value-objects/serialized/todo-list-item.serialized';
+import { TodoListItem } from '../todo-list-item';
+import { TodoListItemSnapshot } from './todo-list-item.snapshot';
 
 export class TodoListSnapshot implements EntitySnapshot {
 
-  private readonly _items: SerializedTodoListItem[] = [];
+  private readonly _items: TodoListItemSnapshot[] = [];
 
   constructor(private readonly _id: TodoListId,
               private readonly _name: TodoListName,
               items: TodoListItem[]) {
-    this._items = items.map(item => item.value());
+    this._items = items.map(item => item.snapshot());
   }
 
   id(): string {
