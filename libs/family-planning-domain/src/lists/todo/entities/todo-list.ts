@@ -1,7 +1,6 @@
-import { TodoListId, TodoListItemId, TodoListItemName, TodoListName } from '../value-objects';
+import { TodoListId, TodoListItem, TodoListItemName, TodoListName } from '../value-objects';
 import { TodoListSnapshot } from './snapshots';
 import { Entity } from '../../../common';
-import { TodoListItem } from './todo-list-item';
 
 export class TodoList implements Entity<TodoListSnapshot> {
 
@@ -21,14 +20,14 @@ export class TodoList implements Entity<TodoListSnapshot> {
   }
 
   private createItem(itemName: string): TodoListItem {
-    const id = TodoListItemId.new();
     const name = new TodoListItemName(itemName);
-    return new TodoListItem(id, name);
+    return new TodoListItem(name);
   }
 
   static fromSnapshot(snapshot: TodoListSnapshot): TodoList {
     const list = new TodoList(TodoListId.fromString(snapshot.id()), new TodoListName(snapshot.name()));
-    list._items = snapshot.todos().map(itemSnapshot => TodoListItem.fromSnapshot(itemSnapshot));
+    list._items = snapshot.todos()
+      .map(serializedItem => new TodoListItem(new TodoListItemName(serializedItem.name)));
     return list;
   }
 }
