@@ -12,9 +12,9 @@ import { ListsController } from './lists.controller';
     TypeOrmListsPersistenceModule
   ],
   providers: [
-    ListsService,
     CreateTodoListCommandHandler,
-    AddItemToTodoListCommandHandler
+    AddItemToTodoListCommandHandler,
+    ListsService,
   ]
 })
 export class ListsModule {}

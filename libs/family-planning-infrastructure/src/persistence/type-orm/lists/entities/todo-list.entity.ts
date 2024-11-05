@@ -9,6 +9,6 @@ export class TodoList {
   @Column()
   name: string;
 
-  @OneToMany(() => TodoListItem, (item) => item.list)
+  @OneToMany(() => TodoListItem, (item) => item.list, { cascade: true, eager: true })
   items: TodoListItem[];
 }

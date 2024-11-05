@@ -15,10 +15,7 @@ export class OrmTodoListsRepository implements TodoListsRepository {
   }
 
   async findById(id: string): Promise<TodoList> {
-    const entity = await this.todoListRepository.findOneBy({ id });
-    if (!entity) {
-      return Promise.reject('TodoList not found');
-    }
+    const entity = await this.todoListRepository.findOneByOrFail({ id });
     return TodoListMapper.toDomain(entity);
   }
 }

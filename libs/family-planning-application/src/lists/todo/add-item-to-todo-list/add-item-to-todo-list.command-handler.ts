@@ -1,7 +1,8 @@
 import { TodoListsRepository } from '@family-planning/domain';
 import { AddItemToTodoListCommand } from './add-item-to-todo-list.command';
-import { ICommandHandler } from '@nestjs/cqrs';
+import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
 
+@CommandHandler(AddItemToTodoListCommand)
 export class AddItemToTodoListCommandHandler implements ICommandHandler<AddItemToTodoListCommand> {
   constructor(private readonly todoListsRepository: TodoListsRepository) {
   }

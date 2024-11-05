@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { CommandBus } from '@nestjs/cqrs';
-import { CreateTodoListCommand, CreateTodoListDto } from '@family-planning/application';
+import { AddItemToTodoListCommand, AddItemToTodoListDto, CreateTodoListCommand, CreateTodoListDto } from '@family-planning/application';
 
 @Injectable()
 export class ListsService {
@@ -8,5 +8,9 @@ export class ListsService {
 
   async createTodoList(dto: CreateTodoListDto) {
     return this.commandBus.execute(new CreateTodoListCommand(dto));
+  }
+
+  async addItemToTodoList(dto: AddItemToTodoListDto) {
+    return this.commandBus.execute(new AddItemToTodoListCommand(dto));
   }
 }
