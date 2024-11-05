@@ -1,8 +1,8 @@
-import { TodoList, TodoListReadModel, TodoListSnapshot, TodoListsRepository } from '@family-planning/domain';
+import { TodoList, TodoListsCommandsRepository, TodoListSnapshot } from '@family-planning/domain';
 import { Injectable } from '@nestjs/common';
 
 @Injectable()
-export class InMemoryTodoListsRepository implements TodoListsRepository {
+export class InMemoryTodoListsCommandsRepository implements TodoListsCommandsRepository {
 
   private _lists = new Map<string, TodoListSnapshot>();
 
@@ -20,12 +20,6 @@ export class InMemoryTodoListsRepository implements TodoListsRepository {
     return Promise.resolve(TodoList.fromSnapshot(found));
   }
 
-  findAll(): Promise<TodoListReadModel[]> {
-    return Promise.resolve(
-      Array.from(this._lists.values()).map(snapshot => new TodoListReadModel(snapshot))
-    );
-  }
-
   totalLists(): number {
     return this._lists.size;
   }
@@ -34,7 +28,7 @@ export class InMemoryTodoListsRepository implements TodoListsRepository {
     return Array.from(this._lists.values());
   }
 
-  withSnapshots(snapshots: TodoListSnapshot[]): InMemoryTodoListsRepository {
+  withSnapshots(snapshots: TodoListSnapshot[]): InMemoryTodoListsCommandsRepository {
     this._lists = new Map(snapshots.map(snapshot => [snapshot.id(), snapshot]));
     return this;
   }

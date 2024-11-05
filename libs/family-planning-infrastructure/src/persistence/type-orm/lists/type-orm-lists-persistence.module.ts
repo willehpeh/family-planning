@@ -2,8 +2,8 @@ import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { TodoList } from './entities/todo-list.entity';
 import { TodoListItem } from './entities/todo-list-item.entity';
-import { TodoListsRepository } from '@family-planning/domain';
-import { OrmTodoListsRepository } from './repositories/orm-todo-lists.repository';
+import { TodoListsCommandsRepository } from '@family-planning/domain';
+import { OrmTodoListsCommandsRepository } from './repositories/orm-todo-lists-commands.repository';
 
 @Module({
   imports: [
@@ -13,10 +13,10 @@ import { OrmTodoListsRepository } from './repositories/orm-todo-lists.repository
     ])
   ],
   providers: [
-    { provide: TodoListsRepository, useClass: OrmTodoListsRepository }
+    { provide: TodoListsCommandsRepository, useClass: OrmTodoListsCommandsRepository }
   ],
   exports: [
-    TodoListsRepository
+    TodoListsCommandsRepository
   ]
 })
 export class TypeOrmListsPersistenceModule {}

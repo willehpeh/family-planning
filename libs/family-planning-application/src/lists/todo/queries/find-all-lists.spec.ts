@@ -1,6 +1,6 @@
 import {
   EMPTY_TODO_LIST_SNAPSHOT,
-  InMemoryTodoListsRepository,
+  InMemoryTodoListsQueriesRepository,
   TODO_LIST_WITH_ONE_ITEM_SNAPSHOT,
   TODO_LIST_WITH_TWO_ITEMS_SNAPSHOT
 } from '../test-fixtures';
@@ -11,7 +11,7 @@ import { TodoListReadModel, TodoListSnapshot } from '@family-planning/domain';
 describe('Find all todo lists', () => {
   let query: FindAllListsQuery;
   let findAllListsQueryHandler: FindAllListsQueryHandler;
-  let inMemoryTodoListsRepository: InMemoryTodoListsRepository;
+  let inMemoryTodoListsRepository: InMemoryTodoListsQueriesRepository;
 
   beforeEach(() => {
     query = new FindAllListsQuery();
@@ -19,7 +19,7 @@ describe('Find all todo lists', () => {
 
   describe('No lists in persistence', () => {
     beforeEach(() => {
-      inMemoryTodoListsRepository = new InMemoryTodoListsRepository();
+      inMemoryTodoListsRepository = new InMemoryTodoListsQueriesRepository();
       findAllListsQueryHandler = new FindAllListsQueryHandler(inMemoryTodoListsRepository);
     });
 
@@ -30,7 +30,6 @@ describe('Find all todo lists', () => {
   });
 
   describe('Lists in persistence', () => {
-
     let snapshots: TodoListSnapshot[];
 
     beforeEach(() => {
@@ -39,7 +38,7 @@ describe('Find all todo lists', () => {
         TODO_LIST_WITH_ONE_ITEM_SNAPSHOT,
         TODO_LIST_WITH_TWO_ITEMS_SNAPSHOT
       ];
-      inMemoryTodoListsRepository = new InMemoryTodoListsRepository().withSnapshots(snapshots);
+      inMemoryTodoListsRepository = new InMemoryTodoListsQueriesRepository().withSnapshots(snapshots);
       findAllListsQueryHandler = new FindAllListsQueryHandler(inMemoryTodoListsRepository);
     });
 

@@ -1,10 +1,10 @@
 import { TodoList as TodoListEntity } from '../entities/todo-list.entity';
-import { TodoList, TodoListsRepository } from '@family-planning/domain';
+import { TodoList, TodoListsCommandsRepository } from '@family-planning/domain';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { TodoListMapper } from '../mappers/todo-list.mapper';
 
-export class OrmTodoListsRepository implements TodoListsRepository {
+export class OrmTodoListsCommandsRepository implements TodoListsCommandsRepository {
   constructor(@InjectRepository(TodoListEntity) private readonly todoListRepository: Repository<TodoListEntity>) {
   }
 
