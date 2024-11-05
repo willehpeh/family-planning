@@ -1,6 +1,10 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmListsPersistenceModule } from '@family-planning/infrastructure';
-import { AddItemToTodoListCommandHandler, CreateTodoListCommandHandler } from '@family-planning/application';
+import {
+  AddItemToTodoListCommandHandler,
+  CreateTodoListCommandHandler,
+  FindAllListsQueryHandler
+} from '@family-planning/application';
 import { ListsService } from './lists.service';
 import { ListsController } from './lists.controller';
 
@@ -14,6 +18,7 @@ import { ListsController } from './lists.controller';
   providers: [
     CreateTodoListCommandHandler,
     AddItemToTodoListCommandHandler,
+    FindAllListsQueryHandler,
     ListsService,
   ]
 })

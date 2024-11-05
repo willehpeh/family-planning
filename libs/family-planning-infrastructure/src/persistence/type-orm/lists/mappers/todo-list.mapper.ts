@@ -2,8 +2,9 @@ import { TodoList as TodoListEntity } from '../entities/todo-list.entity';
 import {
   TodoList,
   TodoListId,
-  TodoListItem,
-  TodoListItemId, TodoListItemName,
+  TodoListItemId,
+  TodoListItemName,
+  TodoListItemSnapshot,
   TodoListName,
   TodoListSnapshot
 } from '@family-planning/domain';
@@ -30,7 +31,7 @@ export class TodoListMapper {
     const items = entity.items.map(item => {
       const itemId = TodoListItemId.fromString(item.id);
       const itemName = new TodoListItemName(item.name);
-      return new TodoListItem(itemId, itemName);
+      return new TodoListItemSnapshot(itemId, itemName);
     });
     const snapshot = new TodoListSnapshot(id, name, items);
     return TodoList.fromSnapshot(snapshot);
