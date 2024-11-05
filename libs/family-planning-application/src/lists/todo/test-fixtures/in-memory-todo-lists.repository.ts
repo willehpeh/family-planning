@@ -1,4 +1,4 @@
-import { TodoList, TodoListSnapshot, TodoListsRepository } from '@family-planning/domain';
+import { TodoList, TodoListReadModel, TodoListSnapshot, TodoListsRepository } from '@family-planning/domain';
 import { Injectable } from '@nestjs/common';
 
 @Injectable()
@@ -18,6 +18,12 @@ export class InMemoryTodoListsRepository implements TodoListsRepository {
       return Promise.reject(new Error(`List with id ${listId} not found`));
     }
     return Promise.resolve(TodoList.fromSnapshot(found));
+  }
+
+  findAll(): Promise<TodoListReadModel[]> {
+    return Promise.resolve(
+      Array.from(this._lists.values()).map(snapshot => new TodoListReadModel(snapshot))
+    );
   }
 
   totalLists(): number {

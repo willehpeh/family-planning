@@ -1,1 +1,1 @@
-export * from './empty-todo-list-snapshot';
+export * from './todo-list-snapshots';

@@ -1,9 +1,9 @@
-import { EMPTY_TODO_LIST_SNAPSHOT, InMemoryTodoListsRepository } from '../test-fixtures';
+import { EMPTY_TODO_LIST_SNAPSHOT, InMemoryTodoListsRepository } from '../../test-fixtures';
 import { AddItemToTodoListCommand } from './add-item-to-todo-list.command';
 import { AddItemToTodoListCommandHandler } from './add-item-to-todo-list.command-handler';
 import { AddItemToTodoListDto } from './add-item-to-todo-list.dto';
 
-describe('Adding items to Todo List', () => {
+describe('Add item to todo list', () => {
   let addItemToTodoListCommandHandler: AddItemToTodoListCommandHandler;
   let inMemoryTodoListsRepository: InMemoryTodoListsRepository;
   let command: AddItemToTodoListCommand;
