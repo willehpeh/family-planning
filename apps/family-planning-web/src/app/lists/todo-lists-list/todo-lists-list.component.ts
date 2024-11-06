@@ -1,7 +1,9 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, OnInit, Signal } from '@angular/core';
 import { CommonModule } from "@angular/common";
 import { Store } from '@ngrx/store';
 import { LoadAllLists } from '../state/lists.actions';
+import { listsFeature } from '../state/lists.reducer';
+import { TodoList } from '../models/todo-list';
 
 @Component({
   selector: "app-todo-lists-list",
@@ -12,6 +14,7 @@ import { LoadAllLists } from '../state/lists.actions';
 })
 export class TodoListsListComponent implements OnInit {
   store = inject(Store);
+  lists: Signal<TodoList[]> = this.store.selectSignal(listsFeature.selectAllLists);
 
   ngOnInit() {
     this.store.dispatch(LoadAllLists());

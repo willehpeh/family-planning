@@ -1,1 +1,8 @@
-<p>todo-lists-list works!</p>
+@for(list of lists(); track list.id) {
+	<p class="font-bold">{{ list.name }}</p>
+	<ul class="list-disc list-inside">
+		@for(item of list.items; track item.id) {
+			<li>{{ item.name }}</li>
+		}
+	</ul>
+}

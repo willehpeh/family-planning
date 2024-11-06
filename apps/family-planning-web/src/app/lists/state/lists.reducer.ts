@@ -26,7 +26,7 @@ export const listsFeature = createFeature({
     selectAllLists: createSelector(
       selectIds,
       selectEntities,
-      (ids, entities) => ids.map(id => entities[id])
+      (ids, entities) => ids.map(id => entities[id]).filter(list => !!list)
     )
   })
 });
