@@ -1,22 +1,14 @@
-import {
-  ApplicationConfig,
-  provideZoneChangeDetection,
-  isDevMode,
-} from "@angular/core";
-import { provideRouter } from "@angular/router";
-import { appRoutes } from "./app.routes";
-import { provideState, provideStore } from '@ngrx/store';
-import { provideEffects } from "@ngrx/effects";
-import { provideStoreDevtools } from "@ngrx/store-devtools";
-import { disclaimerReducer } from "./state/disclaimer.reducer";
+import { ApplicationConfig, provideZoneChangeDetection, } from '@angular/core';
+import { provideRouter } from '@angular/router';
+import { appRoutes } from './app.routes';
+import { provideHttpClient } from '@angular/common/http';
+import { storeProviders } from './store.providers';
 
 export const appConfig: ApplicationConfig = {
   providers: [
-    provideStore(),
-    provideState({ name: 'disclaimer', reducer: disclaimerReducer }),
-    provideStoreDevtools({ logOnly: !isDevMode() }),
-    provideEffects(),
+    ...storeProviders,
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideRouter(appRoutes),
+    provideHttpClient()
   ],
 };
