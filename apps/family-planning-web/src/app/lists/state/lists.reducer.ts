@@ -9,7 +9,10 @@ export interface ListsState extends EntityState<TodoList>{
   loading: boolean;
 }
 
-export const adapter = createEntityAdapter<TodoList>();
+export const adapter = createEntityAdapter<TodoList>({
+  selectId: list => list.id,
+  sortComparer: (a, b) => a.name.localeCompare(b.name)
+});
 
 export const initialState: ListsState = adapter.getInitialState({
   loading: false
@@ -20,13 +23,17 @@ export const listsFeature = createFeature({
   reducer: createReducer(
     initialState,
     on(LoadAllLists, state => ({ ...state, loading: true })),
-    on(LoadAllListsSuccess, (state, { lists }) => adapter.setAll(lists, { ...state, loading: false })),
+    on(LoadAllListsSuccess, (state, { lists }) => adapter.addMany(lists, { ...state, loading: false })),
   ),
   extraSelectors: ({ selectIds, selectEntities }) => ({
     selectAllLists: createSelector(
       selectIds,
       selectEntities,
       (ids, entities) => ids.map(id => entities[id]).filter(list => !!list)
+    ),
+    selectListById: (id: string) => createSelector(
+      selectEntities,
+      entities => entities[id]
     )
   })
 });

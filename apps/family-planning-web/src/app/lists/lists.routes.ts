@@ -5,14 +5,21 @@ import { provideEffects } from '@ngrx/effects';
 import { ListsEffects } from './state/lists.effects';
 
 export const listRoutes: Routes = [
-  { path: 'lists',
+  {
+    path: 'lists',
+    providers: [
+      provideState(listsFeature),
+      provideEffects(ListsEffects)
+    ],
     children: [
-      { path: 'todo',
-        providers: [
-          provideState(listsFeature),
-          provideEffects(ListsEffects)
-        ],
-        loadComponent: () => import('./todo-lists-list/todo-lists-list.component').then(m => m.TodoListsListComponent)}
+      {
+        path: 'todo',
+        loadComponent: () => import('./todo-lists-list/todo-lists-list.component').then(m => m.TodoListsListComponent)
+      },
+      {
+        path: 'todo/:id',
+        loadComponent: () => import('./todo-list-detail/todo-list-detail.component').then(m => m.TodoListDetailComponent)
+      },
     ]
   },
-]
+];

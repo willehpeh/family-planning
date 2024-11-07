@@ -1,5 +1,7 @@
 <div class="flex flex-wrap gap-6 justify-center">
-	<app-card class="text-center" (click)="onChooseLists()">
+	<app-card class="text-center"
+						(click)="onChooseLists()"
+						[clickable]="true">
 		<fa-icon [icon]="faListCheck"
 						 size="4x"
 						 class="text-white" />

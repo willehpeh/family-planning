@@ -1,8 +1,8 @@
-@for(list of lists(); track list.id) {
-	<p class="font-bold">{{ list.name }}</p>
-	<ul class="list-disc list-inside">
-		@for(item of list.items; track item.id) {
-			<li>{{ item.name }}</li>
-		}
-	</ul>
-}
+<app-header title="TODO LISTS"/>
+<div class="flex justify-center">
+	@for (list of lists(); track list.id) {
+		<app-card [clickable]="true" (click)="onClickList(list.id)">
+			<h2>{{ list.name }}</h2>
+		</app-card>
+	}
+</div>

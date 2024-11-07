@@ -1,10 +1,8 @@
+import { TodoListItem } from './todo-list-item';
+
 export type TodoList = {
   id: string;
   name: string;
   items: TodoListItem[]
 }
 
-export type TodoListItem = {
-  id: string;
-  name: string;
-};

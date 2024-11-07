@@ -1,0 +1,6 @@
+<app-header [title]="list()?.name"/>
+<div class="max-w-screen-md m-auto">
+	@for (item of items(); track item.id) {
+		<app-todo-list-item [item]="item" />
+	}
+</div>
