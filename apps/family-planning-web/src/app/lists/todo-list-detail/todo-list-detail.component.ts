@@ -22,6 +22,7 @@ export class TodoListDetailComponent {
     return selectedSignal();
   });
   items = computed(() => this.list()?.items);
+  newItemButtonTabIndex = computed(() => this.items()?.length || 0);
   protected readonly faPlus = faPlus;
 
   onCreateItem() {
