@@ -4,11 +4,13 @@ import { HeaderComponent } from '../../layout/header/header.component';
 import { Store } from '@ngrx/store';
 import { listsFeature } from '../state/lists.reducer';
 import { TodoListItemComponent } from './todo-list-item/todo-list-item.component';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
+import { faPlus } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: "app-todo-list-detail",
   standalone: true,
-  imports: [CommonModule, HeaderComponent, TodoListItemComponent],
+  imports: [CommonModule, HeaderComponent, TodoListItemComponent, FaIconComponent],
   templateUrl: "./todo-list-detail.component.html",
   styleUrl: "./todo-list-detail.component.scss",
 })
@@ -20,4 +22,9 @@ export class TodoListDetailComponent {
     return selectedSignal();
   });
   items = computed(() => this.list()?.items);
+  protected readonly faPlus = faPlus;
+
+  onCreateItem() {
+    throw new Error('Not implemented');
+  }
 }

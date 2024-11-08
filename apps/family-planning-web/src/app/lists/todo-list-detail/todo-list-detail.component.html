@@ -1,6 +1,13 @@
 <app-header [title]="list()?.name"/>
 <div class="max-w-screen-md m-auto">
 	@for (item of items(); track item.id) {
-		<app-todo-list-item [item]="item" />
+		<app-todo-list-item [item]="item"/>
 	}
+	<div class="bg-black bg-opacity-60 p-6 m-auto max-w-screen-md text-amber-300 border-amber-300 cursor-pointer hover:border-amber-500 hover:bg-gray-900 border-2 rounded-md flex align-middle gap-4"
+			 (click)="onCreateItem()"
+			 (keydown)="onCreateItem()"
+			 [tabIndex]="items().length + 1">
+		<fa-icon [icon]="faPlus"/>
+		<p class="text-amber-300">NEW</p>
+	</div>
 </div>
