@@ -10,18 +10,19 @@ import { CommonModule } from '@angular/common';
 })
 export class CardComponent {
   clickable = input<boolean>(false);
-  clickableClasses = computed(() => this._clickableClasses.reduce((obj, cls) => ({
-    ...obj,
-    [cls]: this.clickable()
-  }), {}));
+  borderColor = input<string>('blue');
+  styleClasses = computed(() => {
+    const borderClassName = `border-${this.borderColor()}-300`;
+    const clickableBorderClassName = `hover:border-${this.borderColor()}-500`;
 
-  private _clickableClasses = [
-    'cursor-pointer',
-    'hover:bg-gray-900',
-    'hover:bg-opacity-60',
-    'hover:border-blue-500',
-    'active:bg-gray-800',
-    'active:bg-opacity-60'
-  ];
-
+    return {
+      [borderClassName]: true,
+      [clickableBorderClassName]: this.clickable(),
+      'cursor-pointer': this.clickable(),
+      'hover:bg-gray-900': this.clickable(),
+      'hover:bg-opacity-60': this.clickable(),
+      'active:bg-gray-800': this.clickable(),
+      'active:bg-opacity-60': this.clickable(),
+    };
+  });
 }
