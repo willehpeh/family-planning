@@ -17,6 +17,10 @@ export const listRoutes: Routes = [
         loadComponent: () => import('./todo-lists-list/todo-lists-list.component').then(m => m.TodoListsListComponent)
       },
       {
+        path: 'todo/new',
+        loadComponent: () => import('./todo-lists-list/create-list-form/create-list-form.component').then(m => m.CreateListFormComponent)
+      },
+      {
         path: 'todo/:id',
         loadComponent: () => import('./todo-list-detail/todo-list-detail.component').then(m => m.TodoListDetailComponent)
       },

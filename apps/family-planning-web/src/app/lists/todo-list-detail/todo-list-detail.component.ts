@@ -18,7 +18,8 @@ export class TodoListDetailComponent {
   private store = inject(Store);
   id = input<string>('');
   list = computed(() => {
-    const selectedSignal = this.store.selectSignal(listsFeature.selectListById(this.id()));
+    const id = this.id();
+    const selectedSignal = this.store.selectSignal(listsFeature.selectListById(id));
     return selectedSignal();
   });
   items = computed(() => this.list()?.items);

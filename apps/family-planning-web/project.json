@@ -5,7 +5,7 @@
   "prefix": "app",
   "sourceRoot": "apps/family-planning-web/src",
   "tags": [
-    "family-planning/web-frontend"
+    "family-planning:web-frontend"
   ],
   "targets": {
     "build": {

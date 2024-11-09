@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { Store } from '@ngrx/store';
 import { LoadAllLists } from '../state/lists.actions';
 import { listsFeature } from '../state/lists.reducer';
-import { TodoList } from '../models/todo-list';
+import { SerializedTodoList } from '../models/serialized-todo-list';
 import { HeaderComponent } from '../../layout/header/header.component';
 import { CardComponent } from '../../ui-elements/card/card.component';
 import { Router } from '@angular/router';
@@ -19,7 +19,7 @@ import { faPlus, faListCheck } from '@fortawesome/free-solid-svg-icons';
 })
 export class TodoListsListComponent implements OnInit {
   store = inject(Store);
-  lists: Signal<TodoList[]> = this.store.selectSignal(listsFeature.selectAllLists);
+  lists: Signal<SerializedTodoList[]> = this.store.selectSignal(listsFeature.selectAllLists);
   readonly faPlus = faPlus;
   readonly faListCheck = faListCheck;
 
@@ -35,6 +35,6 @@ export class TodoListsListComponent implements OnInit {
   }
 
   onCreateList() {
-    throw new Error('Not implemented');
+    this.router.navigate(['/lists/todo/new']);
   }
 }

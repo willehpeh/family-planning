@@ -1,6 +1,6 @@
 import { Component, computed, input } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { TodoListItem } from '../../models/todo-list-item';
+import { SerializedTodoListItem } from '../../models/serialized-todo-list-item';
 
 @Component({
   selector: "app-todo-list-item",
@@ -10,6 +10,6 @@ import { TodoListItem } from '../../models/todo-list-item';
   styleUrl: "./todo-list-item.component.scss",
 })
 export class TodoListItemComponent {
-  item = input.required<TodoListItem>();
+  item = input.required<SerializedTodoListItem>();
   itemName = computed(() => this.item().name);
 }

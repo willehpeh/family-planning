@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { TodoList } from './models/todo-list';
+import { SerializedTodoList } from './models/serialized-todo-list';
+import { Observable } from 'rxjs';
+import { CreateTodoListDto } from '@family-planning/application';
 
 @Injectable({
   providedIn: 'root'
@@ -8,7 +10,11 @@ import { TodoList } from './models/todo-list';
 export class ListsService {
   constructor(private http: HttpClient) {}
 
-  loadAllLists() {
-    return this.http.get<TodoList[]>('api/lists/todo');
+  loadAllLists(): Observable<SerializedTodoList[]> {
+    return this.http.get<SerializedTodoList[]>('api/lists/todo');
+  }
+
+  createList(createListDto: CreateTodoListDto): Observable<void> {
+    return this.http.post<void>('api/lists/todo', createListDto);
   }
 }

@@ -1,21 +1,30 @@
 import { createEntityAdapter, EntityState } from '@ngrx/entity';
-import { TodoList } from '../models/todo-list';
+import { SerializedTodoList } from '../models/serialized-todo-list';
 import { createFeature, createReducer, createSelector, on } from '@ngrx/store';
-import { LoadAllLists, LoadAllListsSuccess } from './lists.actions';
+import {
+  CreateList,
+  CreateListFailure,
+  CreateListSuccess,
+  LoadAllLists,
+  LoadAllListsFailure,
+  LoadAllListsSuccess
+} from './lists.actions';
 
 export const featureKey = 'lists';
 
-export interface ListsState extends EntityState<TodoList>{
+export interface ListsState extends EntityState<SerializedTodoList>{
   loading: boolean;
+  saving: boolean;
 }
 
-export const adapter = createEntityAdapter<TodoList>({
+export const adapter = createEntityAdapter<SerializedTodoList>({
   selectId: list => list.id,
   sortComparer: (a, b) => a.name.localeCompare(b.name)
 });
 
 export const initialState: ListsState = adapter.getInitialState({
-  loading: false
+  loading: false,
+  saving: false,
 });
 
 export const listsFeature = createFeature({
@@ -24,6 +33,10 @@ export const listsFeature = createFeature({
     initialState,
     on(LoadAllLists, state => ({ ...state, loading: true })),
     on(LoadAllListsSuccess, (state, { lists }) => adapter.addMany(lists, { ...state, loading: false })),
+    on(LoadAllListsFailure, state => ({ ...state, loading: false })),
+    on(CreateList, state => ({ ...state, saving: true })),
+    on(CreateListSuccess, state => ({ ...state, saving: false })),
+    on(CreateListFailure, state => ({ ...state, saving: false })),
   ),
   extraSelectors: ({ selectIds, selectEntities }) => ({
     selectAllLists: createSelector(
