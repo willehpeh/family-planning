@@ -1,6 +1,6 @@
 <div class="bg-black bg-opacity-60 p-6 m-auto max-w-screen-md text-amber-300 border-amber-300 border-2 rounded-md flex align-middle gap-4" [ngClass]="hoverClasses()"
-		 (click)="startEditing()"
-		 (keydown)="startEditing()"
+		 (click)="onStartEditing()"
+		 (keydown)="onStartEditing()"
 		 [tabIndex]="tabIndex()">
 	@if (editing()) {
 		<form [formGroup]="newItemForm" class="w-full">
@@ -12,6 +12,7 @@
 							 class="border-blue-700 border-2 bg-gray-900 p-3 w-full mt-3 mb-6">
 			</div>
 			<app-button (click)="onCreateItem()" [disabled]="!newItemForm.valid">SAVE</app-button>
+			<app-button buttonStyle="outline" (click)="onCancelEditing()" class="ml-3">CANCEL</app-button>
 		</form>
 	} @else {
 		<fa-icon [icon]="faPlus"/>

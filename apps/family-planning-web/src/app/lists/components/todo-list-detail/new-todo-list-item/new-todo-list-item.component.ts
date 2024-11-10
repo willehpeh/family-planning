@@ -35,9 +35,14 @@ export class NewTodoListItemComponent implements OnInit {
   onCreateItem(): void {
     this.itemCreated.emit(this.newItemForm.value);
     this.editing.set(false);
+    this.newItemForm.reset();
   }
 
-  startEditing() {
+  onStartEditing(): void {
     this.editing.set(true);
+  }
+
+  onCancelEditing(): void {
+    this.editing.set(false);
   }
 }
