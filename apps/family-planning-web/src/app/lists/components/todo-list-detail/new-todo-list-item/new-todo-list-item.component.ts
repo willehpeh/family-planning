@@ -38,7 +38,10 @@ export class NewTodoListItemComponent implements OnInit {
     this.newItemForm.reset();
   }
 
-  onStartEditing(): void {
+  onStartEditing(event?: KeyboardEvent): void {
+    if (event && event.key !== 'Enter' && event.key !== ' ') {
+      return;
+    }
     this.editing.set(true);
   }
 

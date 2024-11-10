@@ -1,6 +1,6 @@
 <div class="bg-black bg-opacity-60 p-6 m-auto max-w-screen-md text-amber-300 border-amber-300 border-2 rounded-md flex align-middle gap-4" [ngClass]="hoverClasses()"
 		 (click)="onStartEditing()"
-		 (keydown)="onStartEditing()"
+		 (keydown)="onStartEditing($event)"
 		 [tabIndex]="tabIndex()">
 	@if (editing()) {
 		<form [formGroup]="newItemForm" class="w-full">
