@@ -34,8 +34,6 @@ export class NewTodoListItemComponent implements OnInit {
 
   onCreateItem(): void {
     this.itemCreated.emit(this.newItemForm.value);
-    console.log(this.newItemForm.value);
-    console.log(this.newItemForm.valid);
     this.editing.set(false);
   }
 
