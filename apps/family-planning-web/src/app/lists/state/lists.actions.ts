@@ -1,7 +1,8 @@
 import { createAction, props } from '@ngrx/store';
 import { SerializedTodoList } from '../models/serialized-todo-list';
 import { HttpErrorResponse } from '@angular/common/http';
-import { AddItemToTodoListDto, CreateTodoListDto } from '@family-planning/application';
+import { CreateTodoListDto } from '@family-planning/application';
+import { SerializedTodoListItem } from '../models/serialized-todo-list-item';
 
 export const LoadAllLists = createAction(
   '[TodoListsListComponent] Load All Lists'
@@ -37,7 +38,7 @@ export const CreateListFailure = createAction(
 
 export const AddItemToList = createAction(
   '[TodoListsDetailComponent] Add Item to List',
-  props<AddItemToTodoListDto>()
+  props<{ listId: string, temporaryItem: SerializedTodoListItem }>()
 );
 
 export const AddItemToListSuccess = createAction(
@@ -46,5 +47,5 @@ export const AddItemToListSuccess = createAction(
 
 export const AddItemToListFailure = createAction(
   '[Lists API] Add Item to List Failure',
-  props<{ error: HttpErrorResponse }>()
+  props<{ error: HttpErrorResponse, listId: string, transactionId: string }>()
 );

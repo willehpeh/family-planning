@@ -1,11 +1,15 @@
 import { inject, Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import {
+  AddItemToList,
+  AddItemToListFailure,
+  AddItemToListSuccess,
   CreateList,
   CreateListFailure,
   CreateListSuccess,
   LoadAllLists,
-  LoadAllListsFailure, LoadAllListsFromDetailView,
+  LoadAllListsFailure,
+  LoadAllListsFromDetailView,
   LoadAllListsSuccess
 } from './lists.actions';
 import { ListsService } from '../lists.service';
@@ -42,6 +46,19 @@ export class ListsEffects {
   createNewListSuccess$ = createEffect(() => this.actions$.pipe(
     ofType(CreateListSuccess),
     map(() => this.router.navigate(['/lists/todo']))
-  ), { dispatch: false })
+  ), { dispatch: false });
+
+  addItemToList$ = createEffect(() => this.actions$.pipe(
+    ofType(AddItemToList),
+    switchMap(({ listId, temporaryItem }) => this.listsService.addItemToList(listId, temporaryItem).pipe(
+      map(() => AddItemToListSuccess()),
+      catchError((error: HttpErrorResponse) => of(AddItemToListFailure({ error, listId, transactionId: temporaryItem.id })))
+    ))
+  ));
+
+  addItemToListSuccess$ = createEffect(() => this.actions$.pipe(
+    ofType(AddItemToListSuccess),
+    map(() => LoadAllListsFromDetailView())
+  ));
 
 }

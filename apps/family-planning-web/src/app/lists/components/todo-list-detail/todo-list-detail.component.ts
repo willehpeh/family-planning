@@ -8,7 +8,8 @@ import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import { NewTodoListItemComponent } from './new-todo-list-item/new-todo-list-item.component';
 import { ItemDetails } from '@family-planning/application';
-import { LoadAllListsFromDetailView } from '../../state/lists.actions';
+import { AddItemToList, LoadAllListsFromDetailView } from '../../state/lists.actions';
+import { SerializedTodoListItemFactory } from '../../models/factories/serialized-todo-list-item.factory';
 
 @Component({
   selector: "app-todo-list-detail",
@@ -36,6 +37,9 @@ export class TodoListDetailComponent implements OnInit {
   }
 
   onCreateItem(itemDetails: ItemDetails): void {
-    throw new Error('Not implemented');
+    this.store.dispatch(AddItemToList({
+      listId: this.id(),
+      temporaryItem: SerializedTodoListItemFactory.temporaryItem(itemDetails)
+    }));
   }
 }
