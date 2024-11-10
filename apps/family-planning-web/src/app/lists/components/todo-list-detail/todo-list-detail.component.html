@@ -1,0 +1,9 @@
+<app-header [title]="list()?.name"/>
+<div class="max-w-screen-md m-auto">
+	@for (item of items(); track item.id; let index = $index) {
+		<app-todo-list-item [item]="item"
+												[tabIndex]="index + 1"/>
+	}
+	<app-new-todo-list-item (itemCreated)="onCreateItem($event)"
+													[tabIndex]="newItemButtonTabIndex()"/>
+</div>

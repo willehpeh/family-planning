@@ -1,6 +1,6 @@
 import { Component, computed, input } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { SerializedTodoListItem } from '../../models/serialized-todo-list-item';
+import { SerializedTodoListItem } from '../../../models/serialized-todo-list-item';
 
 @Component({
   selector: "app-todo-list-item",
@@ -12,4 +12,6 @@ import { SerializedTodoListItem } from '../../models/serialized-todo-list-item';
 export class TodoListItemComponent {
   item = input.required<SerializedTodoListItem>();
   itemName = computed(() => this.item().name);
+
+  tabIndex = input.required<number>();
 }

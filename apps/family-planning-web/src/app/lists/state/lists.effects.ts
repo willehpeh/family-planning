@@ -5,7 +5,7 @@ import {
   CreateListFailure,
   CreateListSuccess,
   LoadAllLists,
-  LoadAllListsFailure,
+  LoadAllListsFailure, LoadAllListsFromDetailView,
   LoadAllListsSuccess
 } from './lists.actions';
 import { ListsService } from '../lists.service';
@@ -21,7 +21,10 @@ export class ListsEffects {
   private readonly router = inject(Router);
 
   loadAllLists$ = createEffect(() => this.actions$.pipe(
-    ofType(LoadAllLists),
+    ofType(
+      LoadAllLists,
+      LoadAllListsFromDetailView
+    ),
     switchMap(() => this.listsService.loadAllLists().pipe(
       map(lists => LoadAllListsSuccess({ lists })),
       catchError((error: HttpErrorResponse) => of(LoadAllListsFailure(error)))

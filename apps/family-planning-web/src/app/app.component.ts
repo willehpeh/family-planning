@@ -1,26 +1,13 @@
-import { ChangeDetectionStrategy, Component, inject, Signal } from '@angular/core';
-import { Router, RouterModule } from '@angular/router';
-import { DisclaimerComponent } from './disclaimer/disclaimer.component';
-import { Store } from '@ngrx/store';
-import { selectDisclaimerSeen } from './state/disclaimer.selectors';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { RouterModule } from '@angular/router';
 
 @Component({
   standalone: true,
-  imports: [RouterModule, DisclaimerComponent],
+  imports: [RouterModule],
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AppComponent {
-  disclaimerSeen: Signal<boolean>;
-
-  constructor() {
-    const store = inject(Store);
-    const router = inject(Router);
-    this.disclaimerSeen = store.selectSignal(selectDisclaimerSeen);
-    if (!this.disclaimerSeen()) {
-      router.navigate(['/disclaimer']);
-    }
-  }
 }
