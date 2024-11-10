@@ -4,6 +4,9 @@
 		<app-todo-list-item [item]="item"
 												[tabIndex]="index + 1"/>
 	}
+	@if (loadingAndListEmpty()) {
+		<p class="text-center">Loading...</p>
+	}
 	<app-new-todo-list-item (itemCreated)="onCreateItem($event)"
 													[tabIndex]="newItemButtonTabIndex()"/>
 </div>

@@ -26,6 +26,8 @@ export class TodoListDetailComponent implements OnInit {
     const selectedSignal = this.store.selectSignal(listsFeature.selectListById(id));
     return selectedSignal();
   });
+  loading = this.store.selectSignal(listsFeature.selectLoading);
+  loadingAndListEmpty = computed(() => this.loading() && !this.list());
   items = computed(() => this.list()?.items);
   newItemButtonTabIndex = computed(() => (this.items()?.length || 0) + 1);
   protected readonly faPlus = faPlus;

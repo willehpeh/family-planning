@@ -1,5 +1,5 @@
 <app-header title="NEW TODO LIST"/>
-<form [formGroup]="newTodoListForm">
+<form [formGroup]="newTodoListForm" class="relative">
 	<div class="mx-4 md:mx-auto max-w-screen-md">
 		<label for="listName" class="block mb-3">List name</label>
 		<input type="text" id="listName" formControlName="name" class="bg-gray-900 p-3 w-full">
@@ -7,4 +7,10 @@
 	<div class="w-full text-center mt-6">
 		<app-button (click)="onCreateNewList()" [disabled]="saving()">CREATE LIST</app-button>
 	</div>
+	@if (saving()) {
+		<div class="absolute top-0 left-0 w-full h-full z-10 bg-gray-900
+								opacity-90 flex justify-center items-center">
+			<p>Saving…</p>
+		</div>
+	}
 </form>

@@ -8,7 +8,7 @@ import {
   CreateListFailure,
   CreateListSuccess,
   LoadAllLists,
-  LoadAllListsFailure,
+  LoadAllListsFailure, LoadAllListsFromDetailView,
   LoadAllListsSuccess
 } from './lists.actions';
 
@@ -33,7 +33,7 @@ export const listsFeature = createFeature({
   name: featureKey,
   reducer: createReducer(
     initialState,
-    on(LoadAllLists, state => ({ ...state, loading: true })),
+    on(LoadAllLists, LoadAllListsFromDetailView, state => ({ ...state, loading: true })),
     on(LoadAllListsSuccess, (state, { lists }) => adapter.upsertMany(lists, { ...state, loading: false })),
     on(LoadAllListsFailure, state => ({ ...state, loading: false })),
     on(CreateList, state => ({ ...state, saving: true })),

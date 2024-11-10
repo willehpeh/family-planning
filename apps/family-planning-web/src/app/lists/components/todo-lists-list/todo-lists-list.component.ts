@@ -20,6 +20,7 @@ import { faPlus, faListCheck } from '@fortawesome/free-solid-svg-icons';
 export class TodoListsListComponent implements OnInit {
   store = inject(Store);
   lists: Signal<SerializedTodoList[]> = this.store.selectSignal(listsFeature.selectAllLists);
+  loading = this.store.selectSignal(listsFeature.selectLoading);
   readonly faPlus = faPlus;
   readonly faListCheck = faListCheck;
 
