@@ -13,7 +13,7 @@ import {
   LoadAllListsSuccess
 } from './lists.actions';
 import { ListsService } from '../lists.service';
-import { catchError, map, of, switchMap } from 'rxjs';
+import { catchError, map, mergeMap, of, switchMap } from 'rxjs';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
 
@@ -50,7 +50,7 @@ export class ListsEffects {
 
   addItemToList$ = createEffect(() => this.actions$.pipe(
     ofType(AddItemToList),
-    switchMap(({ listId, temporaryItem }) => this.listsService.addItemToList(listId, temporaryItem).pipe(
+    mergeMap(({ listId, temporaryItem }) => this.listsService.addItemToList(listId, temporaryItem).pipe(
       map(() => AddItemToListSuccess()),
       catchError((error: HttpErrorResponse) => of(AddItemToListFailure({ error, listId, transactionId: temporaryItem.id })))
     ))
