@@ -1,6 +1,5 @@
 import { TodoList } from '../entities';
-import { TodoListName } from '../value-objects/todo-list-name';
-import { TodoListId } from '../value-objects/todo-list-id';
+import { TodoListId, TodoListName } from '../value-objects';
 
 export class TodoListFactory {
   createEmptyList(name: string): TodoList {
