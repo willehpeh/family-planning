@@ -1,4 +1,4 @@
-import { EntitySnapshot } from '../../../../common';
+import { EntitySnapshot } from '../../../../../common';
 import { TodoListItemId, TodoListItemName } from '../../value-objects';
 
 export class TodoListItemSnapshot implements EntitySnapshot {

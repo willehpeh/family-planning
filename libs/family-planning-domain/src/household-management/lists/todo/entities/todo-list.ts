@@ -1,6 +1,6 @@
 import { TodoListId, TodoListItemId, TodoListItemName, TodoListName } from '../value-objects';
 import { TodoListSnapshot } from './snapshots';
-import { Entity } from '../../../common';
+import { Entity } from '../../../../common';
 import { TodoListItem } from './todo-list-item';
 
 export class TodoList implements Entity<TodoListSnapshot> {

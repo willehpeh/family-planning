@@ -1,4 +1,4 @@
-import { Entity } from '../../../common';
+import { Entity } from '../../../../common';
 import { TodoListItemSnapshot } from './snapshots';
 import { TodoListItemId, TodoListItemName } from '../value-objects';
 

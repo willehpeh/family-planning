@@ -1,4 +1,4 @@
-import { ValueObject } from '../../../common';
+import { ValueObject } from '../../../../common';
 
 export class TodoListItemId implements ValueObject<string> {
   private static readonly PREFIX = 'TODOLISTITEM';

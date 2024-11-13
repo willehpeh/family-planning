@@ -1,4 +1,4 @@
-import { ValueObject } from '../../../common';
+import { ValueObject } from '../../../../common';
 
 export class TodoListId implements ValueObject<string> {
 

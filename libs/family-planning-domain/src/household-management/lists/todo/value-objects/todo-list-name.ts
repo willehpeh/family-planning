@@ -1,4 +1,4 @@
-import { ValueObject } from '../../../common';
+import { ValueObject } from '../../../../common';
 
 export class TodoListName implements ValueObject<string> {
   constructor(private readonly _name: string) {}
