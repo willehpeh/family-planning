@@ -51,3 +51,9 @@ services:
 volumes:
   db:
     driver: local
+  keycloak_data:
+    driver: local
+  keycloak_conf:
+    driver: local
+  keycloak_db:
+    driver: local
