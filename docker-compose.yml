@@ -41,14 +41,10 @@ services:
       - "8080:8080"
     env_file:
       - .env
-    volumes:
-      - keycloak_data:/opt/keycloak/data
-      - keycloak_db:/opt/keycloak/db
+    environment:
+      - KC_BOOTSTRAP_ADMIN_USERNAME
+      - KC_BOOTSTRAP_ADMIN_PASSWORD
     command: start-dev
 volumes:
   db:
-    driver: local
-  keycloak_data:
-    driver: local
-  keycloak_db:
     driver: local
