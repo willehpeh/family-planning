@@ -7,6 +7,7 @@ services:
     depends_on:
       - fp_db
       - api
+      - keycloak
     ports:
       - "80:80"
   api:
@@ -33,6 +34,20 @@ services:
       - POSTGRES_DB
     volumes:
       - db:/var/lib/postgresql/data
+  keycloak:
+    image: quay.io/keycloak/keycloak:26.0.5
+    container_name: keycloak
+    ports:
+      - "8080:8080"
+    env_file:
+      - .env
+    environment:
+      - KC_BOOTSTRAP_ADMIN_USERNAME
+      - KC_BOOTSTRAP_ADMIN_PASSWORD
+    volumes:
+      - keycloak_data:/opt/keycloak/data
+      - keycloak_conf:/opt/keycloak/conf
+      - keycloak_db:/opt/keycloak/db
 volumes:
   db:
     driver: local
