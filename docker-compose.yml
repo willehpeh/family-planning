@@ -48,6 +48,9 @@ services:
       - KC_HOSTNAME_STRICT=false
       - KC_PROXY_HEADERS=xforwarded
     command: start-dev
+    volumes:
+      - $PWD/server.crt.pem:/opt/keycloak/conf/server.crt.pem
+      - $PWD/server.key.pem:/opt/keycloak/conf/server.key.pem
 volumes:
   db:
     driver: local
