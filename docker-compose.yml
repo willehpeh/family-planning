@@ -41,9 +41,6 @@ services:
       - "8080:8080"
     env_file:
       - .env
-    environment:
-      - KC_BOOTSTRAP_ADMIN_USERNAME
-      - KC_BOOTSTRAP_ADMIN_PASSWORD
     volumes:
       - keycloak_data:/opt/keycloak/data
       - keycloak_db:/opt/keycloak/db
