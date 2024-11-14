@@ -46,15 +46,12 @@ services:
       - KC_BOOTSTRAP_ADMIN_PASSWORD
     volumes:
       - keycloak_data:/opt/keycloak/data
-      - keycloak_conf:/opt/keycloak/conf
       - keycloak_db:/opt/keycloak/db
     command: start-dev
 volumes:
   db:
     driver: local
   keycloak_data:
-    driver: local
-  keycloak_conf:
     driver: local
   keycloak_db:
     driver: local
