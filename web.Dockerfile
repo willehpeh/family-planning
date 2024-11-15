@@ -6,4 +6,3 @@ COPY . .
 RUN npx nx build family-planning-web
 FROM nginx:latest AS server
 COPY --from=builder /app/dist/apps/family-planning-web/browser /usr/share/nginx/html
-COPY nginx.conf /etc/nginx/nginx.conf
