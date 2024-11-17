@@ -59,8 +59,7 @@ services:
       - KC_PROXY_HEADERS=xforwarded
     command: start-dev
     volumes:
-      - ./server.crt.pem:/opt/keycloak/conf/server.crt.pem
-      - ./server.key.pem:/opt/keycloak/conf/server.key.pem
+      - ./keycloak/data:/opt/keycloak/data
 volumes:
   db:
     driver: local
