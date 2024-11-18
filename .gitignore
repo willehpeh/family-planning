@@ -48,3 +48,5 @@ Thumbs.db
 .env.*
 **/.env
 **/.env.*
+
+sessions
