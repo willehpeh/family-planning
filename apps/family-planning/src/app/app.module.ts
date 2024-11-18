@@ -5,9 +5,10 @@ import { AppService } from "./app.service";
 import { ConfigModule } from "@nestjs/config";
 import { TypeOrmModule } from "@nestjs/typeorm";
 import { ListsModule } from "./lists/lists.module";
-import { CqrsModule } from '@nestjs/cqrs';
+import { CqrsModule } from "@nestjs/cqrs";
+import { AuthModule } from "./auth/auth.module";
 
-const isDevEnvironment = process.env.APP_ENV === 'development';
+const isDevEnvironment = process.env.APP_ENV === "development";
 
 @Module({
   imports: [
@@ -16,16 +17,17 @@ const isDevEnvironment = process.env.APP_ENV === 'development';
     }),
     TypeOrmModule.forRoot({
       type: "postgres",
-      host: isDevEnvironment ? '127.0.0.1' : process.env.POSTGRES_HOST,
+      host: isDevEnvironment ? "127.0.0.1" : process.env.POSTGRES_HOST,
       port: +process.env.POSTGRES_PORT,
-      username: isDevEnvironment ? 'postgres' : process.env.POSTGRES_USER,
-      password: isDevEnvironment ? 'pass1234' : process.env.POSTGRES_PASSWORD,
-      database: isDevEnvironment ? 'postgres' : process.env.POSTGRES_DB,
+      username: isDevEnvironment ? "postgres" : process.env.POSTGRES_USER,
+      password: isDevEnvironment ? "pass1234" : process.env.POSTGRES_PASSWORD,
+      database: isDevEnvironment ? "postgres" : process.env.POSTGRES_DB,
       synchronize: true,
-      autoLoadEntities: true
+      autoLoadEntities: true,
     }),
     CqrsModule.forRoot(),
     ListsModule,
+    AuthModule,
   ],
   controllers: [AppController],
   providers: [AppService],
