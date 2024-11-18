@@ -31,6 +31,7 @@
     "@ngrx/store": "^18.0.2",
     "axios": "^1.6.0",
     "cookie-parser": "^1.4.7",
+    "express-session": "^1.18.1",
     "openid-client": "^5.7.0",
     "passport-openidconnect": "^0.1.2",
     "pg": "^8.13.1",
