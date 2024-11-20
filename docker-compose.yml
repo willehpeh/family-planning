@@ -27,6 +27,7 @@ services:
     container_name: fp_api
     depends_on:
       - fp_db
+      - keycloak
     ports:
       - "3000:3000"
     env_file:
