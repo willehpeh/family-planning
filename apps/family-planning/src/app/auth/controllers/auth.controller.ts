@@ -1,8 +1,9 @@
-import { Controller, Get, Query, Req, Res } from '@nestjs/common';
+import { Controller, Get, Req, Res, UseGuards } from '@nestjs/common';
 import { TokenSet } from 'openid-client';
 import { ConfigService } from '@nestjs/config';
 import { Request, Response } from 'express';
 import { AuthService } from '../services/auth.service';
+import { AuthGuard } from '../guards/auth.guard';
 
 @Controller('auth')
 export class AuthController {
@@ -15,8 +16,9 @@ export class AuthController {
   }
 
   @Get('userinfo')
-  async userinfo(@Req() req: Request, @Query('access_token') token: string) {
-    return this.authService.userInfo(token);
+  @UseGuards(AuthGuard)
+  async userinfo(@Req() req: Request) {
+    return this.authService.userInfo(req.cookies['access_token']);
   }
 
   @Get('callback')

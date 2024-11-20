@@ -42,4 +42,12 @@ export class AuthService {
     });
   }
 
+  async validateToken(accessToken: string) {
+    return this.client.introspect(accessToken);
+  }
+
+  async refreshToken(refreshToken: string) {
+    return this.client.refresh(refreshToken);
+  }
+
 }

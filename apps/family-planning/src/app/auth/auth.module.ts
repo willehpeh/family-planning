@@ -13,7 +13,7 @@ import { AuthService } from './services/auth.service';
       useFactory: async (configService: ConfigService) => await Issuer.discover(configService.get('KEYCLOAK_ISSUER')),
       inject: [ConfigService]
     },
-    AuthService
+    AuthService,
   ]
 })
 export class AuthModule {}
