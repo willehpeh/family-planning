@@ -15,16 +15,15 @@ export class AuthGuard implements CanActivate {
       response.redirect('/api/auth/login');
       return false;
     }
-    const token = request.cookies['access_token'];
-    const isValid = await this.authService.validateToken(token);
+    const accessToken = request.cookies['access_token'];
+    const refreshToken = request.cookies['refresh_token']
+    const isValid = await this.authService.validateToken(accessToken);
     if (!isValid.active) {
       response.redirect('/api/auth/login');
       return false;
     }
     try {
-      console.time('refreshToken');
-      const newTokens = await this.authService.refreshToken(token);
-      console.timeEnd('refreshToken');
+      const newTokens = await this.authService.refreshToken(refreshToken);
       this.setCookies(response, newTokens);
       return true;
     } catch {
