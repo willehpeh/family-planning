@@ -1,4 +1,4 @@
-import { CanActivate, ExecutionContext, Injectable, UnauthorizedException } from '@nestjs/common';
+import { CanActivate, ExecutionContext, Injectable } from '@nestjs/common';
 import { AuthService } from '../services/auth.service';
 import { TokenSet } from 'openid-client';
 import { Response } from 'express';
@@ -16,11 +16,10 @@ export class AuthGuard implements CanActivate {
       return false;
     }
     const token = request.cookies['access_token'];
-    console.time('validateToken');
     const isValid = await this.authService.validateToken(token);
-    console.timeEnd('validateToken');
     if (!isValid.active) {
-      throw new UnauthorizedException('Invalid token');
+      response.redirect('/api/auth/login');
+      return false;
     }
     try {
       console.time('refreshToken');

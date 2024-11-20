@@ -5,6 +5,8 @@ import { Store } from '@ngrx/store';
 import { Router } from '@angular/router';
 import { AcceptDisclaimer } from '../state/disclaimer.actions';
 import { HeaderComponent } from '../layout/header/header.component';
+import { HttpClient } from '@angular/common/http';
+import { tap } from 'rxjs';
 
 @Component({
   selector: "app-disclaimer",
@@ -16,7 +18,11 @@ import { HeaderComponent } from '../layout/header/header.component';
 export class DisclaimerComponent {
 
   constructor(private store: Store,
-              private router: Router) {
+              private router: Router,
+              private http: HttpClient) {
+    this.http.get('/api/auth/userinfo').pipe(
+      tap(console.log)
+    ).subscribe();
   }
 
   onAcceptDisclaimer() {
