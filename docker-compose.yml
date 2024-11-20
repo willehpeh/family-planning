@@ -61,7 +61,6 @@ services:
     command: start-dev
     volumes:
       - ./keycloak/data:/opt/keycloak/data
-      - ./keycloak-config:/opt/keycloak/conf
 volumes:
   db:
     driver: local
