@@ -1,9 +1,11 @@
 import { createReducer, on } from '@ngrx/store';
 import { AcceptDisclaimer } from './disclaimer.actions';
 
-export type DisclaimerState = {
+export const featureKey = 'disclaimer';
+
+export interface DisclaimerState {
   disclaimerSeen: boolean;
-};
+}
 
 export const initialState: DisclaimerState = {
   disclaimerSeen: false,
