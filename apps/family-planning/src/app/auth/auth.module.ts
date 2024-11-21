@@ -12,7 +12,9 @@ import { delay, lastValueFrom, of } from 'rxjs';
   providers: [
     { provide: 'KEYCLOAK_ISSUER',
       useFactory: async (configService: ConfigService) => {
-        await lastValueFrom(of(true).pipe(delay(30000))); // make sure Keycloak available
+        if (configService.get('APP_ENV') === 'production') {
+          await lastValueFrom(of(true).pipe(delay(30000)));
+        } // make sure Keycloak available
         return await Issuer.discover(configService.get('KEYCLOAK_ISSUER'));
       },
       inject: [ConfigService]
