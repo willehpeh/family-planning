@@ -1,8 +1,13 @@
-import { HouseholdReadModel, HouseholdSnapshot, HouseholdsQueryRepository } from '@family-planning/domain';
+import {
+  HouseholdMemberId,
+  HouseholdReadModel,
+  HouseholdSnapshot,
+  HouseholdsQueryRepository
+} from '@family-planning/domain';
 
 
 export class InMemoryHouseholdsQueryRepository implements HouseholdsQueryRepository {
-  findHouseholdForMember(memberId: string): Promise<HouseholdReadModel> {
+  findHouseholdForMember(memberId: HouseholdMemberId): Promise<HouseholdReadModel> {
     return Promise.resolve(new HouseholdReadModel());
   }
 
