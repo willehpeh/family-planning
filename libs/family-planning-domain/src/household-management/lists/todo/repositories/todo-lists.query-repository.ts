@@ -1,5 +1,5 @@
 import { TodoListReadModel } from '../read-models';
 
-export abstract class TodoListsQueriesRepository {
+export abstract class TodoListsQueryRepository {
   abstract findAll(): Promise<TodoListReadModel[]>;
 }
