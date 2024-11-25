@@ -2,9 +2,9 @@ import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { TodoList } from './entities/todo-list.entity';
 import { TodoListItem } from './entities/todo-list-item.entity';
-import { TodoListsCommandsRepository, TodoListsQueriesRepository } from '@family-planning/domain';
-import { OrmTodoListsCommandsRepository } from './repositories/orm-todo-lists-commands.repository';
-import { OrmTodoListsQueriesRepository } from './repositories/orm-todo-lists-queries.repository';
+import { TodoListsCommandRepository, TodoListsQueryRepository } from '@family-planning/domain';
+import { OrmTodoListsCommandRepository } from './repositories/orm.todo-lists.command-repository';
+import { OrmTodoListsQueryRepository } from './repositories/orm.todo-lists.query-repository';
 
 @Module({
   imports: [
@@ -14,12 +14,12 @@ import { OrmTodoListsQueriesRepository } from './repositories/orm-todo-lists-que
     ])
   ],
   providers: [
-    { provide: TodoListsCommandsRepository, useClass: OrmTodoListsCommandsRepository },
-    { provide: TodoListsQueriesRepository, useClass: OrmTodoListsQueriesRepository }
+    { provide: TodoListsCommandRepository, useClass: OrmTodoListsCommandRepository },
+    { provide: TodoListsQueryRepository, useClass: OrmTodoListsQueryRepository }
   ],
   exports: [
-    TodoListsCommandsRepository,
-    TodoListsQueriesRepository
+    TodoListsCommandRepository,
+    TodoListsQueryRepository
   ]
 })
 export class TypeOrmListsPersistenceModule {}

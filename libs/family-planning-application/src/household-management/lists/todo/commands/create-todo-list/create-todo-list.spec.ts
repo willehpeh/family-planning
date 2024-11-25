@@ -1,16 +1,16 @@
 import { CreateTodoListCommandHandler } from './index';
-import { InMemoryTodoListsCommandsRepository } from '../../test-fixtures';
+import { InMemoryTodoListsCommandRepository } from '../../test-fixtures';
 import { CreateTodoListCommand } from './create-todo-list.command';
 import { CreateTodoListDto } from './create-todo-list.dto';
 
 describe('Create todo list', () => {
   let createTodoListCommandHandler: CreateTodoListCommandHandler;
-  let inMemoryTodoListsRepository: InMemoryTodoListsCommandsRepository;
+  let inMemoryTodoListsRepository: InMemoryTodoListsCommandRepository;
   let command: CreateTodoListCommand;
   let dto: CreateTodoListDto;
 
   beforeEach(() => {
-    inMemoryTodoListsRepository = new InMemoryTodoListsCommandsRepository();
+    inMemoryTodoListsRepository = new InMemoryTodoListsCommandRepository();
     createTodoListCommandHandler = new CreateTodoListCommandHandler(inMemoryTodoListsRepository);
 
     dto = { name: 'My List' };
