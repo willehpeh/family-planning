@@ -1,6 +1,6 @@
-import { TodoListReadModel, TodoListSnapshot, TodoListsQueryRepository } from '@family-planning/domain';
+import { TodoListReadModel, TodoListSnapshot, TodoListsQueriesRepository } from '@family-planning/domain';
 
-export class InMemoryTodoListsQueryRepository implements TodoListsQueryRepository {
+export class InMemoryTodoListsQueriesRepository implements TodoListsQueriesRepository {
 
   private  _lists = new Map<string, TodoListSnapshot>()
 
@@ -10,7 +10,7 @@ export class InMemoryTodoListsQueryRepository implements TodoListsQueryRepositor
     );
   }
 
-  withSnapshots(snapshots: TodoListSnapshot[]): InMemoryTodoListsQueryRepository {
+  withSnapshots(snapshots: TodoListSnapshot[]): InMemoryTodoListsQueriesRepository {
     this._lists = new Map(snapshots.map(snapshot => [snapshot.id(), snapshot]));
     return this;
   }

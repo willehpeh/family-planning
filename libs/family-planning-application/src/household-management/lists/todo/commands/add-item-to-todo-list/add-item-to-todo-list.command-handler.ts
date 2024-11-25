@@ -1,10 +1,10 @@
-import { TodoListsCommandRepository } from '@family-planning/domain';
+import { TodoListsCommandsRepository } from '@family-planning/domain';
 import { AddItemToTodoListCommand } from './add-item-to-todo-list.command';
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
 
 @CommandHandler(AddItemToTodoListCommand)
 export class AddItemToTodoListCommandHandler implements ICommandHandler<AddItemToTodoListCommand> {
-  constructor(private readonly todoListsRepository: TodoListsCommandRepository) {
+  constructor(private readonly todoListsRepository: TodoListsCommandsRepository) {
   }
   async execute({ listId, itemDetails }: AddItemToTodoListCommand): Promise<void> {
     const list = await this.todoListsRepository.findById(listId);
