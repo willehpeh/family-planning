@@ -18,7 +18,7 @@ describe('FindHouseholdForMemberQuery', () => {
       inMemoryHouseholdsRepository = new InMemoryHouseholdsQueryRepository().withSnaphsots([HOUSEHOLD_SNAPSHOT]);
     });
 
-    it('should return the household read model for the member', async () => {
+    it('should return the household for the member', async () => {
       const expected = new HouseholdReadModel();
       findHouseholdForMemberQueryHandler = new FindHouseholdForMemberQueryHandler(inMemoryHouseholdsRepository);
       const result = await findHouseholdForMemberQueryHandler.execute(query);
