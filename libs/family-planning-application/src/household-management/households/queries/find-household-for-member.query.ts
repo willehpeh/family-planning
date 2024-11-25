@@ -1,5 +1,7 @@
-import { HouseholdMemberDto } from '../dtos/household-member.dto';
-
 export class FindHouseholdForMemberQuery {
-  constructor(public readonly member: HouseholdMemberDto) {}
+  constructor(private readonly _memberId: string) {}
+
+  memberId(): string {
+    return this._memberId;
+  }
 }
