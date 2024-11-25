@@ -26,7 +26,7 @@ describe('CreateNewHouseholdCommand', () => {
 
   it('should create the new household with the provided name', async () => {
     await handler.execute(command);
-    expect(inMemoryHouseholdRepository.households()[0].name).toBe(dto.householdName);
+    expect(inMemoryHouseholdRepository.households()[0].name()).toBe(dto.householdName);
   });
 });
 
