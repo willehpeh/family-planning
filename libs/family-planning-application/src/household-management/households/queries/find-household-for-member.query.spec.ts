@@ -1,7 +1,7 @@
 import { FindHouseholdForMemberQuery } from './find-household-for-member.query';
 import { FindHouseholdForMemberQueryHandler } from './find-household-for-member.query-handler';
-import { HOUSEHOLD_WITH_MEMBER, InMemoryHouseholdsQueryRepository } from '../test-fixtures';
-import { HouseholdReadModel } from '@family-planning/domain';
+import { InMemoryHouseholdsQueryRepository } from '../test-fixtures/in-memory-households.query-repository';
+import { HouseholdReadModel, HouseholdSnapshot } from '@family-planning/domain';
 import { HouseholdMemberDto } from '../dtos';
 
 describe('FindHouseholdForMemberQuery', () => {
@@ -17,12 +17,15 @@ describe('FindHouseholdForMemberQuery', () => {
 
   describe('Household exists for member', () => {
 
+    let HOUSEHOLD_SNAPSHOT: HouseholdSnapshot;
+
     beforeEach(() => {
-      inMemoryHouseholdsRepository = new InMemoryHouseholdsQueryRepository().withSnaphsots([HOUSEHOLD_WITH_MEMBER]);
+      HOUSEHOLD_SNAPSHOT = new HouseholdSnapshot();
+      inMemoryHouseholdsRepository = new InMemoryHouseholdsQueryRepository().withSnaphsots([HOUSEHOLD_SNAPSHOT]);
     });
 
     it('should return the household read model for the member', async () => {
-      const expected = new HouseholdReadModel(HOUSEHOLD_WITH_MEMBER);
+      const expected = new HouseholdReadModel(HOUSEHOLD_SNAPSHOT);
       findHouseholdForMemberQueryHandler = new FindHouseholdForMemberQueryHandler(inMemoryHouseholdsRepository);
       const result = await findHouseholdForMemberQueryHandler.execute(query);
       expect(result).toEqual(expected);
