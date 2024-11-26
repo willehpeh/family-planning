@@ -4,15 +4,18 @@ import { CreatingMemberDetails } from '../types';
 import { Email, FirstName, HouseholdMemberId, HouseholdName, LastName } from '../value-objects';
 import { HouseholdMember } from './household-member';
 import { UserId } from '../../../auth';
+import { TodoList } from '../../lists';
 
 export class Household implements Entity<HouseholdSnapshot> {
+
+  private _todoLists: TodoList[] = [];
 
   private constructor(private _name: HouseholdName,
                       private _members: HouseholdMember[]) {
   }
 
   snapshot(): HouseholdSnapshot {
-    return new HouseholdSnapshot(this._name, this._members);
+    return new HouseholdSnapshot(this._name, this._members, this._todoLists);
   }
 
   static createNew(householdName: HouseholdName, details: CreatingMemberDetails): Household {
