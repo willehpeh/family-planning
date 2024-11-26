@@ -28,5 +28,10 @@ describe('CreateNewHouseholdCommand', () => {
     await handler.execute(command);
     expect(inMemoryHouseholdRepository.households()[0].name()).toBe(dto.householdName);
   });
+
+  it('should create the new household with the provided creating member', async () => {
+    await handler.execute(command);
+    expect(inMemoryHouseholdRepository.households()[0].members()[0].toPojo()).toMatchObject(dto.creatingMember);
+  });
 });
 
