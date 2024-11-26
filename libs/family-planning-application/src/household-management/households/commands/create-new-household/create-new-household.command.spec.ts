@@ -33,10 +33,5 @@ describe('CreateNewHouseholdCommand', () => {
     await handler.execute(command);
     expect(inMemoryHouseholdRepository.households()[0].members()[0].toPojo()).toMatchObject(dto.creatingMember);
   });
-
-  it('should create the new household with no todo lists', async () => {
-    await handler.execute(command);
-    expect(inMemoryHouseholdRepository.households()[0].todoLists()).toEqual([]);
-  });
 });
 
