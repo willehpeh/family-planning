@@ -4,10 +4,10 @@ import { UserId } from '../../../../auth';
 
 export class HouseholdMemberSnapshot implements EntitySnapshot {
   constructor(private readonly _id: HouseholdMemberId,
-              private readonly userId: UserId,
-              private readonly lastName: LastName,
-              private readonly firstName: FirstName,
-              private readonly email: Email) {
+              private readonly _userId: UserId,
+              private readonly _lastName: LastName,
+              private readonly _firstName: FirstName,
+              private readonly _email: Email) {
 
   }
 
@@ -15,13 +15,19 @@ export class HouseholdMemberSnapshot implements EntitySnapshot {
     return this._id.value();
   }
 
-  toPojo() {
-    return {
-      id: this._id.value(),
-      userId: this.userId.value(),
-      lastName: this.lastName.value(),
-      firstName: this.firstName.value(),
-      email: this.email.value(),
-    };
+  userId(): string {
+    return this._userId.value();
+  }
+
+  lastName(): string {
+    return this._lastName.value();
+  }
+
+  firstName(): string {
+    return this._firstName.value();
+  }
+
+  email(): string {
+    return this._email.value();
   }
 }
