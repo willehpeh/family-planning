@@ -1,11 +1,6 @@
-import {
-  HouseholdCommandRepository,
-  TodoListsCommandRepository,
-  TodoListsQueryRepository
-} from '@family-planning/domain';
+/**
+ * Marker interface for UoW repository providers
+  */
+// eslint-disable-next-line @typescript-eslint/no-empty-interface
+export interface RepositoryProvider {}
 
-export interface RepositoryProvider {
-  todoListsCommandRepository(): TodoListsCommandRepository;
-  todoListsQueryRepository(): TodoListsQueryRepository;
-  householdCommandRepository(): HouseholdCommandRepository;
-}
