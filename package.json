@@ -72,6 +72,7 @@
     "@swc/helpers": "~0.5.11",
     "@types/cookie-parser": "^1.4.7",
     "@types/jest": "^29.5.12",
+    "@types/jsonwebtoken": "^9.0.7",
     "@types/node": "~18.16.9",
     "@typescript-eslint/utils": "^8.0.0",
     "angular-eslint": "^18.3.0",

@@ -1,4 +1,4 @@
-import { Module } from "@nestjs/common";
+import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
 
 import { AppController } from "./app.controller";
 import { AppService } from "./app.service";
@@ -7,6 +7,7 @@ import { TypeOrmModule } from "@nestjs/typeorm";
 import { ListsModule } from "./lists/lists.module";
 import { CqrsModule } from "@nestjs/cqrs";
 import { AuthModule } from "./auth/auth.module";
+import { CookieMiddleware } from './middleware/cookie.middleware';
 
 const isDevEnvironment = process.env.APP_ENV === "development";
 
@@ -32,4 +33,8 @@ const isDevEnvironment = process.env.APP_ENV === "development";
   controllers: [AppController],
   providers: [AppService],
 })
-export class AppModule {}
+export class AppModule implements NestModule {
+  configure(consumer: MiddlewareConsumer): void {
+    consumer.apply(CookieMiddleware).forRoutes("*");
+  }
+}
