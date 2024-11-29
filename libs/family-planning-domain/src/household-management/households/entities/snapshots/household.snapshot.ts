@@ -1,16 +1,12 @@
 import { EntitySnapshot } from '../../../../common';
-import { HouseholdId, HouseholdName } from '../../value-objects';
-import { HouseholdMember } from '../household-member';
-import { HouseholdMemberSnapshot } from './household-member.snapshot';
+import { HouseholdId, HouseholdMemberId, HouseholdName } from '../../value-objects';
 
 export class HouseholdSnapshot implements EntitySnapshot {
 
-  private readonly _members: HouseholdMemberSnapshot[];
 
   constructor(private readonly _id: HouseholdId,
               private readonly _name: HouseholdName,
-              members: HouseholdMember[]) {
-    this._members = members.map(member => member.snapshot());
+              private readonly _memberIds: HouseholdMemberId[]) {
   }
 
   id(): string {
@@ -21,7 +17,7 @@ export class HouseholdSnapshot implements EntitySnapshot {
     return this._name.value();
   }
 
-  members(): HouseholdMemberSnapshot[] {
-    return this._members;
+  memberIds(): HouseholdMemberId[] {
+    return this._memberIds;
   }
 }
