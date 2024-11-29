@@ -1,1 +1,1 @@
-export * from './type-orm/lists';
+export * from './type-orm/household-management';
