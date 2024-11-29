@@ -8,6 +8,7 @@ import { ListsModule } from "./lists/lists.module";
 import { CqrsModule } from "@nestjs/cqrs";
 import { AuthModule } from "./auth/auth.module";
 import { UserIdMiddleware } from './middleware/user-id.middleware';
+import { HouseholdsModule } from './households/households.module';
 
 const isDevEnvironment = process.env.APP_ENV === "development";
 
@@ -29,6 +30,7 @@ const isDevEnvironment = process.env.APP_ENV === "development";
     CqrsModule.forRoot(),
     ListsModule,
     AuthModule,
+    HouseholdsModule
   ],
   controllers: [AppController],
   providers: [AppService],

@@ -15,6 +15,6 @@ import { HouseholdUnitOfWork } from '@family-planning/application';
   providers: [
     { provide: HouseholdUnitOfWork, useClass: OrmHouseholdUnitOfWork }
   ],
-  exports: [OrmHouseholdUnitOfWork]
+  exports: [HouseholdUnitOfWork]
 })
 export class TypeOrmHouseholdsPersistenceModule {}

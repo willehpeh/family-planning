@@ -8,6 +8,6 @@ export class Household {
   @Column()
   name: string;
 
-  @Column()
+  @Column('jsonb')
   memberIds: string[];
 }
