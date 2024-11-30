@@ -1,17 +1,16 @@
 import { IQueryHandler, QueryHandler } from '@nestjs/cqrs';
 import { FindHouseholdForUserIdQuery } from './find-household-for-user-id.query';
-import { HouseholdRepository, HouseholdReadModel } from '@family-planning/domain';
+import { HouseholdRepository, HouseholdReadModel, HouseholdMemberRepository } from '@family-planning/domain';
 
 @QueryHandler(FindHouseholdForUserIdQuery)
 export class FindHouseholdForUserIdQueryHandler implements IQueryHandler<FindHouseholdForUserIdQuery> {
 
-  constructor(private readonly householdRepository: HouseholdRepository) {
+  constructor(private readonly householdRepository: HouseholdRepository,
+              private readonly householdMemberRepository: HouseholdMemberRepository) {
   }
 
-  execute({ userId }: FindHouseholdForUserIdQuery): Promise<HouseholdReadModel> {
-    return Promise.resolve({
-      id: '123',
-      name: 'My household',
-    });
+  async execute({ userId }: FindHouseholdForUserIdQuery): Promise<HouseholdReadModel> {
+    const householdMember = await this.householdMemberRepository.findByUserId(userId);
+    return this.householdRepository.findByMemberId(householdMember.id);
   }
 }
