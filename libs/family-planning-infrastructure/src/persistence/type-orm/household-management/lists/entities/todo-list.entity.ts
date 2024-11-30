@@ -11,4 +11,7 @@ export class TodoList {
 
   @OneToMany(() => TodoListItem, (item) => item.list, { cascade: true, eager: true })
   items: TodoListItem[];
+
+  @Column()
+  householdId: string;
 }

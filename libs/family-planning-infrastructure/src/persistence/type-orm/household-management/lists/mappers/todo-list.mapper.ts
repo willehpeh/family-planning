@@ -1,5 +1,6 @@
 import { TodoList as TodoListEntity } from '../entities/todo-list.entity';
 import {
+  HouseholdId,
   TodoList,
   TodoListId,
   TodoListItemId,
@@ -22,6 +23,7 @@ export class TodoListMapper {
       itemEntity.name = item.name();
       return itemEntity;
     });
+    entity.householdId = snapshot.householdId();
     return entity;
   }
 
@@ -33,7 +35,8 @@ export class TodoListMapper {
       const itemName = new TodoListItemName(item.name);
       return new TodoListItemSnapshot(itemId, itemName);
     });
-    const snapshot = new TodoListSnapshot(id, name, items);
+    const householdId = HouseholdId.fromString(entity.householdId);
+    const snapshot = new TodoListSnapshot(id, name, items, householdId);
     return TodoList.fromSnapshot(snapshot);
   }
 }
