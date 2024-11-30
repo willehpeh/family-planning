@@ -2,17 +2,19 @@ import { TodoListId, TodoListItemId, TodoListItemName, TodoListName } from '../v
 import { TodoListSnapshot } from './snapshots';
 import { Entity } from '../../../../common';
 import { TodoListItem } from './todo-list-item';
+import { HouseholdId } from '../../../households';
 
 export class TodoList implements Entity<TodoListSnapshot> {
 
   private _items: TodoListItem[] = [];
 
   constructor(private readonly _id: TodoListId,
-              private _name: TodoListName) {
+              private _name: TodoListName,
+              private readonly householdId: HouseholdId) {
   }
 
   snapshot(): TodoListSnapshot {
-    return new TodoListSnapshot(this._id, this._name, this._items.map(item => item.snapshot()));
+    return new TodoListSnapshot(this._id, this._name, this._items.map(item => item.snapshot()), this.householdId);
   }
 
   addNewItem(itemName: string): void {
@@ -27,7 +29,7 @@ export class TodoList implements Entity<TodoListSnapshot> {
   }
 
   static fromSnapshot(snapshot: TodoListSnapshot): TodoList {
-    const list = new TodoList(TodoListId.fromString(snapshot.id()), new TodoListName(snapshot.name()));
+    const list = new TodoList(TodoListId.fromString(snapshot.id()), new TodoListName(snapshot.name()), HouseholdId.fromString(snapshot.householdId()));
     list._items = snapshot.items().map(itemSnapshot => TodoListItem.fromSnapshot(itemSnapshot));
     return list;
   }

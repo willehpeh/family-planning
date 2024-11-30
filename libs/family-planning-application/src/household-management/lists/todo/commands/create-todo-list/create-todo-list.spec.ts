@@ -2,19 +2,22 @@ import { CreateTodoListCommandHandler } from './index';
 import { InMemoryTodoListsCommandRepository } from '../../test-fixtures';
 import { CreateTodoListCommand } from './create-todo-list.command';
 import { CreateTodoListDto } from './create-todo-list.dto';
+import { HouseholdId } from '@family-planning/domain';
 
 describe('Create todo list', () => {
   let createTodoListCommandHandler: CreateTodoListCommandHandler;
   let inMemoryTodoListsRepository: InMemoryTodoListsCommandRepository;
   let command: CreateTodoListCommand;
   let dto: CreateTodoListDto;
+  let householdId: string;
 
   beforeEach(() => {
     inMemoryTodoListsRepository = new InMemoryTodoListsCommandRepository();
     createTodoListCommandHandler = new CreateTodoListCommandHandler(inMemoryTodoListsRepository);
 
     dto = { name: 'My List' };
-    command = new CreateTodoListCommand(dto);
+    householdId = HouseholdId.new().value();
+    command = new CreateTodoListCommand(dto, householdId);
     createTodoListCommandHandler.execute(command);
   });
 
