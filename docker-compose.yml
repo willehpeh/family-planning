@@ -45,7 +45,7 @@ services:
       - POSTGRES_DB
     volumes:
       - db:/var/lib/postgresql/data
-      - enable-rls.sql:/docker-entrypoint-initdb.d/enable-rls.sql
+      - ./enable-rls.sql:/docker-entrypoint-initdb.d/enable-rls.sql
   keycloak:
     image: quay.io/keycloak/keycloak:26.0.5
     container_name: keycloak
