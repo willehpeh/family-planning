@@ -65,5 +65,10 @@ describe('CreateNewHouseholdCommand', () => {
     expect(inMemoryHouseholdMemberRepository.members()[0].email()).toBe(dto.creatingMember.email);
   });
 
+  it('should create a new member with the provided household ID', async () => {
+    await handler.execute(command);
+    expect(inMemoryHouseholdMemberRepository.members()[0].householdId()).toBe(inMemoryHouseholdRepository.households()[0].id());
+  });
+
 });
 
