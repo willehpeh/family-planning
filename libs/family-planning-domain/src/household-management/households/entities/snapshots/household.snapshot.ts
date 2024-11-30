@@ -17,7 +17,7 @@ export class HouseholdSnapshot implements EntitySnapshot {
     return this._name.value();
   }
 
-  memberIds(): HouseholdMemberId[] {
-    return this._memberIds;
+  memberIds(): string[] {
+    return this._memberIds.map(id => id.value());
   }
 }

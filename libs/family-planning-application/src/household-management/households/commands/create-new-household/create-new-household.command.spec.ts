@@ -70,5 +70,10 @@ describe('CreateNewHouseholdCommand', () => {
     expect(inMemoryHouseholdMemberRepository.members()[0].householdId()).toBe(inMemoryHouseholdRepository.households()[0].id());
   });
 
+  it('should add the new member ID to the household', async () => {
+    await handler.execute(command);
+    expect(inMemoryHouseholdRepository.households()[0].memberIds()).toEqual([inMemoryHouseholdMemberRepository.members()[0].id()]);
+  });
+
 });
 
