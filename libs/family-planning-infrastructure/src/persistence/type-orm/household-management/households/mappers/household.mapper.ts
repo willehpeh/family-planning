@@ -7,7 +7,7 @@ export class HouseholdMapper {
     return {
       id: snapshot.id(),
       name: snapshot.name(),
-      memberIds: snapshot.memberIds().map(id => id.value()),
+      memberIds: snapshot.memberIds(),
     };
   }
 
