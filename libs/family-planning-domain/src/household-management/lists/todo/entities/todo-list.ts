@@ -25,7 +25,7 @@ export class TodoList implements Entity<TodoListSnapshot> {
   private createItem(itemName: string): TodoListItem {
     const id = TodoListItemId.new();
     const name = new TodoListItemName(itemName);
-    return new TodoListItem(id, name);
+    return new TodoListItem(id, name, this.householdId);
   }
 
   static fromSnapshot(snapshot: TodoListSnapshot): TodoList {

@@ -21,6 +21,7 @@ export class TodoListMapper {
       const itemEntity = new TodoListItemEntity();
       itemEntity.id = item.id();
       itemEntity.name = item.name();
+      itemEntity.householdId = item.householdId();
       return itemEntity;
     });
     entity.householdId = snapshot.householdId();
@@ -30,12 +31,12 @@ export class TodoListMapper {
   static toDomain(entity: TodoListEntity): TodoList {
     const id = TodoListId.fromString(entity.id);
     const name = new TodoListName(entity.name);
+    const householdId = HouseholdId.fromString(entity.householdId);
     const items = entity.items.map(item => {
       const itemId = TodoListItemId.fromString(item.id);
       const itemName = new TodoListItemName(item.name);
-      return new TodoListItemSnapshot(itemId, itemName);
+      return new TodoListItemSnapshot(itemId, itemName, householdId);
     });
-    const householdId = HouseholdId.fromString(entity.householdId);
     const snapshot = new TodoListSnapshot(id, name, items, householdId);
     return TodoList.fromSnapshot(snapshot);
   }

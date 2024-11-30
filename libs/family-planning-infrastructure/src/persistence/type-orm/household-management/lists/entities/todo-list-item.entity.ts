@@ -11,4 +11,7 @@ export class TodoListItem {
 
   @ManyToOne(() => TodoList, (list) => list.items)
   list: TodoList;
+
+  @Column()
+  householdId: string;
 }
