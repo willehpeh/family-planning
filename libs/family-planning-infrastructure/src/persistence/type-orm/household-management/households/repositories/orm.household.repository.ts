@@ -1,9 +1,9 @@
-import { Household, HouseholdCommandRepository } from '@family-planning/domain';
+import { Household, HouseholdRepository } from '@family-planning/domain';
 import { Household as HouseholdEntity } from '../entities/household.entity';
 import { Repository } from 'typeorm';
 import { HouseholdMapper } from '../mappers/household.mapper';
 
-export class OrmHouseholdCommandRepository implements HouseholdCommandRepository {
+export class OrmHouseholdRepository implements HouseholdRepository {
 
   constructor(private readonly householdRepository: Repository<HouseholdEntity>) {}
 

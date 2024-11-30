@@ -1,10 +1,10 @@
 import { HouseholdRepositoryProvider, HouseholdUnitOfWork } from '../providers';
-import { InMemoryHouseholdCommandRepository } from './in-memory.household.command-repository';
+import { InMemoryHouseholdRepository } from './in-memory.household.repository';
 import { InMemoryHouseholdMemberRepository } from './in-memory.household-member.repository';
 
 export class InMemoryUnitOfWork implements HouseholdUnitOfWork {
 
-  constructor(private householdCommandRepository: InMemoryHouseholdCommandRepository,
+  constructor(private householdCommandRepository: InMemoryHouseholdRepository,
               private householdMemberRepository: InMemoryHouseholdMemberRepository) {
   }
 

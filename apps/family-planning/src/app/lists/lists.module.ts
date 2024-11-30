@@ -22,4 +22,5 @@ import { ListsController } from './lists.controller';
     ListsService,
   ]
 })
-export class ListsModule {}
+export class ListsModule {
+}

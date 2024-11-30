@@ -1,6 +1,6 @@
-import { Household, HouseholdCommandRepository, HouseholdSnapshot } from '@family-planning/domain';
+import { Household, HouseholdRepository, HouseholdSnapshot } from '@family-planning/domain';
 
-export class InMemoryHouseholdCommandRepository implements HouseholdCommandRepository {
+export class InMemoryHouseholdRepository implements HouseholdRepository {
 
   private _households: HouseholdSnapshot[] = [];
 

@@ -1,7 +1,7 @@
 import { CreateNewHouseholdCommand } from './create-new-household.command';
 import { CreateNewHouseholdCommandHandler } from './create-new-household.command-handler';
 import {
-  InMemoryHouseholdCommandRepository,
+  InMemoryHouseholdRepository,
   InMemoryHouseholdMemberRepository,
   InMemoryUnitOfWork
 } from '../../test-fixtures';
@@ -10,13 +10,13 @@ import { CreateNewHouseholdDto } from './create-new-household.dto';
 describe('CreateNewHouseholdCommand', () => {
   let command: CreateNewHouseholdCommand;
   let handler: CreateNewHouseholdCommandHandler;
-  let inMemoryHouseholdRepository: InMemoryHouseholdCommandRepository;
+  let inMemoryHouseholdRepository: InMemoryHouseholdRepository;
   let inMemoryHouseholdMemberRepository: InMemoryHouseholdMemberRepository;
   let inMemoryUnitOfWork: InMemoryUnitOfWork;
   let dto: CreateNewHouseholdDto;
 
   beforeEach(() => {
-    inMemoryHouseholdRepository = new InMemoryHouseholdCommandRepository();
+    inMemoryHouseholdRepository = new InMemoryHouseholdRepository();
     inMemoryHouseholdMemberRepository = new InMemoryHouseholdMemberRepository();
     inMemoryUnitOfWork = new InMemoryUnitOfWork(
       inMemoryHouseholdRepository,

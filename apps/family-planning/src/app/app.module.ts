@@ -1,12 +1,12 @@
 import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
 
-import { AppController } from "./app.controller";
-import { AppService } from "./app.service";
-import { ConfigModule } from "@nestjs/config";
-import { TypeOrmModule } from "@nestjs/typeorm";
-import { ListsModule } from "./lists/lists.module";
-import { CqrsModule } from "@nestjs/cqrs";
-import { AuthModule } from "./auth/auth.module";
+import { AppController } from './app.controller';
+import { AppService } from './app.service';
+import { ConfigModule } from '@nestjs/config';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { ListsModule } from './lists/lists.module';
+import { CqrsModule } from '@nestjs/cqrs';
+import { AuthModule } from './auth/auth.module';
 import { UserIdMiddleware } from './middleware/user-id.middleware';
 import { HouseholdsModule } from './households/households.module';
 

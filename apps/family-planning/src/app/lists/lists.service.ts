@@ -20,7 +20,7 @@ export class ListsService {
   }
 
   async createTodoList(dto: CreateTodoListDto): Promise<void> {
-    return this.commandBus.execute(new CreateTodoListCommand(dto));
+    // return this.commandBus.execute(new CreateTodoListCommand(dto));
   }
 
   async addItemToTodoList(dto: AddItemToTodoListDto): Promise<void> {
