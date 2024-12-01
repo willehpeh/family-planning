@@ -23,8 +23,12 @@ export class AuthController {
 
   @Get('callback')
   async callback(@Req() req: Request, @Res() res: Response) {
-    const tokens = await this.authService.exchangeCodeForTokens(req);
-    this.setTokenCookies(res, tokens).redirect(this.configService.get('FRONTEND_URL'));
+    try {
+      const tokens = await this.authService.exchangeCodeForTokens(req);
+      this.setTokenCookies(res, tokens).redirect(this.configService.get('FRONTEND_URL'));
+    } catch {
+      res.redirect(this.authUrl);
+    }
   }
 
   @Get('login')
