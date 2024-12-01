@@ -8,24 +8,30 @@ import { HouseholdMemberRepository, HouseholdRepository } from '@family-planning
 import { OrmHouseholdRepository } from './repositories/orm.household.repository';
 import { OrmHouseholdMemberRepository } from './repositories/orm.household-member.repository';
 import { DataSource } from 'typeorm';
+import { HouseholdByUserIdView } from './view-entities/household-by-user-id.view-entity';
 
 @Module({
   imports: [
     TypeOrmModule.forFeature([
       Household,
-      HouseholdMember
+      HouseholdMember,
+      HouseholdByUserIdView
     ])
   ],
   providers: [
     { provide: HouseholdUnitOfWork, useClass: OrmHouseholdUnitOfWork },
     {
-      provide: HouseholdRepository,
-      useFactory: (dataSource: DataSource) => new OrmHouseholdRepository(dataSource.getRepository(Household)),
+      provide: HouseholdMemberRepository,
+      useFactory: (dataSource: DataSource) => new OrmHouseholdMemberRepository(dataSource.getRepository(HouseholdMember)),
       inject: [DataSource]
     },
     {
-      provide: HouseholdMemberRepository,
-      useFactory: (dataSource: DataSource) => new OrmHouseholdMemberRepository(dataSource.getRepository(HouseholdMember)),
+      provide: HouseholdRepository,
+      useFactory: (dataSource: DataSource) =>
+        new OrmHouseholdRepository(
+          dataSource.getRepository(Household),
+          dataSource.getRepository(HouseholdByUserIdView)
+        ),
       inject: [DataSource]
     },
   ],

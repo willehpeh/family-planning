@@ -4,4 +4,5 @@ import { HouseholdReadModel } from '../read-models';
 export abstract class HouseholdRepository {
   abstract save(household: Household): Promise<void>;
   abstract findByMemberId(id: string): Promise<HouseholdReadModel>;
+  abstract findByUserId(id: string): Promise<HouseholdReadModel>;
 }

@@ -2,10 +2,12 @@ import { Household, HouseholdReadModel, HouseholdRepository } from '@family-plan
 import { Household as HouseholdEntity } from '../entities/household.entity';
 import { Repository } from 'typeorm';
 import { HouseholdMapper } from '../mappers/household.mapper';
+import { HouseholdByUserIdView } from '../view-entities/household-by-user-id.view-entity';
 
 export class OrmHouseholdRepository implements HouseholdRepository {
 
-  constructor(private readonly householdRepository: Repository<HouseholdEntity>) {}
+  constructor(private readonly householdRepository: Repository<HouseholdEntity>,
+              private readonly householdByUserIdViewRepository: Repository<HouseholdByUserIdView>) {}
 
   async save(household: Household): Promise<void> {
     const entity = HouseholdMapper.toPersistence(household);
@@ -19,6 +21,8 @@ export class OrmHouseholdRepository implements HouseholdRepository {
       .getOneOrFail();
   }
 
-
+  async findByUserId(id: string): Promise<HouseholdReadModel> {
+    return this.householdByUserIdViewRepository.findOneOrFail({ where: { userId: id } });
+  }
 
 }

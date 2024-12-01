@@ -17,9 +17,9 @@ describe('FindHouseholdForUserIdQuery', () => {
   beforeEach(() => {
     userId = TEST_USER_ID.value();
     query = new FindHouseholdForUserIdQuery(userId);
-    householdRepository = new InMemoryHouseholdRepository().withSnapshots([TEST_HOUSEHOLD_SNAPSHOT]);
     householdMemberRepository = new InMemoryHouseholdMemberRepository().withSnapshots([TEST_HOUSEHOLD_MEMBER_SNAPSHOT]);
-    handler = new FindHouseholdForUserIdQueryHandler(householdRepository, householdMemberRepository);
+    householdRepository = new InMemoryHouseholdRepository(householdMemberRepository).withSnapshots([TEST_HOUSEHOLD_SNAPSHOT]);
+    handler = new FindHouseholdForUserIdQueryHandler(householdRepository);
   });
 
   it('should return the household for the given user ID', async () => {
