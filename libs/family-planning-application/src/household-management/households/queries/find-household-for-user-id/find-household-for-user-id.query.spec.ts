@@ -1,5 +1,5 @@
 import { FindHouseholdForUserIdQuery } from './find-household-for-user-id.query';
-import { FindHouseholdForUserIdQueryHandler } from './find-household-for-user-id-query.handler';
+import { FindHouseholdForUserIdQueryHandler } from './find-household-for-user-id.query-handler';
 import {
   InMemoryHouseholdMemberRepository,
   InMemoryHouseholdRepository,
