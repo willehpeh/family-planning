@@ -8,14 +8,14 @@ export class HouseholdsService {
               private readonly queryBus: QueryBus) {
   }
 
-  async createNewHousehold(name: string) {
+  async createNewHousehold(name: string, userId: string, lastName: string, firstName: string, email: string) {
     await this.commandBus.execute(new CreateNewHouseholdCommand({
       householdName: name,
       creatingMember: {
-        userId: '123',
-        firstName: 'John',
-        lastName: 'Doe',
-        email: 'john.doe@example.com'
+        userId,
+        firstName,
+        lastName,
+        email
       }
     }));
   }

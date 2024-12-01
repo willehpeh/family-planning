@@ -10,6 +10,9 @@ export class UserIdMiddleware implements NestMiddleware {
       try {
         const decoded = jwt.decode(accessToken);
         req['userId'] = decoded.sub;
+        req['userLastName'] = decoded['family_name'];
+        req['userFirstName'] = decoded['given_name'];
+        req['userEmail'] = decoded['email'];
       } catch {
         throw new UnauthorizedException();
       }

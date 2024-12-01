@@ -1,5 +1,6 @@
-import { Controller, Get } from '@nestjs/common';
+import { Controller, Get, Req } from '@nestjs/common';
 import { HouseholdsService } from './households.service';
+import { Request } from 'express';
 
 @Controller('households')
 export class HouseholdsController {
@@ -7,12 +8,18 @@ export class HouseholdsController {
   constructor(private readonly householdsService: HouseholdsService) {}
 
   @Get('new')
-  newHousehold() {
-    return this.householdsService.createNewHousehold('My Household');
+  newHousehold(@Req() req: Request) {
+    return this.householdsService.createNewHousehold(
+      'My Household',
+      req['userId'],
+      req['userLastName'],
+      req['userFirstName'],
+      req['userEmail']
+    );
   }
 
   @Get('me')
-  getMe() {
-    return this.householdsService.getMe('123');
+  getMe(@Req() req: Request) {
+    return this.householdsService.getMe(req['userId']);
   }
 }
