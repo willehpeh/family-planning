@@ -2,6 +2,6 @@ import { HouseholdRepository, HouseholdMemberRepository } from '@family-planning
 import { RepositoryProvider } from '../../../shared';
 
 export interface HouseholdRepositoryProvider extends RepositoryProvider {
-  householdCommandRepository(): HouseholdRepository;
+  householdRepository(): HouseholdRepository;
   householdMemberRepository(): HouseholdMemberRepository;
 }

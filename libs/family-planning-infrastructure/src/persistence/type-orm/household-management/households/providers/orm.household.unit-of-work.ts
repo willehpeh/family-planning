@@ -14,7 +14,7 @@ export class OrmHouseholdUnitOfWork implements HouseholdUnitOfWork {
   transaction<T>(operation: (repositories: HouseholdRepositoryProvider) => Promise<T>): Promise<T> {
     return this.dataSource.transaction(async (transactionalEntityManager) => {
       const repositories: HouseholdRepositoryProvider = {
-        householdCommandRepository: () => new OrmHouseholdRepository(
+        householdRepository: () => new OrmHouseholdRepository(
           transactionalEntityManager.getRepository(HouseholdEntity),
           transactionalEntityManager.getRepository(HouseholdByUserIdView)
         ),
