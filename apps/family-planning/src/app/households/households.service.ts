@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { CommandBus, QueryBus } from '@nestjs/cqrs';
 import { CreateNewHouseholdCommand, FindHouseholdForUserIdQuery } from '@family-planning/application';
 import { HouseholdReadModel } from '@family-planning/domain';
@@ -21,11 +21,7 @@ export class HouseholdsService {
     }));
   }
 
-  getHouseholdForUserId(id: string): Promise<HouseholdReadModel> {
-    const household = this.queryBus.execute(new FindHouseholdForUserIdQuery(id));
-    if (!household) {
-      throw new NotFoundException('No household found for user');
-    }
-    return household;
+  getHouseholdForUserId(id: string): Promise<HouseholdReadModel | null> {
+    return this.queryBus.execute(new FindHouseholdForUserIdQuery(id));
   }
 }
