@@ -35,6 +35,9 @@ export class InMemoryHouseholdRepository implements HouseholdRepository {
 
   async findByUserId(id: string): Promise<HouseholdReadModel> {
     const member = await this.householdMemberRepository.findByUserId(id);
+    if (!member) {
+      throw new Error('Member not found');
+    }
     const household = this._households.find(household => household.memberIds().includes(member.id));
     if (!household) {
       throw new Error('Household not found');

@@ -5,8 +5,7 @@ import { HouseholdReadModel, HouseholdRepository } from '@family-planning/domain
 @QueryHandler(FindHouseholdForUserIdQuery)
 export class FindHouseholdForUserIdQueryHandler implements IQueryHandler<FindHouseholdForUserIdQuery> {
 
-  constructor(private readonly householdRepository: HouseholdRepository) {
-  }
+  constructor(private readonly householdRepository: HouseholdRepository) {}
 
   async execute({ userId }: FindHouseholdForUserIdQuery): Promise<HouseholdReadModel | null> {
     return this.householdRepository.findByUserId(userId);

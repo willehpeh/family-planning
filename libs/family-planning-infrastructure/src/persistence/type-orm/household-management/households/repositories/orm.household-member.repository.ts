@@ -12,7 +12,7 @@ export class OrmHouseholdMemberRepository implements HouseholdMemberRepository {
     await this.householdMemberRepository.save(entity);
   }
 
-  async findByUserId(userId: string): Promise<HouseholdMemberReadModel> {
-    return this.householdMemberRepository.findOneOrFail({ where: { userId } });
+  async findByUserId(userId: string): Promise<HouseholdMemberReadModel | null> {
+    return this.householdMemberRepository.findOne({ where: { userId } });
   }
 }

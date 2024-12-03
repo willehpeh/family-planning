@@ -17,6 +17,10 @@ export const appRoutes: Route[] = [
       provideEffects(ListsEffects)
     ],
     loadChildren: () => import('./lists/lists.routes').then(m => m.listRoutes) },
+  { path: 'households',
+    canActivate: [AuthGuard],
+    loadChildren: () => import('./households/households.routes').then(m => m.householdsRoutes)
+  },
   { path: '', redirectTo: 'disclaimer', pathMatch: 'full' },
   { path: '**', redirectTo: 'disclaimer' }
 ];
