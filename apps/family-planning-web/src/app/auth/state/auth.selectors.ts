@@ -7,3 +7,8 @@ export const selectAuthenticated = createSelector(
   selectAuthState,
   (state: AuthState) => state.authenticated
 );
+
+export const selectHouseholdName = createSelector(
+  selectAuthState,
+  (state: AuthState) => state.householdName ?? ''
+);
