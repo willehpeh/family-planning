@@ -20,6 +20,7 @@ export class TenantMiddleware implements NestMiddleware {
       throw new UnauthorizedException();
     }
     const householdId = household.id;
+    req['householdId'] = householdId;
     await this.dataSource.query(`SET app.tenant_id = '${householdId}'`);
     next();
   }

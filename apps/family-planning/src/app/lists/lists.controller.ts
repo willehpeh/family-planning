@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Post } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, Req } from '@nestjs/common';
 import { AddItemToTodoListDto, CreateTodoListDto, ItemDetails } from '@family-planning/application';
 import { ListsService } from './lists.service';
 
@@ -13,8 +13,8 @@ export class ListsController {
   }
 
   @Post('todo')
-  createTodoList(@Body() createTodoListDto: CreateTodoListDto) {
-    return this.listsService.createTodoList(createTodoListDto);
+  createTodoList(@Body() createTodoListDto: CreateTodoListDto, @Req() { householdId }: { householdId: string }) {
+    return this.listsService.createTodoList(createTodoListDto, householdId);
   }
 
   @Post('todo/:id/add-item')

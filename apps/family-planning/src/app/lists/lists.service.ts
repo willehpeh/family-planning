@@ -19,8 +19,8 @@ export class ListsService {
     return this.queryBus.execute(new FindAllListsQuery());
   }
 
-  async createTodoList(dto: CreateTodoListDto): Promise<void> {
-    // return this.commandBus.execute(new CreateTodoListCommand(dto));
+  async createTodoList(dto: CreateTodoListDto, householdId: string): Promise<void> {
+    return this.commandBus.execute(new CreateTodoListCommand(dto, householdId));
   }
 
   async addItemToTodoList(dto: AddItemToTodoListDto): Promise<void> {
