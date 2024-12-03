@@ -20,6 +20,6 @@ export class HouseholdsController {
 
   @Get('me')
   getMe(@Req() req: Request) {
-    return this.householdsService.getMe(req['userId']);
+    return this.householdsService.getHouseholdForUserId(req['userId']);
   }
 }
