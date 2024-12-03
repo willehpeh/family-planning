@@ -1,4 +1,4 @@
-import { Injectable, NestMiddleware } from '@nestjs/common';
+import { Injectable, NestMiddleware, UnauthorizedException } from '@nestjs/common';
 import { Request, Response, NextFunction } from 'express';
 import { DataSource } from 'typeorm';
 import { QueryBus } from '@nestjs/cqrs';
@@ -12,7 +12,13 @@ export class TenantMiddleware implements NestMiddleware {
 
   async use(req: Request, res: Response, next: NextFunction) {
     const userId = req['userId'];
+    if (!userId) {
+      throw new UnauthorizedException();
+    }
     const household: HouseholdReadModel = await this.queryBus.execute(new FindHouseholdForUserIdQuery(userId));
+    if (!household) {
+      throw new UnauthorizedException();
+    }
     const householdId = household.id;
     await this.dataSource.query(`SET app.tenant_id = '${householdId}'`);
     next();
