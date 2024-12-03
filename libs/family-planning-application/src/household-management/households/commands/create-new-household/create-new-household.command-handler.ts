@@ -1,7 +1,8 @@
 import {
   Email,
   FirstName,
-  Household, HouseholdId,
+  Household,
+  HouseholdId,
   HouseholdMember,
   HouseholdMemberId,
   HouseholdName,
@@ -12,17 +13,12 @@ import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
 import { CreateNewHouseholdCommand } from './create-new-household.command';
 import { HouseholdUnitOfWork } from '../../providers';
 import { CreatingMemberDetails } from './creating-member-details';
-import { UserAlreadyHasHouseholdException } from '../../exceptions/user-already-has-household.exception';
 
 @CommandHandler(CreateNewHouseholdCommand)
 export class CreateNewHouseholdCommandHandler implements ICommandHandler<CreateNewHouseholdCommand>{
   constructor(private readonly unitOfWork: HouseholdUnitOfWork) {}
 
   async execute(command: CreateNewHouseholdCommand): Promise<void> {
-    const alreadyExists = await this.userAlreadyHasHousehold(command);
-    if (alreadyExists) {
-      throw new UserAlreadyHasHouseholdException();
-    }
     await this.unitOfWork.transaction(async (repositories) => {
       const creatingMemberId = HouseholdMemberId.new();
       const householdId = HouseholdId.new();
@@ -36,13 +32,6 @@ export class CreateNewHouseholdCommandHandler implements ICommandHandler<CreateN
   private createHousehold(householdNameRaw: string, householdId: HouseholdId, creatingMemberId: HouseholdMemberId) {
     const householdName = new HouseholdName(householdNameRaw);
     return new Household(householdId, householdName, [creatingMemberId]);
-  }
-
-  private userAlreadyHasHousehold(command: CreateNewHouseholdCommand) {
-    return this.unitOfWork.transaction(async (repositories) => {
-      const member = await repositories.householdMemberRepository().findByUserId(command.dto.creatingMember.userId);
-      return !!member;
-    });
   }
 
   private createMember(householdId: HouseholdId, id: HouseholdMemberId, details: CreatingMemberDetails): HouseholdMember {

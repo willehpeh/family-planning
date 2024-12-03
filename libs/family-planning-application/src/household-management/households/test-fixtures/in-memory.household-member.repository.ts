@@ -28,6 +28,7 @@ export class InMemoryHouseholdMemberRepository implements HouseholdMemberReposit
       firstName: memberWithUserId.firstName(),
       lastName: memberWithUserId.lastName(),
       email: memberWithUserId.email(),
+      householdId: memberWithUserId.householdId()
     });
   }
 

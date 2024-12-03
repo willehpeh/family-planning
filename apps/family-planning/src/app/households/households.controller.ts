@@ -1,4 +1,4 @@
-import { Controller, Get, Req } from '@nestjs/common';
+import { Body, Controller, Get, Post, Req } from '@nestjs/common';
 import { HouseholdsService } from './households.service';
 import { Request } from 'express';
 
@@ -7,10 +7,10 @@ export class HouseholdsController {
 
   constructor(private readonly householdsService: HouseholdsService) {}
 
-  @Get('new')
-  newHousehold(@Req() req: Request) {
+  @Post('new')
+  newHousehold(@Req() req: Request, @Body('householdName') householdName: string) {
     return this.householdsService.createNewHousehold(
-      'My Household',
+      householdName,
       req['userId'],
       req['userLastName'],
       req['userFirstName'],

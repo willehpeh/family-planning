@@ -1,10 +1,11 @@
-import { Column, Entity, PrimaryColumn } from 'typeorm';
+import { Column, Entity, Index, PrimaryColumn } from 'typeorm';
 
 @Entity()
 export class HouseholdMember {
   @PrimaryColumn()
   id: string;
 
+  @Index({ unique: true })
   @Column()
   userId: string;
 

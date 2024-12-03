@@ -27,12 +27,12 @@ import { HouseholdByUserIdView } from './view-entities/household-by-user-id.view
     },
     {
       provide: HouseholdRepository,
-      useFactory: (dataSource: DataSource) =>
+      useFactory: (dataSource: DataSource, householdMemberRepository: HouseholdMemberRepository) =>
         new OrmHouseholdRepository(
           dataSource.getRepository(Household),
-          dataSource.getRepository(HouseholdByUserIdView)
+          householdMemberRepository
         ),
-      inject: [DataSource]
+      inject: [DataSource, HouseholdMemberRepository]
     },
   ],
   exports: [

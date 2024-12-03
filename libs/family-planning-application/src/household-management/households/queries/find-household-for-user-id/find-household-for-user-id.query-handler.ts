@@ -8,7 +8,7 @@ export class FindHouseholdForUserIdQueryHandler implements IQueryHandler<FindHou
   constructor(private readonly householdRepository: HouseholdRepository) {
   }
 
-  async execute({ userId }: FindHouseholdForUserIdQuery): Promise<HouseholdReadModel> {
+  async execute({ userId }: FindHouseholdForUserIdQuery): Promise<HouseholdReadModel | null> {
     return this.householdRepository.findByUserId(userId);
   }
 }

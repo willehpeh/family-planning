@@ -5,7 +5,6 @@ import { Household as HouseholdEntity } from '../entities/household.entity';
 import { HouseholdMember as HouseholdMemberEntity } from '../entities/household-member.entity';
 import { OrmHouseholdMemberRepository } from '../repositories/orm.household-member.repository';
 import { Injectable } from '@nestjs/common';
-import { HouseholdByUserIdView } from '../view-entities/household-by-user-id.view-entity';
 
 @Injectable()
 export class OrmHouseholdUnitOfWork implements HouseholdUnitOfWork {
@@ -13,14 +12,16 @@ export class OrmHouseholdUnitOfWork implements HouseholdUnitOfWork {
 
   transaction<T>(operation: (repositories: HouseholdRepositoryProvider) => Promise<T>): Promise<T> {
     return this.dataSource.transaction(async (transactionalEntityManager) => {
+      const householdMemberReposotiry = new OrmHouseholdMemberRepository(
+        transactionalEntityManager.getRepository(HouseholdMemberEntity)
+      );
+      const householdRepository = new OrmHouseholdRepository(
+        transactionalEntityManager.getRepository(HouseholdEntity),
+        householdMemberReposotiry
+      );
       const repositories: HouseholdRepositoryProvider = {
-        householdRepository: () => new OrmHouseholdRepository(
-          transactionalEntityManager.getRepository(HouseholdEntity),
-          transactionalEntityManager.getRepository(HouseholdByUserIdView)
-        ),
-        householdMemberRepository: () => new OrmHouseholdMemberRepository(
-          transactionalEntityManager.getRepository(HouseholdMemberEntity)
-        )
+        householdRepository: () => householdRepository,
+        householdMemberRepository: () => householdMemberReposotiry
       };
       return operation(repositories);
     });

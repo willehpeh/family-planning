@@ -3,7 +3,8 @@ import { FindHouseholdForUserIdQueryHandler } from './find-household-for-user-id
 import {
   InMemoryHouseholdMemberRepository,
   InMemoryHouseholdRepository,
-  TEST_HOUSEHOLD_ID, TEST_HOUSEHOLD_MEMBER_SNAPSHOT, TEST_HOUSEHOLD_NAME, TEST_HOUSEHOLD_SNAPSHOT,
+  TEST_HOUSEHOLD_MEMBER_SNAPSHOT,
+  TEST_HOUSEHOLD_SNAPSHOT,
   TEST_USER_ID
 } from '../../test-fixtures';
 
@@ -22,9 +23,22 @@ describe('FindHouseholdForUserIdQuery', () => {
     handler = new FindHouseholdForUserIdQueryHandler(householdRepository);
   });
 
-  it('should return the household for the given user ID', async () => {
-    const household = await handler.execute(query);
-    expect(household.id).toBe(TEST_HOUSEHOLD_ID.value());
-    expect(household.name).toBe(TEST_HOUSEHOLD_NAME.value());
+  describe('Given the user already has a household', () => {
+
+    it('should return the household for the given user ID', async () => {
+      const household = await handler.execute(query);
+      expect(household).not.toBeNull();
+    });
+
+    it('should return the household with the correct id', async () => {
+      const household = await handler.execute(query);
+      expect(household?.id).toBe(TEST_HOUSEHOLD_SNAPSHOT.id());
+    });
+
+    it('should return the household with the correct name', async () => {
+      const household = await handler.execute(query);
+      expect(household?.name).toBe(TEST_HOUSEHOLD_SNAPSHOT.name());
+    });
   });
+
 });
