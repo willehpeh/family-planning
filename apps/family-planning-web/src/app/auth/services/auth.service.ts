@@ -17,10 +17,4 @@ export class AuthService {
       map(unknownUser => ({ user: unknownUser }))
     );
   }
-
-  loadHouseholdId(): Observable<{ householdId: string, householdName: string }> {
-    return this.http.get<{ id: string, name: string }>('/api/households/me').pipe(
-      map(({ id, name }) => ({ householdId: id, householdName: name }))
-    );
-  }
 }

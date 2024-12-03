@@ -1,15 +1,8 @@
 import { inject, Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { catchError, filter, map, of, switchMap } from 'rxjs';
-import {
-  LoadHouseholdInfo, LoadHouseholdInfoFailure,
-  LoadHouseholdInfoSuccess,
-  LoadUserInfo,
-  LoadUserInfoFailure,
-  LoadUserInfoSuccess
-} from './auth.actions';
+import { LoadUserInfo, LoadUserInfoFailure, LoadUserInfoSuccess } from './auth.actions';
 import { AuthService } from '../services/auth.service';
-import { Router } from '@angular/router';
 import { AcceptDisclaimer } from '../../state/disclaimer.actions';
 import { concatLatestFrom } from '@ngrx/operators';
 import { Store } from '@ngrx/store';
@@ -20,31 +13,7 @@ export class AuthEffects {
 
   private actions$ = inject(Actions);
   private authService = inject(AuthService);
-  private router = inject(Router);
   private store = inject(Store);
-
-  loadHouseholdIdOnLoadUserInfoSuccess$ = createEffect(() => this.actions$.pipe(
-    ofType(LoadUserInfoSuccess),
-    map(() => LoadHouseholdInfo())
-  ));
-
-  loadHouseholdInfo$ = createEffect(() => this.actions$.pipe(
-    ofType(LoadHouseholdInfo),
-    switchMap(() => this.authService.loadHouseholdId().pipe(
-      map(({ householdId, householdName }) => LoadHouseholdInfoSuccess({ householdId, householdName})),
-      catchError(() => of(LoadHouseholdInfoFailure()))
-    ))
-  ));
-
-  navigateToDashboardOnLoadHouseholdInfoSuccess$ = createEffect(() => this.actions$.pipe(
-    ofType(LoadHouseholdInfoSuccess),
-    map(() => this.router.navigate(['/dashboard']))
-  ), { dispatch: false });
-
-  navigateToNewHouseholdPageOnLoadHouseholdInfoFailure$ = createEffect(() => this.actions$.pipe(
-    ofType(LoadHouseholdInfoFailure),
-    map(() => this.router.navigate(['/new-household']))
-  ), { dispatch: false });
 
   loadUserInfo$ = createEffect(() => this.actions$.pipe(
     ofType(LoadUserInfo),

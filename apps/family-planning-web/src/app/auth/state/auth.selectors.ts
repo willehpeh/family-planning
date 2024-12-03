@@ -1,14 +1,9 @@
-import { AuthState, featureKey } from './auth.reducer';
+import { AuthState, authFeatureKey } from './auth.reducer';
 import { createFeatureSelector, createSelector } from '@ngrx/store';
 
-export const selectAuthState = createFeatureSelector<AuthState>(featureKey);
+export const selectAuthState = createFeatureSelector<AuthState>(authFeatureKey);
 
 export const selectAuthenticated = createSelector(
   selectAuthState,
   (state: AuthState) => state.authenticated
-);
-
-export const selectHouseholdName = createSelector(
-  selectAuthState,
-  (state: AuthState) => state.householdName ?? ''
 );
