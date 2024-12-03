@@ -25,6 +25,6 @@ import { TenantMiddleware } from '../middleware/tenant.middleware';
 })
 export class ListsModule implements NestModule {
   configure(consumer: MiddlewareConsumer): void {
-    consumer.apply(TenantMiddleware).forRoutes("lists/*");
+    consumer.apply(TenantMiddleware).forRoutes(ListsController);
   }
 }
