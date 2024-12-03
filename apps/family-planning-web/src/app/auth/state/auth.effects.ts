@@ -18,7 +18,7 @@ export class AuthEffects {
   loadUserInfo$ = createEffect(() => this.actions$.pipe(
     ofType(LoadUserInfo),
     switchMap(() => this.authService.loadUserInfo().pipe(
-      map(({ user }) => LoadUserInfoSuccess({ user })),
+      map(({ userInfo }) => LoadUserInfoSuccess({ userInfo })),
       catchError(() => of(LoadUserInfoFailure()))
     )),
   ));

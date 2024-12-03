@@ -1,19 +1,20 @@
 import { createReducer, on } from '@ngrx/store';
 import { LoadUserInfoSuccess } from './auth.actions';
+import { UserInfoDto } from '../types/user-info.dto';
 
 export const authFeatureKey = 'auth';
 
 export interface AuthState {
-  user: unknown;
+  userInfo: UserInfoDto | null;
   authenticated: boolean;
 }
 
 export const initialState: AuthState = {
-  user: null,
+  userInfo: null,
   authenticated: false,
 };
 
 export const authReducer = createReducer(
   initialState,
-  on(LoadUserInfoSuccess, (state, { user }): AuthState => ({ ...state, user, authenticated: true })),
+  on(LoadUserInfoSuccess, (state, { userInfo }): AuthState => ({ ...state, userInfo, authenticated: true })),
 );
