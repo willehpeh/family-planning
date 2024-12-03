@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
 import { TypeOrmListsPersistenceModule } from '@family-planning/infrastructure';
 import {
   AddItemToTodoListCommandHandler,
@@ -7,6 +7,7 @@ import {
 } from '@family-planning/application';
 import { ListsService } from './lists.service';
 import { ListsController } from './lists.controller';
+import { TenantMiddleware } from '../middleware/tenant.middleware';
 
 @Module({
   controllers: [
@@ -22,5 +23,8 @@ import { ListsController } from './lists.controller';
     ListsService,
   ]
 })
-export class ListsModule {
+export class ListsModule implements NestModule {
+  configure(consumer: MiddlewareConsumer): void {
+    consumer.apply(TenantMiddleware).forRoutes("*");
+  }
 }
