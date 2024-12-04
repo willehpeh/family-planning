@@ -45,5 +45,10 @@ export class HouseholdsEffects {
       map(() => CreateHouseholdSuccess()),
       catchError(() => of(CreateHouseholdFailure()))
     ))
-  ))
+  ));
+
+  redirectToDashboardOnCreateHouseholdSuccess$ = createEffect(() => this.actions$.pipe(
+    ofType(CreateHouseholdSuccess),
+    tap(() => this.householdsService.redirectToDashboard())
+  ), { dispatch: false });
 }

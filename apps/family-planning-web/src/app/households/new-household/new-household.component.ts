@@ -34,5 +34,6 @@ export class NewHouseholdComponent {
 
   onSubmitHouseholdName() {
     this.store.dispatch(CreateHousehold({ householdName: this.newHouseholdNameCtrl.value }));
+    this.newHouseholdNameCtrl.disable();
   }
 }
