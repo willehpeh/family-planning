@@ -1,6 +1,11 @@
 <app-card class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
-	<h2 class="text-2xl text-center">Welcome {{ userGivenName() }}!</h2>
-	<h2 class="text-xl text-center">Please choose a name for your household.</h2>
-	<input type="text" placeholder="Household name e.g. 'The Smiths'" class="bg-gray-900 p-3 w-full my-6"/>
-	<app-button>Let's go!</app-button>
+	<form>
+		<h2 class="text-2xl text-center">Welcome {{ userGivenName() }}!</h2>
+		<h2 class="text-xl text-center">Please choose a name for your household. It must be at least 5 characters long.</h2>
+		<input type="text"
+					 placeholder="Household name e.g. 'The Smiths'"
+					 [formControl]="newHouseholdNameCtrl"
+					 class="bg-gray-900 p-3 w-full my-6"/>
+		<app-button (click)="onSubmitHouseholdName()" [disabled]="formIsInvalid()">Let's go!</app-button>
+	</form>
 </app-card>

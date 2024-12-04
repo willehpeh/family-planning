@@ -1,22 +1,36 @@
 import { Component, inject, Signal } from '@angular/core';
-import { CommonModule } from "@angular/common";
+import { CommonModule } from '@angular/common';
 import { Store } from '@ngrx/store';
 import { selectUserGivenName } from '../../auth/state/auth.selectors';
 import { ButtonComponent } from '../../ui-elements/button/button.component';
 import { CardComponent } from '../../ui-elements/card/card.component';
+import { FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
+import { toSignal } from '@angular/core/rxjs-interop';
+import { map } from 'rxjs';
 
 @Component({
-  selector: "app-new-household",
+  selector: 'app-new-household',
   standalone: true,
-  imports: [CommonModule, ButtonComponent, CardComponent],
-  templateUrl: "./new-household.component.html",
-  styleUrl: "./new-household.component.scss",
+  imports: [CommonModule, ButtonComponent, CardComponent, ReactiveFormsModule],
+  templateUrl: './new-household.component.html',
+  styleUrl: './new-household.component.scss',
 })
 export class NewHouseholdComponent {
-  private store = inject(Store);
   userGivenName: Signal<string>;
+  formIsInvalid: Signal<boolean>;
+  newHouseholdNameCtrl = new FormControl<string>('', {
+    validators: [Validators.required, Validators.minLength(5)],
+  });
+  private store = inject(Store);
 
   constructor() {
     this.userGivenName = this.store.selectSignal(selectUserGivenName);
+    this.formIsInvalid = toSignal(this.newHouseholdNameCtrl.statusChanges.pipe(
+      map(status => status !== 'VALID'),
+    ), { initialValue: true });
+  }
+
+  onSubmitHouseholdName() {
+    //
   }
 }
