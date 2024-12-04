@@ -16,7 +16,7 @@ DO $$
                         'CREATE POLICY tenant_isolation_policy
                          ON %I
                          FOR ALL
-                         USING (householdId = current_setting(''app.tenant_id'')::uuid);',
+                         USING ("householdId" = current_setting(''app.tenant_id''));',
                         table_name
                         );
             END LOOP;

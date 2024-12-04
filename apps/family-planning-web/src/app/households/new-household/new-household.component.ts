@@ -7,6 +7,7 @@ import { CardComponent } from '../../ui-elements/card/card.component';
 import { FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { map } from 'rxjs';
+import { CreateHousehold } from '../state/households.actions';
 
 @Component({
   selector: 'app-new-household',
@@ -20,6 +21,7 @@ export class NewHouseholdComponent {
   formIsInvalid: Signal<boolean>;
   newHouseholdNameCtrl = new FormControl<string>('', {
     validators: [Validators.required, Validators.minLength(5)],
+    nonNullable: true,
   });
   private store = inject(Store);
 
@@ -31,6 +33,6 @@ export class NewHouseholdComponent {
   }
 
   onSubmitHouseholdName() {
-    //
+    this.store.dispatch(CreateHousehold({ householdName: this.newHouseholdNameCtrl.value }));
   }
 }

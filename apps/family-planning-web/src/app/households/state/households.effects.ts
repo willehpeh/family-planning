@@ -2,7 +2,13 @@ import { inject, Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { LoadUserInfoSuccess } from '../../auth/state/auth.actions';
 import { catchError, map, of, switchMap, tap } from 'rxjs';
-import { LoadHouseholdInfo, LoadHouseholdInfoFailure, LoadHouseholdInfoSuccess } from './households.actions';
+import {
+  CreateHousehold,
+  CreateHouseholdFailure, CreateHouseholdSuccess,
+  LoadHouseholdInfo,
+  LoadHouseholdInfoFailure,
+  LoadHouseholdInfoSuccess
+} from './households.actions';
 import { HouseholdsService } from '../services/households.service';
 
 @Injectable()
@@ -32,4 +38,12 @@ export class HouseholdsEffects {
     ofType(LoadHouseholdInfoFailure),
     tap(() => this.householdsService.redirectToHouseholdCreation())
   ), { dispatch: false });
+
+  createHousehold$ = createEffect(() => this.actions$.pipe(
+    ofType(CreateHousehold),
+    switchMap(({ householdName }) => this.householdsService.createHousehold(householdName).pipe(
+      map(() => CreateHouseholdSuccess()),
+      catchError(() => of(CreateHouseholdFailure()))
+    ))
+  ))
 }

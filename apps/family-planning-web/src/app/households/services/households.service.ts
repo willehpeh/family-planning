@@ -16,6 +16,10 @@ export class HouseholdsService {
     );
   }
 
+  createHousehold(householdName: string): Observable<void> {
+    return this.http.post<void>('/api/households/new', { householdName });
+  }
+
   redirectToHouseholdCreation(): void {
     this.router.navigate(['/households/new']);
   }
