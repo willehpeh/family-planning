@@ -47,8 +47,8 @@ export class HouseholdsEffects {
     ))
   ));
 
-  redirectToDashboardOnCreateHouseholdSuccess$ = createEffect(() => this.actions$.pipe(
+  loadHouseholdInfoOnCreateHouseholdSuccess$ = createEffect(() => this.actions$.pipe(
     ofType(CreateHouseholdSuccess),
-    tap(() => this.householdsService.redirectToDashboard())
-  ), { dispatch: false });
+    map(() => LoadHouseholdInfo())
+  ));
 }
