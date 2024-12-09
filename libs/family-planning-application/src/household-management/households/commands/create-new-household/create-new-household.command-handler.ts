@@ -20,13 +20,18 @@ export class CreateNewHouseholdCommandHandler implements ICommandHandler<CreateN
 
   async execute(command: CreateNewHouseholdCommand): Promise<void> {
     await this.unitOfWork.transaction(async (repositories) => {
-      const creatingMemberId = HouseholdMemberId.new();
-      const householdId = HouseholdId.new();
-      const creatingMember = this.createMember(householdId, creatingMemberId, command.dto.creatingMember);
-      const household = this.createHousehold(command.dto.householdName, householdId, creatingMemberId);
+      const { creatingMember, household } = this.createHouseholdAndMember(command);
       await repositories.householdRepository().save(household);
       await repositories.householdMemberRepository().save(creatingMember);
     });
+  }
+
+  private createHouseholdAndMember(command: CreateNewHouseholdCommand) {
+    const creatingMemberId = HouseholdMemberId.new();
+    const householdId = HouseholdId.new();
+    const creatingMember = this.createMember(householdId, creatingMemberId, command.dto.creatingMember);
+    const household = this.createHousehold(command.dto.householdName, householdId, creatingMemberId);
+    return { creatingMember, household };
   }
 
   private createHousehold(householdNameRaw: string, householdId: HouseholdId, creatingMemberId: HouseholdMemberId) {
