@@ -10,6 +10,10 @@ export class Household implements Entity<HouseholdSnapshot> {
   }
 
   snapshot(): HouseholdSnapshot {
-    return new HouseholdSnapshot(this._id, this._name, this._members);
+    return new HouseholdSnapshot({
+      id: this._id,
+      name: this._name,
+      memberIds: this._members,
+    });
   }
 }
