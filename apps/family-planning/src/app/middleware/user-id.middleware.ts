@@ -13,6 +13,7 @@ export class UserIdMiddleware implements NestMiddleware {
         req['userLastName'] = decoded['family_name'];
         req['userFirstName'] = decoded['given_name'];
         req['userEmail'] = decoded['email'];
+        req['username'] = decoded['preferred_username'];
       } catch {
         throw new UnauthorizedException();
       }
