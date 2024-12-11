@@ -6,7 +6,7 @@ export class Household implements Entity<HouseholdSnapshot> {
 
   constructor(private _id: HouseholdId,
               private _name: HouseholdName,
-              private _members: HouseholdMemberId[]) {
+              private _members: HouseholdMemberId[] = []) {
   }
 
   snapshot(): HouseholdSnapshot {
