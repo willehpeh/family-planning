@@ -3,12 +3,28 @@ import { Email, FirstName, HouseholdId, HouseholdMemberId, LastName } from '../.
 import { UserId } from '../../../../auth';
 
 export class HouseholdMemberSnapshot implements EntitySnapshot {
-  constructor(private readonly _id: HouseholdMemberId,
-              private readonly _userId: UserId,
-              private readonly _householdId: HouseholdId,
-              private readonly _lastName: LastName,
-              private readonly _firstName: FirstName, private readonly _email: Email) {
 
+  private readonly _id: HouseholdMemberId;
+  private readonly _userId: UserId;
+  private readonly _householdId: HouseholdId;
+  private readonly _lastName: LastName;
+  private readonly _firstName: FirstName;
+  private readonly _email: Email;
+
+  constructor(memberSnapshotProps: {
+    id: HouseholdMemberId;
+    userId: UserId;
+    householdId: HouseholdId;
+    lastName: LastName;
+    firstName: FirstName;
+    email: Email;
+  }) {
+    this._id = memberSnapshotProps.id;
+    this._userId = memberSnapshotProps.userId;
+    this._householdId = memberSnapshotProps.householdId;
+    this._lastName = memberSnapshotProps.lastName;
+    this._firstName = memberSnapshotProps.firstName;
+    this._email = memberSnapshotProps.email;
   }
 
   id(): string {

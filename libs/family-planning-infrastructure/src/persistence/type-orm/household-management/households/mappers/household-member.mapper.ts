@@ -23,13 +23,13 @@ export class HouseholdMemberMapper {
   }
 
   static toDomain(entity: HouseholdMemberEntity): HouseholdMember {
-    return new HouseholdMember(
-      HouseholdMemberId.fromString(entity.id),
-      new UserId(entity.userId),
-      HouseholdId.fromString(entity.householdId),
-      new LastName(entity.lastName),
-      new FirstName(entity.firstName),
-      new Email(entity.email),
-    );
+    return new HouseholdMember({
+      id: HouseholdMemberId.fromString(entity.id),
+      userId: new UserId(entity.userId),
+      householdId: HouseholdId.fromString(entity.householdId),
+      lastName: new LastName(entity.lastName),
+      firstName: new FirstName(entity.firstName),
+      email: new Email(entity.email),
+    });
   }
 }

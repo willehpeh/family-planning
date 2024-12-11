@@ -40,13 +40,13 @@ export class CreateNewHouseholdCommandHandler implements ICommandHandler<CreateN
   }
 
   private createMember(householdId: HouseholdId, id: HouseholdMemberId, details: CreatingMemberDetails): HouseholdMember {
-    return new HouseholdMember(
+    return new HouseholdMember({
       id,
-      new UserId(details.userId),
       householdId,
-      new LastName(details.lastName),
-      new FirstName(details.firstName),
-      new Email(details.email)
-    );
+      firstName: new FirstName(details.firstName),
+      lastName: new LastName(details.lastName),
+      email: new Email(details.email),
+      userId: new UserId(details.userId)
+    });
   }
 }

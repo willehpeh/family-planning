@@ -19,11 +19,11 @@ export const TEST_HOUSEHOLD_SNAPSHOT = new HouseholdSnapshot({
   memberIds: [TEST_HOUSEHOLD_MEMBER_ID]
 });
 
-export const TEST_HOUSEHOLD_MEMBER_SNAPSHOT = new HouseholdMemberSnapshot(
-  TEST_HOUSEHOLD_MEMBER_ID,
-  TEST_USER_ID,
-  TEST_HOUSEHOLD_ID,
-  new LastName('test-last-name'),
-  new FirstName('test-first-name'),
-  new Email('test-email'),
-);
+export const TEST_HOUSEHOLD_MEMBER_SNAPSHOT = new HouseholdMemberSnapshot({
+  id: TEST_HOUSEHOLD_MEMBER_ID,
+  userId: TEST_USER_ID,
+  householdId: TEST_HOUSEHOLD_ID,
+  lastName: new LastName('Test'),
+  firstName: new FirstName('Test'),
+  email: new Email('test@test.com')
+});
