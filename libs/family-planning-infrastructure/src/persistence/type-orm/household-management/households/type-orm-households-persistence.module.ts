@@ -4,9 +4,8 @@ import { OrmHouseholdMemberEntity } from './entities/household-member.entity';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { OrmHouseholdEntity } from './entities/household.entity';
 import { HouseholdUnitOfWork } from '@family-planning/application';
-import { HouseholdMemberRepository, HouseholdRepository } from '@family-planning/domain';
+import { HouseholdRepository } from '@family-planning/domain';
 import { OrmHouseholdRepository } from './repositories/orm.household.repository';
-import { OrmHouseholdMemberRepository } from './repositories/orm.household-member.repository';
 import { DataSource } from 'typeorm';
 import { HouseholdByUserIdView } from './view-entities/household-by-user-id.view-entity';
 
@@ -21,24 +20,17 @@ import { HouseholdByUserIdView } from './view-entities/household-by-user-id.view
   providers: [
     { provide: HouseholdUnitOfWork, useClass: OrmHouseholdUnitOfWork },
     {
-      provide: HouseholdMemberRepository,
-      useFactory: (dataSource: DataSource) => new OrmHouseholdMemberRepository(dataSource.getRepository(OrmHouseholdMemberEntity)),
-      inject: [DataSource]
-    },
-    {
       provide: HouseholdRepository,
-      useFactory: (dataSource: DataSource, householdMemberRepository: HouseholdMemberRepository) =>
+      useFactory: (dataSource: DataSource) =>
         new OrmHouseholdRepository(
-          dataSource.getRepository(OrmHouseholdEntity),
-          householdMemberRepository
+          dataSource.getRepository(OrmHouseholdEntity)
         ),
-      inject: [DataSource, HouseholdMemberRepository]
+      inject: [DataSource]
     },
   ],
   exports: [
     HouseholdUnitOfWork,
-    HouseholdRepository,
-    HouseholdMemberRepository
+    HouseholdRepository
   ]
 })
 export class TypeOrmHouseholdsPersistenceModule {}

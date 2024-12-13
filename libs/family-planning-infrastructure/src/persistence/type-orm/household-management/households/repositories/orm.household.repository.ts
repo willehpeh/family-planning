@@ -1,12 +1,11 @@
-import { Household, HouseholdMemberRepository, HouseholdReadModel, HouseholdRepository } from '@family-planning/domain';
+import { Household, HouseholdReadModel, HouseholdRepository } from '@family-planning/domain';
 import { OrmHouseholdEntity as HouseholdEntity } from '../entities/household.entity';
 import { Repository } from 'typeorm';
 import { HouseholdMapper } from '../mappers/household.mapper';
 
 export class OrmHouseholdRepository implements HouseholdRepository {
 
-  constructor(private readonly householdRepository: Repository<HouseholdEntity>,
-              private readonly householdMemberRepository: HouseholdMemberRepository) {
+  constructor(private readonly householdRepository: Repository<HouseholdEntity>) {
   }
 
   async save(household: Household): Promise<void> {
@@ -15,11 +14,7 @@ export class OrmHouseholdRepository implements HouseholdRepository {
   }
 
   async findByUserId(userId: string): Promise<HouseholdReadModel | null> {
-    const member = await this.householdMemberRepository.findByUserId(userId);
-    if (!member) {
-      return Promise.resolve(null);
-    }
-    return this.householdRepository.findOne({ where: { id: member.householdId } });
+    return this.householdRepository.findOne({ relations: ['members'], where: { members: { userId } } });
   }
 
 

@@ -2,8 +2,6 @@ import { HouseholdRepositoryProvider, HouseholdUnitOfWork } from '@family-planni
 import { DataSource } from 'typeorm';
 import { OrmHouseholdRepository } from '../repositories/orm.household.repository';
 import { OrmHouseholdEntity as HouseholdEntity } from '../entities/household.entity';
-import { OrmHouseholdMemberEntity as HouseholdMemberEntity } from '../entities/household-member.entity';
-import { OrmHouseholdMemberRepository } from '../repositories/orm.household-member.repository';
 import { Injectable } from '@nestjs/common';
 
 @Injectable()
@@ -12,12 +10,8 @@ export class OrmHouseholdUnitOfWork implements HouseholdUnitOfWork {
 
   transaction<T>(operation: (repositories: HouseholdRepositoryProvider) => Promise<T>): Promise<T> {
     return this.dataSource.transaction(async (transactionalEntityManager) => {
-      const householdMemberRepository = new OrmHouseholdMemberRepository(
-        transactionalEntityManager.getRepository(HouseholdMemberEntity)
-      );
       const householdRepository = new OrmHouseholdRepository(
-        transactionalEntityManager.getRepository(HouseholdEntity),
-        householdMemberRepository
+        transactionalEntityManager.getRepository(HouseholdEntity)
       );
       const repositories: HouseholdRepositoryProvider = {
         householdRepository: () => householdRepository,
