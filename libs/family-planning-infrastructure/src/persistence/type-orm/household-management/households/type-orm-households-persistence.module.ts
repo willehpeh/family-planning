@@ -1,8 +1,8 @@
 import { Module } from '@nestjs/common';
 import { OrmHouseholdUnitOfWork } from './providers/orm.household.unit-of-work';
-import { HouseholdMember } from './entities/household-member.entity';
+import { OrmHouseholdMemberEntity } from './entities/household-member.entity';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { Household } from './entities/household.entity';
+import { OrmHouseholdEntity } from './entities/household.entity';
 import { HouseholdUnitOfWork } from '@family-planning/application';
 import { HouseholdMemberRepository, HouseholdRepository } from '@family-planning/domain';
 import { OrmHouseholdRepository } from './repositories/orm.household.repository';
@@ -13,8 +13,8 @@ import { HouseholdByUserIdView } from './view-entities/household-by-user-id.view
 @Module({
   imports: [
     TypeOrmModule.forFeature([
-      Household,
-      HouseholdMember,
+      OrmHouseholdEntity,
+      OrmHouseholdMemberEntity,
       HouseholdByUserIdView
     ])
   ],
@@ -22,14 +22,14 @@ import { HouseholdByUserIdView } from './view-entities/household-by-user-id.view
     { provide: HouseholdUnitOfWork, useClass: OrmHouseholdUnitOfWork },
     {
       provide: HouseholdMemberRepository,
-      useFactory: (dataSource: DataSource) => new OrmHouseholdMemberRepository(dataSource.getRepository(HouseholdMember)),
+      useFactory: (dataSource: DataSource) => new OrmHouseholdMemberRepository(dataSource.getRepository(OrmHouseholdMemberEntity)),
       inject: [DataSource]
     },
     {
       provide: HouseholdRepository,
       useFactory: (dataSource: DataSource, householdMemberRepository: HouseholdMemberRepository) =>
         new OrmHouseholdRepository(
-          dataSource.getRepository(Household),
+          dataSource.getRepository(OrmHouseholdEntity),
           householdMemberRepository
         ),
       inject: [DataSource, HouseholdMemberRepository]

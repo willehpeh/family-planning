@@ -1,7 +1,8 @@
-import { Column, Entity, Index, PrimaryColumn } from 'typeorm';
+import { Column, Entity, Index, ManyToOne, PrimaryColumn } from 'typeorm';
+import { OrmHouseholdEntity } from './household.entity';
 
-@Entity()
-export class HouseholdMember {
+@Entity('household_member')
+export class OrmHouseholdMemberEntity {
   @PrimaryColumn()
   id: string;
 
@@ -20,4 +21,7 @@ export class HouseholdMember {
 
   @Column()
   householdId: string;
+
+  @ManyToOne(() => OrmHouseholdEntity, household => household.members, { onDelete: 'CASCADE', onUpdate: 'CASCADE' })
+  household: OrmHouseholdEntity;
 }

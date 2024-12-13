@@ -12,6 +12,32 @@ export class Household implements Entity<HouseholdSnapshot> {
               private _name: HouseholdName) {
   }
 
+  static householdWithMembers(
+    householdDetails: {
+      id: HouseholdId,
+      name: HouseholdName,
+    },
+    memberDetails: {
+      id: HouseholdMemberId,
+      userId: UserId,
+      lastName: LastName,
+      firstName: FirstName,
+      email: Email,
+    }[]
+  ): Household {
+    const household = new Household(householdDetails.id, householdDetails.name);
+    memberDetails.forEach(memberDetail => {
+      household.createNewMember(
+        memberDetail.id,
+        memberDetail.userId,
+        memberDetail.lastName,
+        memberDetail.firstName,
+        memberDetail.email,
+      );
+    });
+    return household;
+  }
+
   static newHousehold(
     householdDetails: {
       id: HouseholdId,

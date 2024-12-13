@@ -1,7 +1,8 @@
-import { Column, Entity, PrimaryColumn } from 'typeorm';
+import { Column, Entity, OneToMany, PrimaryColumn } from 'typeorm';
+import { OrmHouseholdMemberEntity } from './household-member.entity';
 
-@Entity()
-export class Household {
+@Entity('household')
+export class OrmHouseholdEntity {
   @PrimaryColumn()
   id: string;
 
@@ -10,4 +11,7 @@ export class Household {
 
   @Column('jsonb')
   memberIds: string[];
+
+  @OneToMany(() => OrmHouseholdMemberEntity, member => member.household, { cascade: true })
+  members: OrmHouseholdMemberEntity[];
 }

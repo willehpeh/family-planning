@@ -1,5 +1,5 @@
 import { Household, HouseholdMemberRepository, HouseholdReadModel, HouseholdRepository } from '@family-planning/domain';
-import { Household as HouseholdEntity } from '../entities/household.entity';
+import { OrmHouseholdEntity as HouseholdEntity } from '../entities/household.entity';
 import { Repository } from 'typeorm';
 import { HouseholdMapper } from '../mappers/household.mapper';
 
