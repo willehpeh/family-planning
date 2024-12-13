@@ -11,7 +11,6 @@ export class InMemoryUnitOfWork implements HouseholdUnitOfWork {
   async transaction<T>(operation: (repositories: HouseholdRepositoryProvider) => Promise<T>): Promise<T> {
     const repositories: HouseholdRepositoryProvider = {
       householdRepository: () => this.householdCommandRepository,
-      householdMemberRepository: () => this.householdMemberRepository
     };
     return operation(repositories);
   }

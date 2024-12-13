@@ -21,7 +21,6 @@ export class OrmHouseholdUnitOfWork implements HouseholdUnitOfWork {
       );
       const repositories: HouseholdRepositoryProvider = {
         householdRepository: () => householdRepository,
-        householdMemberRepository: () => householdMemberRepository
       };
       return operation(repositories);
     });
