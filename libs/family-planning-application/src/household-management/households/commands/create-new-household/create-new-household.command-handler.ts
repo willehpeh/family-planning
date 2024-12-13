@@ -3,7 +3,6 @@ import {
   FirstName,
   Household,
   HouseholdId,
-  HouseholdMember,
   HouseholdMemberId,
   HouseholdName,
   LastName,
@@ -12,7 +11,6 @@ import {
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
 import { CreateNewHouseholdCommand } from './create-new-household.command';
 import { HouseholdUnitOfWork } from '../../providers';
-import { CreatingMemberDetails } from './creating-member-details';
 
 @CommandHandler(CreateNewHouseholdCommand)
 export class CreateNewHouseholdCommandHandler implements ICommandHandler<CreateNewHouseholdCommand>{
@@ -20,33 +18,20 @@ export class CreateNewHouseholdCommandHandler implements ICommandHandler<CreateN
 
   async execute(command: CreateNewHouseholdCommand): Promise<void> {
     await this.unitOfWork.transaction(async (repositories) => {
-      const { creatingMember, household } = this.createHouseholdAndMember(command);
+      const householdDetails = {
+        id: HouseholdId.new(),
+        name: new HouseholdName(command.dto.householdName),
+      };
+      const member = command.dto.foundingMember;
+      const memberDetails = {
+        id: HouseholdMemberId.new(),
+        userId: new UserId(member.userId),
+        lastName: new LastName(member.lastName),
+        firstName: new FirstName(member.firstName),
+        email: new Email(member.email),
+      };
+      const household = Household.newHousehold(householdDetails, memberDetails);
       await repositories.householdRepository().save(household);
-      await repositories.householdMemberRepository().save(creatingMember);
-    });
-  }
-
-  private createHouseholdAndMember(command: CreateNewHouseholdCommand) {
-    const creatingMemberId = HouseholdMemberId.new();
-    const householdId = HouseholdId.new();
-    const creatingMember = this.createMember(householdId, creatingMemberId, command.dto.creatingMember);
-    const household = this.createHousehold(command.dto.householdName, householdId, creatingMemberId);
-    return { creatingMember, household };
-  }
-
-  private createHousehold(householdNameRaw: string, householdId: HouseholdId, creatingMemberId: HouseholdMemberId) {
-    const householdName = new HouseholdName(householdNameRaw);
-    return new Household(householdId, householdName, [creatingMemberId]);
-  }
-
-  private createMember(householdId: HouseholdId, id: HouseholdMemberId, details: CreatingMemberDetails): HouseholdMember {
-    return new HouseholdMember({
-      id,
-      householdId,
-      firstName: new FirstName(details.firstName),
-      lastName: new LastName(details.lastName),
-      email: new Email(details.email),
-      userId: new UserId(details.userId)
     });
   }
 }

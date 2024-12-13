@@ -13,12 +13,6 @@ export const TEST_HOUSEHOLD_NAME = new HouseholdName('Test Household');
 export const TEST_HOUSEHOLD_MEMBER_ID = HouseholdMemberId.new();
 export const TEST_USER_ID = new UserId('test-user-id');
 
-export const TEST_HOUSEHOLD_SNAPSHOT = new HouseholdSnapshot({
-  id: TEST_HOUSEHOLD_ID,
-  name: TEST_HOUSEHOLD_NAME,
-  memberIds: [TEST_HOUSEHOLD_MEMBER_ID]
-});
-
 export const TEST_HOUSEHOLD_MEMBER_SNAPSHOT = new HouseholdMemberSnapshot({
   id: TEST_HOUSEHOLD_MEMBER_ID,
   userId: TEST_USER_ID,
@@ -26,4 +20,10 @@ export const TEST_HOUSEHOLD_MEMBER_SNAPSHOT = new HouseholdMemberSnapshot({
   lastName: new LastName('Test'),
   firstName: new FirstName('Test'),
   email: new Email('test@test.com')
+});
+
+export const TEST_HOUSEHOLD_SNAPSHOT = new HouseholdSnapshot({
+  id: TEST_HOUSEHOLD_ID,
+  name: TEST_HOUSEHOLD_NAME,
+  members: [TEST_HOUSEHOLD_MEMBER_SNAPSHOT]
 });

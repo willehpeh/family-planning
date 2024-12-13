@@ -28,7 +28,7 @@ describe('CreateNewHouseholdCommand', () => {
     handler = new CreateNewHouseholdCommandHandler(inMemoryUnitOfWork);
     dto = {
       householdName: 'newHouseholdName',
-      creatingMember: {
+      foundingMember: {
         firstName: 'John',
         lastName: 'Doe',
         email: 'john.doe@example.com',
@@ -45,31 +45,27 @@ describe('CreateNewHouseholdCommand', () => {
   });
 
   it('should have a single member', async () => {
-    expect(createdHouseholdSnapshot.memberIds()).toHaveLength(1);
+    expect(createdHouseholdSnapshot.members()).toHaveLength(1);
   });
 
   it('should create a new member with the provided user ID', async () => {
-    expect(inMemoryHouseholdMemberRepository.members()[0].userId()).toBe(dto.creatingMember.userId);
+    expect(createdHouseholdSnapshot.members()[0].userId()).toBe(dto.foundingMember.userId);
   });
 
   it('should create a new member with the provided first name', async () => {
-    expect(inMemoryHouseholdMemberRepository.members()[0].firstName()).toBe(dto.creatingMember.firstName);
+    expect(createdHouseholdSnapshot.members()[0].firstName()).toBe(dto.foundingMember.firstName);
   });
 
   it('should create a new member with the provided last name', async () => {
-    expect(inMemoryHouseholdMemberRepository.members()[0].lastName()).toBe(dto.creatingMember.lastName);
+    expect(createdHouseholdSnapshot.members()[0].lastName()).toBe(dto.foundingMember.lastName);
   });
 
   it('should create a new member with the provided email', async () => {
-    expect(inMemoryHouseholdMemberRepository.members()[0].email()).toBe(dto.creatingMember.email);
+    expect(createdHouseholdSnapshot.members()[0].email()).toBe(dto.foundingMember.email);
   });
 
   it('should create a new member with the provided household ID', async () => {
-    expect(inMemoryHouseholdMemberRepository.members()[0].householdId()).toBe(inMemoryHouseholdRepository.households()[0].id());
-  });
-
-  it('should add the new member ID to the household', async () => {
-    expect(inMemoryHouseholdRepository.households()[0].memberIds()).toEqual([inMemoryHouseholdMemberRepository.members()[0].id()]);
+    expect(createdHouseholdSnapshot.members()[0].householdId()).toBe(inMemoryHouseholdRepository.households()[0].id());
   });
 
 });

@@ -12,7 +12,7 @@ export class HouseholdsService {
   async createNewHousehold(name: string, userId: string, lastName: string, firstName: string, email: string) {
     await this.commandBus.execute(new CreateNewHouseholdCommand({
       householdName: name,
-      creatingMember: {
+      foundingMember: {
         userId,
         firstName,
         lastName,

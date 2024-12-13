@@ -1,6 +1,6 @@
-import { CreatingMemberDetails } from './creating-member-details';
+import { HouseholdMemberDetails } from './household-member-details';
 
 export type CreateNewHouseholdDto = {
   householdName: string,
-  creatingMember: CreatingMemberDetails,
+  foundingMember: HouseholdMemberDetails,
 };

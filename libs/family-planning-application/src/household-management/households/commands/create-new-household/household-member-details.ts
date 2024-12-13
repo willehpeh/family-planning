@@ -1,4 +1,4 @@
-export type CreatingMemberDetails = {
+export type HouseholdMemberDetails = {
   firstName: string;
   lastName: string;
   email: string;
