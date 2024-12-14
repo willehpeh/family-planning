@@ -40,7 +40,8 @@ export class AuthController {
   async logout(@Req() req: Request, @Res() res: Response) {
     res.clearCookie('access_token');
     res.clearCookie('refresh_token');
-    return this.authService.logout(req.cookies['refresh_token']);
+    await this.authService.logout(req.cookies['refresh_token']);
+    res.status(200).send();
   }
 
   private setTokenCookies(res: Response, tokens: TokenSet) {

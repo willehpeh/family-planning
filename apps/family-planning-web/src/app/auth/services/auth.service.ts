@@ -18,4 +18,8 @@ export class AuthService {
       map(userInfo => ({ userInfo }))
     );
   }
+
+  logout(): Observable<void> {
+    return this.http.get<void>('/api/auth/logout');
+  }
 }

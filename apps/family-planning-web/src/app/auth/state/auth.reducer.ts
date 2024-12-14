@@ -1,5 +1,5 @@
 import { createReducer, on } from '@ngrx/store';
-import { LoadUserInfoSuccess } from './auth.actions';
+import { LoadUserInfoSuccess, Logout } from './auth.actions';
 import { UserInfoDto } from '../types/user-info.dto';
 
 export const authFeatureKey = 'auth';
@@ -17,4 +17,5 @@ export const initialState: AuthState = {
 export const authReducer = createReducer(
   initialState,
   on(LoadUserInfoSuccess, (state, { userInfo }): AuthState => ({ ...state, userInfo, authenticated: true })),
+  on(Logout, (state): AuthState => ({ ...state, userInfo: null, authenticated: false })),
 );

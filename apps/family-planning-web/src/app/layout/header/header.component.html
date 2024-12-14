@@ -1,3 +1,8 @@
-<header class="p-5">
+<header class="p-5 flex justify-between">
 	<h1 class="text-4xl text-center">{{ title() }}</h1>
+	@if (authenticated()) {
+		<app-button buttonStyle="outline" class="block" (click)="onLogout()">
+			<fa-icon [icon]="faRightFromBracket" />
+		</app-button>
+	}
 </header>

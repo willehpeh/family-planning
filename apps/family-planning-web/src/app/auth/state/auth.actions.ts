@@ -7,4 +7,4 @@ export const LoadUserInfoSuccess = createAction(
   props<{ userInfo: UserInfoDto }>()
 );
 export const LoadUserInfoFailure = createAction('[Auth API] Load User Info Failure');
-
+export const Logout = createAction('[AppHeader] Logout');
