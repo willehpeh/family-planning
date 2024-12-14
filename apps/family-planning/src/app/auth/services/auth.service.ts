@@ -32,6 +32,10 @@ export class AuthService {
     return this.authorizationUrl;
   }
 
+  async logout(refreshToken: string): Promise<void> {
+    return this.client.revoke(refreshToken, 'refresh_token');
+  }
+
   async exchangeCodeForTokens(request: Request): Promise<TokenSet> {
     return this.client.callback(`${this.configService.get('APP_URL')}/auth/callback`, request.query, { code_verifier: this.code_verifier });
   }

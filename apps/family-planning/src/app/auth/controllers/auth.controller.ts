@@ -36,6 +36,13 @@ export class AuthController {
     res.redirect(this.authUrl);
   }
 
+  @Get('logout')
+  async logout(@Req() req: Request, @Res() res: Response) {
+    res.clearCookie('access_token');
+    res.clearCookie('refresh_token');
+    return this.authService.logout(req.cookies['refresh_token']);
+  }
+
   private setTokenCookies(res: Response, tokens: TokenSet) {
     res.cookie('access_token', tokens.access_token, {
       httpOnly: true,
