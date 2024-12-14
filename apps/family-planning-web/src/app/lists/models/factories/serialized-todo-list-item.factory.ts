@@ -4,7 +4,7 @@ import { SerializedTodoListItem } from '../serialized-todo-list-item';
 export class SerializedTodoListItemFactory {
   static temporaryItem(itemDetails: ItemDetails): SerializedTodoListItem {
     return {
-      id: crypto.randomUUID(),
+      id: Date.now().toString(),
       name: itemDetails.name,
     };
   }
