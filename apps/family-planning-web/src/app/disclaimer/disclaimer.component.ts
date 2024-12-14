@@ -1,9 +1,8 @@
 import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ButtonComponent } from '../ui-elements/button/button.component';
-import { Store } from '@ngrx/store';
-import { AcceptDisclaimer } from '../state/disclaimer.actions';
 import { HeaderComponent } from '../layout/header/header.component';
+import { Router } from '@angular/router';
 
 @Component({
   selector: "app-disclaimer",
@@ -14,9 +13,9 @@ import { HeaderComponent } from '../layout/header/header.component';
 })
 export class DisclaimerComponent {
 
-  private store = inject(Store);
+  private router = inject(Router);
 
   onAcceptDisclaimer() {
-    this.store.dispatch(AcceptDisclaimer());
+    this.router.navigate(['dashboard']);
   }
 }

@@ -1,5 +1,5 @@
 import { Controller, Get, Req, Res, UseGuards } from '@nestjs/common';
-import { TokenSet } from 'openid-client';
+import { TokenSet, UserinfoResponse } from 'openid-client';
 import { ConfigService } from '@nestjs/config';
 import { Request, Response } from 'express';
 import { AuthService } from '../services/auth.service';
@@ -17,15 +17,15 @@ export class AuthController {
 
   @Get('userinfo')
   @UseGuards(AuthGuard)
-  async userinfo(@Req() req: Request) {
+  async userinfo(@Req() req: Request): Promise<UserinfoResponse> {
     return this.authService.userInfo(req.cookies['access_token']);
   }
 
   @Get('callback')
-  async callback(@Req() req: Request, @Res() res: Response) {
+  async callback(@Req() req: Request, @Res() res: Response): Promise<void> {
     try {
       const tokens = await this.authService.exchangeCodeForTokens(req);
-      this.setTokenCookies(res, tokens).redirect(this.configService.get('FRONTEND_URL'));
+      this.setTokenCookies(res, tokens).redirect(`${this.configService.get('FRONTEND_URL')}/dashboard`);
     } catch {
       res.redirect(this.authUrl);
     }
@@ -37,14 +37,18 @@ export class AuthController {
   }
 
   @Get('logout')
-  async logout(@Req() req: Request, @Res() res: Response) {
-    res.clearCookie('access_token');
-    res.clearCookie('refresh_token');
+  async logout(@Req() req: Request, @Res() res: Response): Promise<void> {
+    this.clearTokenCookies(res);
     await this.authService.logout(req.cookies['refresh_token']);
     res.status(200).send();
   }
 
-  private setTokenCookies(res: Response, tokens: TokenSet) {
+  private clearTokenCookies(res: Response): void {
+    res.clearCookie('access_token');
+    res.clearCookie('refresh_token');
+  }
+
+  private setTokenCookies(res: Response, tokens: TokenSet): Response {
     res.cookie('access_token', tokens.access_token, {
       httpOnly: true,
       secure: this.configService.get('APP_ENV') === 'production',

@@ -4,11 +4,12 @@ import { listsFeature } from './lists/state/lists.reducer';
 import { provideEffects } from '@ngrx/effects';
 import { ListsEffects } from './lists/state/lists.effects';
 import { AuthGuard } from './auth/guards/auth.guard';
+import { userInfoResolver } from './dashboard/resolvers/user-info.resolver';
 
 export const appRoutes: Route[] = [
   { path: 'disclaimer', loadComponent: () => import('./disclaimer/disclaimer.component').then(m => m.DisclaimerComponent) },
   { path: 'dashboard',
-    canActivate: [AuthGuard],
+    resolve: { userInfo: userInfoResolver },
     loadComponent: () => import('./dashboard/dashboard.component').then(m => m.DashboardComponent) },
   { path: 'lists',
     canActivate: [AuthGuard],
