@@ -1,9 +1,11 @@
 import {
-  Household,
-  HouseholdMemberRepository,
+  Email,
+  FirstName,
+  Household, HouseholdId, HouseholdMemberId,
+  HouseholdMemberRepository, HouseholdName,
   HouseholdReadModel,
   HouseholdRepository,
-  HouseholdSnapshot
+  HouseholdSnapshot, LastName, UserId
 } from '@family-planning/domain';
 import { InMemoryHouseholdMemberRepository } from './in-memory.household-member.repository';
 
@@ -17,8 +19,19 @@ export class InMemoryHouseholdRepository implements HouseholdRepository {
     return this._households;
   }
 
-  save(household: Household): Promise<void> {
-    this._households.push(household.snapshot());
+  save(householdToSave: Household): Promise<void> {
+    const snapshot = householdToSave.snapshot();
+    const found = this._households.find(household => household.id() === snapshot.id());
+    if (found) {
+      this._households = this._households.map(household => {
+        if (household.id() === snapshot.id()) {
+          return snapshot;
+        }
+        return household;
+      });
+      return Promise.resolve();
+    }
+    this._households.push(householdToSave.snapshot());
     return Promise.resolve();
   }
 
@@ -35,6 +48,23 @@ export class InMemoryHouseholdRepository implements HouseholdRepository {
       id: household.id(),
       name: household.name(),
     });
+  }
+
+  async findById(id: string): Promise<Household> {
+    const household = this._households.find(household => household.id() === id);
+    if (!household) {
+      throw new Error('Household not found');
+    }
+    return Household.householdWithMembers({
+      id: HouseholdId.fromString(household.id()),
+      name: new HouseholdName(household.name()),
+    }, household.members().map(member => ({
+      id: HouseholdMemberId.fromString(member.id()),
+      userId: new UserId(member.userId()),
+      lastName: new LastName(member.lastName()),
+      firstName: new FirstName(member.firstName()),
+      email: new Email(member.email()),
+    })));
   }
 
   withSnapshots(snapshots: HouseholdSnapshot[]): InMemoryHouseholdRepository {

@@ -50,4 +50,8 @@ export class HouseholdMemberSnapshot implements EntitySnapshot {
   householdId(): string {
     return this._householdId.value();
   }
+
+  pending(): boolean {
+    return true;
+  }
 }
