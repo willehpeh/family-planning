@@ -1,4 +1,4 @@
-import { Entity } from '../../../common';
+import { DomainEvent, Entity, EventBus } from '../../../common';
 import { HouseholdSnapshot } from './snapshots';
 import {
   Email,
@@ -11,11 +11,13 @@ import {
 } from '../value-objects';
 import { HouseholdMember } from './household-member';
 import { UserId } from '../../../auth';
+import { NewMemberInvitedEvent } from '../events';
 
 export class Household implements Entity<HouseholdSnapshot> {
 
   private _members: HouseholdMember[] = [];
   private _pendingMembers: PendingHouseholdMember[] = [];
+  private _events: DomainEvent[] = [];
 
   private constructor(private _id: HouseholdId,
                       private _name: HouseholdName) {
@@ -80,6 +82,11 @@ export class Household implements Entity<HouseholdSnapshot> {
     });
   }
 
+  publishEvents(eventBus: EventBus): void {
+    this._events.forEach(event => eventBus.publish(event));
+    this._events = [];
+  }
+
   createNewMember(
     id: HouseholdMemberId,
     userId: UserId,
@@ -100,6 +107,14 @@ export class Household implements Entity<HouseholdSnapshot> {
       email: memberDetails.email,
     });
     this._pendingMembers.push(member);
+    const memberValue = member.value();
+    this.raiseEvent(new NewMemberInvitedEvent(
+      memberValue.householdId,
+      memberValue.id,
+      memberValue.lastName,
+      memberValue.firstName,
+      memberValue.email,
+    ));
   }
 
   private newMember(id: HouseholdMemberId, userId: UserId, lastName: LastName, firstName: FirstName, email: Email) {
@@ -111,5 +126,9 @@ export class Household implements Entity<HouseholdSnapshot> {
       firstName,
       email,
     });
+  }
+
+  private raiseEvent(event: DomainEvent) {
+    this._events.push(event);
   }
 }

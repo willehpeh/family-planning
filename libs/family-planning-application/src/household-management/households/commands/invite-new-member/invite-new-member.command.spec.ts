@@ -1,13 +1,20 @@
-import { InMemoryHouseholdRepository, TEST_HOUSEHOLD_ID, TEST_HOUSEHOLD_SNAPSHOT } from '../../test-fixtures';
+import {
+  FakeEventBus,
+  InMemoryHouseholdRepository,
+  TEST_HOUSEHOLD_ID,
+  TEST_HOUSEHOLD_SNAPSHOT
+} from '../../test-fixtures';
 import { InviteNewMemberDto } from './invite-new-member.dto';
 import { InviteNewMemberCommandHandler } from './invite-new-member.command-handler';
 import { InviteNewMemberCommand } from './invite-new-member.command';
+import { NewMemberInvitedEvent } from '@family-planning/domain';
 
 describe('Invite new member', () => {
   let command: InviteNewMemberCommand;
   let handler: InviteNewMemberCommandHandler;
   let dto: InviteNewMemberDto;
   let inMemoryHouseholdRepository: InMemoryHouseholdRepository;
+  let fakeEventBus: FakeEventBus;
 
   beforeEach(() => {
     dto = {
@@ -19,7 +26,8 @@ describe('Invite new member', () => {
     };
     command = new InviteNewMemberCommand(dto);
     inMemoryHouseholdRepository = new InMemoryHouseholdRepository().withSnapshots([TEST_HOUSEHOLD_SNAPSHOT]);
-    handler = new InviteNewMemberCommandHandler(inMemoryHouseholdRepository);
+    fakeEventBus = new FakeEventBus();
+    handler = new InviteNewMemberCommandHandler(inMemoryHouseholdRepository, fakeEventBus);
   });
 
   it('should add a pending member to the household', async () => {
@@ -33,9 +41,8 @@ describe('Invite new member', () => {
     });
   });
 
-  // it('should raise an event for the new member', async () => {
-  //   await handler.execute(command);
-  //   const household = inMemoryHouseholdRepository.households()[0];
-  //   expect(household.events().length).toBe(1);
-  // });
+  it('should raise an event for the new member', async () => {
+    await handler.execute(command);
+    expect(fakeEventBus.events[0]).toBeInstanceOf(NewMemberInvitedEvent);
+  });
 });
