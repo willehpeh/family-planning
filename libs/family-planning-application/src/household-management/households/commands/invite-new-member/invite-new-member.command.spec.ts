@@ -25,6 +25,17 @@ describe('Invite new member', () => {
   it('should add a pending member to the household', async () => {
     await handler.execute(command);
     const household = inMemoryHouseholdRepository.households()[0];
-    expect(household.pendingMembers().length).toBe(1);
+    expect(household.pendingMembers()[0]).toMatchObject({
+      firstName: dto.firstName,
+      lastName: dto.lastName,
+      email: dto.email,
+      householdId: TEST_HOUSEHOLD_ID.value(),
+    });
   });
+
+  // it('should raise an event for the new member', async () => {
+  //   await handler.execute(command);
+  //   const household = inMemoryHouseholdRepository.households()[0];
+  //   expect(household.events().length).toBe(1);
+  // });
 });
