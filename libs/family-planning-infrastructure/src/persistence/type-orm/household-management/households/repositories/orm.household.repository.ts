@@ -17,6 +17,12 @@ export class OrmHouseholdRepository implements HouseholdRepository {
     return this.householdRepository.findOne({ relations: ['members'], where: { members: { userId } } });
   }
 
-
+  async findById(householdId: string): Promise<Household> {
+    const entity = await this.householdRepository.findOne({ where: { id: householdId } });
+    if (!entity) {
+      throw new Error('Household not found');
+    }
+    return HouseholdMapper.toDomain(entity);
+  }
 
 }
