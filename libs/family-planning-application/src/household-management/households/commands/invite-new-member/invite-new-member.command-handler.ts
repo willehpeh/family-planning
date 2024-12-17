@@ -15,7 +15,6 @@ export class InviteNewMemberCommandHandler implements ICommandHandler<InviteNewM
       email: new Email(command.dto.email),
     });
     await this.householdRepository.save(household);
-    household.publishEventsTo(this.eventBus)
-    return Promise.resolve();
+    household.publishEventsTo(this.eventBus);
   }
 }
