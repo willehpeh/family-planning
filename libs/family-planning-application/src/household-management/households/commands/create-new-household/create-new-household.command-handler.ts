@@ -23,14 +23,14 @@ export class CreateNewHouseholdCommandHandler implements ICommandHandler<CreateN
         name: new HouseholdName(command.dto.householdName),
       };
       const member = command.dto.foundingMember;
-      const memberDetails = {
+      const foundingMember = {
         id: HouseholdMemberId.new(),
         userId: new UserId(member.userId),
         lastName: new LastName(member.lastName),
         firstName: new FirstName(member.firstName),
         email: new Email(member.email),
       };
-      const household = Household.newHousehold(householdDetails, memberDetails);
+      const household = Household.createNew(householdDetails, foundingMember);
       await repositories.householdRepository().save(household);
     });
   }

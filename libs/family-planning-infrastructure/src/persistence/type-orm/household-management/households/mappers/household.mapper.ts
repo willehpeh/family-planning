@@ -35,14 +35,18 @@ export class HouseholdMapper {
     return Household.householdWithMembers({
       id: HouseholdId.fromString(entity.id),
       name: new HouseholdName(entity.name),
-    }, entity.members.map(member => {
-      return {
-        id: HouseholdMemberId.fromString(member.id),
-        userId: new UserId(member.userId),
-        lastName: new LastName(member.lastName),
-        firstName: new FirstName(member.firstName),
-        email: new Email(member.email),
-      };
-    }));
+    },
+      entity.members.map(ormMember => this.memberFromOrmEntity(ormMember))
+    );
+  }
+
+  private static memberFromOrmEntity({ id, userId, lastName, firstName, email }: OrmHouseholdMemberEntity) {
+    return {
+      id: HouseholdMemberId.fromString(id),
+      userId: new UserId(userId),
+      lastName: new LastName(lastName),
+      firstName: new FirstName(firstName),
+      email: new Email(email),
+    };
   }
 }

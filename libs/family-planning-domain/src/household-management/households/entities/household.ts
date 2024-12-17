@@ -13,6 +13,19 @@ import { HouseholdMember } from './household-member';
 import { UserId } from '../../../auth';
 import { NewMemberInvitedEvent } from '../events';
 
+type HouseholdDetails = {
+  id: HouseholdId,
+  name: HouseholdName,
+}
+
+type MemberDetails = {
+  id: HouseholdMemberId,
+  userId: UserId,
+  lastName: LastName,
+  firstName: FirstName,
+  email: Email,
+}
+
 export class Household implements Entity<HouseholdSnapshot> {
 
   private _members: HouseholdMember[] = [];
@@ -23,33 +36,13 @@ export class Household implements Entity<HouseholdSnapshot> {
                       private _name: HouseholdName) {
   }
 
-  static householdWithMembers(
-    householdDetails: {
-      id: HouseholdId,
-      name: HouseholdName,
-    },
-    memberDetails: {
-      id: HouseholdMemberId,
-      userId: UserId,
-      lastName: LastName,
-      firstName: FirstName,
-      email: Email,
-    }[]
-  ): Household {
+  static householdWithMembers(householdDetails: HouseholdDetails, memberDetails: MemberDetails[]): Household {
     const household = new Household(householdDetails.id, householdDetails.name);
-    memberDetails.forEach(memberDetail => {
-      household.createNewMember(
-        memberDetail.id,
-        memberDetail.userId,
-        memberDetail.lastName,
-        memberDetail.firstName,
-        memberDetail.email,
-      );
-    });
+    memberDetails.forEach(memberDetail => household.addMember(memberDetail));
     return household;
   }
 
-  static newHousehold(
+  static createNew(
     householdDetails: {
       id: HouseholdId,
       name: HouseholdName,
@@ -62,15 +55,7 @@ export class Household implements Entity<HouseholdSnapshot> {
       email: Email,
     }
   ): Household {
-    const household = new Household(householdDetails.id, householdDetails.name);
-    household.createNewMember(
-      memberDetails.id,
-      memberDetails.userId,
-      memberDetails.lastName,
-      memberDetails.firstName,
-      memberDetails.email,
-    );
-    return household;
+    return Household.householdWithMembers(householdDetails, [memberDetails]);
   }
 
   snapshot(): HouseholdSnapshot {
@@ -87,14 +72,8 @@ export class Household implements Entity<HouseholdSnapshot> {
     this._events = [];
   }
 
-  createNewMember(
-    id: HouseholdMemberId,
-    userId: UserId,
-    lastName: LastName,
-    firstName: FirstName,
-    email: Email,
-  ): void {
-    const member = this.newMember(id, userId, lastName, firstName, email);
+  addMember(memberDetails: MemberDetails): void {
+    const member = this.newMember(memberDetails);
     this._members.push(member);
   }
 
@@ -107,24 +86,17 @@ export class Household implements Entity<HouseholdSnapshot> {
       email: memberDetails.email,
     });
     this._pendingMembers.push(member);
-    const memberValue = member.value();
-    this.raiseEvent(new NewMemberInvitedEvent(
-      memberValue.householdId,
-      memberValue.id,
-      memberValue.lastName,
-      memberValue.firstName,
-      memberValue.email,
-    ));
+    this.raiseEvent(new NewMemberInvitedEvent(member));
   }
 
-  private newMember(id: HouseholdMemberId, userId: UserId, lastName: LastName, firstName: FirstName, email: Email) {
+  private newMember(memberDetails: MemberDetails) {
     return new HouseholdMember({
       householdId: this._id,
-      id,
-      userId,
-      lastName,
-      firstName,
-      email,
+      id: memberDetails.id,
+      userId: memberDetails.userId,
+      lastName: memberDetails.lastName,
+      firstName: memberDetails.firstName,
+      email: memberDetails.email,
     });
   }
 
