@@ -67,7 +67,7 @@ export class Household implements Entity<HouseholdSnapshot> {
     });
   }
 
-  publishEvents(eventBus: EventBus): void {
+  publishEventsTo(eventBus: EventBus): void {
     this._events.forEach(event => eventBus.publish(event));
     this._events = [];
   }
