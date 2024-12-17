@@ -2,7 +2,7 @@ import { DomainEvent } from '../../../common';
 
 export class NewMemberInvitedEvent implements DomainEvent {
 
-  private readonly _eventName = 'NewMemberInvitedEvent';
+  private readonly _eventName = 'NewMemberInvited';
   private readonly _occurredOn = new Date();
 
   constructor(
