@@ -8,6 +8,7 @@ describe('CreateNewUserCommand', () => {
   let fakeUserCreationService: FakeUserCreationService;
 
   beforeEach(async () => {
+    fakeUserCreationService = new FakeUserCreationService();
     handler = new CreateNewUserCommandHandler(fakeUserCreationService);
     dto = {
       firstName: 'John',
@@ -19,6 +20,10 @@ describe('CreateNewUserCommand', () => {
   });
 
   it('should create a new user with the provided details', async () => {
-
+    expect(fakeUserCreationService.createdUser()).toMatchObject({
+      firstName: dto.firstName,
+      lastName: dto.lastName,
+      email: dto.email,
+    });
   });
 });
