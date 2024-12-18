@@ -8,5 +8,10 @@ export class CreateNewUserCommandHandler implements ICommandHandler<CreateNewUse
   }
 
   async execute(command: CreateNewUserCommand): Promise<void> {
+    await this.userCreationService.createUser(
+      command.dto.firstName,
+      command.dto.lastName,
+      command.dto.email,
+    );
   }
 }
