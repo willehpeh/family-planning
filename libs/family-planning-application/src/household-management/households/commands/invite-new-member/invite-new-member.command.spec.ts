@@ -1,5 +1,4 @@
 import {
-  FakeEventBus,
   InMemoryHouseholdRepository,
   TEST_HOUSEHOLD_ID,
   TEST_HOUSEHOLD_SNAPSHOT
@@ -8,6 +7,7 @@ import { InviteNewMemberDto } from './invite-new-member.dto';
 import { InviteNewMemberCommandHandler } from './invite-new-member.command-handler';
 import { InviteNewMemberCommand } from './invite-new-member.command';
 import { NewMemberInvitedEvent } from '@family-planning/domain';
+import { FakeEventBus } from '../../../../shared';
 
 describe('Invite new member', () => {
   let command: InviteNewMemberCommand;
