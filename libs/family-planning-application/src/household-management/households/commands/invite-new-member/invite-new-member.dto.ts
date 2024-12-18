@@ -3,5 +3,4 @@ export type InviteNewMemberDto = {
   firstName: string;
   lastName: string;
   householdId: string;
-  username: string;
 }

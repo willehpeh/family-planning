@@ -19,7 +19,6 @@ describe('Invite new member', () => {
   beforeEach(() => {
     dto = {
       householdId: TEST_HOUSEHOLD_ID.value(),
-      username: 'john_doe',
       firstName: 'John',
       lastName: 'Doe',
       email: 'john.doe@example.com',
