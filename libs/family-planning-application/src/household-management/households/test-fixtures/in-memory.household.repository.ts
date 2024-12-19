@@ -5,7 +5,7 @@ import {
   HouseholdMemberRepository, HouseholdName,
   HouseholdReadModel,
   HouseholdRepository,
-  HouseholdSnapshot, LastName, UserId
+  HouseholdSnapshot, LastName, PendingHouseholdMember, UserId
 } from '@family-planning/domain';
 import { InMemoryHouseholdMemberRepository } from './in-memory.household-member.repository';
 
@@ -51,19 +51,25 @@ export class InMemoryHouseholdRepository implements HouseholdRepository {
   }
 
   async findById(id: string): Promise<Household> {
-    const household = this._households.find(household => household.id() === id);
-    if (!household) {
+    const found = this._households.find(household => household.id() === id);
+    if (!found) {
       throw new Error('Household not found');
     }
     return Household.householdWithMembers({
-      id: HouseholdId.fromString(household.id()),
-      name: new HouseholdName(household.name()),
-    }, household.members().map(member => ({
+      id: HouseholdId.fromString(found.id()),
+      name: new HouseholdName(found.name()),
+    }, found.members().map(member => ({
       id: HouseholdMemberId.fromString(member.id()),
       userId: new UserId(member.userId()),
       lastName: new LastName(member.lastName()),
       firstName: new FirstName(member.firstName()),
       email: new Email(member.email()),
+    })), found.pendingMembers().map(member => new PendingHouseholdMember({
+      id: HouseholdMemberId.fromString(member.id),
+      lastName: new LastName(member.lastName),
+      firstName: new FirstName(member.firstName),
+      email: new Email(member.email),
+      householdId: HouseholdId.fromString(member.householdId),
     })));
   }
 

@@ -1,5 +1,4 @@
-import { CreateNewHouseholdCommand } from './create-new-household.command';
-import { CreateNewHouseholdCommandHandler } from './create-new-household.command-handler';
+import { CreateNewHouseholdCommand, CreateNewHouseholdCommandHandler } from '.';
 import { InMemoryHouseholdRepository, InMemoryUnitOfWork } from '../../test-fixtures';
 import { CreateNewHouseholdDto } from './create-new-household.dto';
 import { HouseholdSnapshot } from '@family-planning/domain';

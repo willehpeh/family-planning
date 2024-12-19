@@ -36,9 +36,10 @@ export class Household implements Entity<HouseholdSnapshot> {
                       private _name: HouseholdName) {
   }
 
-  static householdWithMembers(householdDetails: HouseholdDetails, memberDetails: MemberDetails[]): Household {
+  static householdWithMembers(householdDetails: HouseholdDetails, memberDetails: MemberDetails[], pendingMembers?: PendingHouseholdMember[]): Household {
     const household = new Household(householdDetails.id, householdDetails.name);
     memberDetails.forEach(memberDetail => household.addMember(memberDetail));
+    household._pendingMembers = pendingMembers || [];
     return household;
   }
 
@@ -102,5 +103,24 @@ export class Household implements Entity<HouseholdSnapshot> {
 
   private raiseEvent(event: DomainEvent) {
     this._events.push(event);
+  }
+
+  confirmNewMember(memberId: HouseholdMemberId, userId: UserId) {
+    const pendingMember = this._pendingMembers.find(member => member.value().id === memberId.value());
+    if (!pendingMember) {
+      throw new Error('Member not found');
+    }
+    this.addMember({
+      id: memberId,
+      userId,
+      lastName: new LastName(pendingMember.value().lastName),
+      firstName: new FirstName(pendingMember.value().firstName),
+      email: new Email(pendingMember.value().email),
+    })
+    this.removePendingMember(memberId);
+  }
+
+  private removePendingMember(memberId: HouseholdMemberId) {
+    this._pendingMembers = this._pendingMembers.filter(member => member.value().id !== memberId.value());
   }
 }
