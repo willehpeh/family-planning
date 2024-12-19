@@ -14,7 +14,9 @@ export class CreateNewUserCommandHandler implements ICommandHandler<CreateNewUse
       command.dto.lastName,
       command.dto.email,
     );
-    const userId = await this.userCreationService.getUserIdForEmail(command.dto.email);
-    await this.eventBus.publish(new UserCreatedEvent(userId, command.dto.firstName, command.dto.lastName, command.dto.email));
+    const { firstName, lastName, email } = command.dto;
+    const userId = await this.userCreationService.getUserIdForEmail(email);
+
+    await this.eventBus.publish(new UserCreatedEvent({ userId, firstName, lastName, email }));
   }
 }
