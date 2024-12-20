@@ -1,7 +1,7 @@
 import { filter, map, merge, Observable, share } from 'rxjs';
 import { DomainEvent, NewMemberInvitedEvent, UserCreatedForHouseholdEvent } from '@family-planning/domain';
 import { CreateNewUserCommand } from '../../../../auth';
-import { ConfirmNewMemberCommand } from '../../commands/confirm-new-member';
+import { ConfirmNewMemberCommand } from '../../commands';
 
 export class HouseholdMemberInvitationSaga {
   commands$: Observable<CreateNewUserCommand | ConfirmNewMemberCommand>;
