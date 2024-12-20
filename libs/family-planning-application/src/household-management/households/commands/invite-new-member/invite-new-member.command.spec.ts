@@ -60,9 +60,9 @@ describe('Invite new member', () => {
     it('should raise the event with the correct details', () => {
       expect(raisedEvent).toMatchObject({
         householdId: TEST_HOUSEHOLD_ID.value(),
-        memberFirstName: dto.firstName,
-        memberLastName: dto.lastName,
-        memberEmail: dto.email,
+        firstName: dto.firstName,
+        lastName: dto.lastName,
+        email: dto.email,
         memberId: inMemoryHouseholdRepository.households()[0].pendingMembers()[0].id
       });
     });

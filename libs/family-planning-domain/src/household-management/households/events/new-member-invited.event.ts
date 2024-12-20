@@ -8,16 +8,17 @@ export class NewMemberInvitedEvent implements DomainEvent {
 
   public readonly householdId: string;
   public readonly memberId: string;
-  public readonly memberLastName: string;
-  public readonly memberFirstName: string;
-  public readonly memberEmail: string;
+  public readonly lastName: string;
+  public readonly firstName: string;
+  public readonly email: string;
 
   constructor(pendingMember: PendingHouseholdMember) {
-    this.householdId = pendingMember.value().householdId;
-    this.memberId = pendingMember.value().id;
-    this.memberLastName = pendingMember.value().lastName;
-    this.memberFirstName = pendingMember.value().firstName;
-    this.memberEmail = pendingMember.value().email;
+    const { householdId, id, firstName, lastName, email } = pendingMember.value();
+    this.householdId = householdId;
+    this.memberId = id;
+    this.lastName = lastName;
+    this.firstName = firstName;
+    this.email = email;
   }
 
   eventName(): string {
