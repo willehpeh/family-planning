@@ -1,5 +1,5 @@
 import { Body, Controller, Get, Post, Req } from '@nestjs/common';
-import { HouseholdsService } from './households.service';
+import { HouseholdsService } from './providers/households.service';
 import { Request } from 'express';
 
 @Controller('households')
@@ -21,5 +21,15 @@ export class HouseholdsController {
   @Get('me')
   getMe(@Req() req: Request) {
     return this.householdsService.getHouseholdForUserId(req['userId']);
+  }
+
+  @Post('invite-member')
+  inviteNewMember(@Req() req: Request) {
+    return this.householdsService.inviteNewMember(
+      req['householdId'],
+      'InvitedLastName',
+      'InvitedFirstName',
+      'will_alexander@me.com'
+    );
   }
 }

@@ -1,16 +1,18 @@
 import { Module, OnModuleInit } from '@nestjs/common';
 import { TypeOrmHouseholdsPersistenceModule } from '@family-planning/infrastructure';
 import {
+  ConfirmNewMemberCommandHandler,
   CreateNewHouseholdCommandHandler,
   FindHouseholdForUserIdQueryHandler,
-  HouseholdMemberInvitationSaga
+  HouseholdMemberInvitationSaga,
+  InviteNewMemberCommandHandler
 } from '@family-planning/application';
-import { HouseholdsService } from './households.service';
+import { HouseholdsService } from './providers/households.service';
 import { HouseholdsController } from './households.controller';
 import { HouseholdSagaRegistry } from './providers/household-saga-registry.service';
-import { EventBus } from '@nestjs/cqrs';
+import { EventBus, isDomainEvent } from '@family-planning/domain';
 import { filter } from 'rxjs';
-import { isDomainEvent } from '@family-planning/domain';
+import { EventBus as NestEventBus } from '@nestjs/cqrs';
 
 @Module({
   controllers: [
@@ -20,16 +22,22 @@ import { isDomainEvent } from '@family-planning/domain';
     TypeOrmHouseholdsPersistenceModule
   ],
   providers: [
+    {
+      provide: EventBus,
+      useClass: NestEventBus
+    },
     CreateNewHouseholdCommandHandler,
     HouseholdsService,
     FindHouseholdForUserIdQueryHandler,
+    InviteNewMemberCommandHandler,
+    ConfirmNewMemberCommandHandler,
     HouseholdSagaRegistry,
     {
       provide: HouseholdMemberInvitationSaga,
-      useFactory: (eventBus: EventBus) =>
+      useFactory: (eventBus: NestEventBus) =>
         new HouseholdMemberInvitationSaga(eventBus.pipe(filter(event => isDomainEvent(event)))),
       inject: [EventBus]
-    }
+    },
   ]
 })
 export class HouseholdsModule implements OnModuleInit {

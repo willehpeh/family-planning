@@ -24,7 +24,6 @@ const isDevEnvironment = process.env.APP_ENV === "development";
       username: isDevEnvironment ? "fp_api" : process.env.POSTGRES_USER,
       password: isDevEnvironment ? "fp_api" : process.env.POSTGRES_PASSWORD,
       database: isDevEnvironment ? "postgres" : process.env.POSTGRES_DB,
-      synchronize: true,
       autoLoadEntities: true,
     }),
     CqrsModule.forRoot(),

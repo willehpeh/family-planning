@@ -7,7 +7,7 @@ import {
   HouseholdMemberSnapshot,
   HouseholdName,
   HouseholdSnapshot,
-  LastName,
+  LastName, PendingHouseholdMember,
   UserId
 } from '@family-planning/domain';
 import { OrmHouseholdEntity } from '../entities/household.entity';
@@ -24,7 +24,14 @@ export class HouseholdMapper {
         id: HouseholdId.fromString(entity.id),
         name: new HouseholdName(entity.name),
       },
-      entity.members.map(ormMember => this.memberFromOrmEntity(ormMember))
+      entity.members.map(ormMember => this.memberFromOrmEntity(ormMember)),
+      entity.pendingMembers.map(member => new PendingHouseholdMember({
+        householdId: HouseholdId.fromString(member.householdId),
+        id: HouseholdMemberId.fromString(member.id),
+        lastName: new LastName(member.lastName),
+        firstName: new FirstName(member.firstName),
+        email: new Email(member.email)
+      }))
     );
   }
 
@@ -35,6 +42,7 @@ export class HouseholdMapper {
     entity.memberIds = snapshot.memberIds();
     entity.members = snapshot.members()
       .map(member => this.ormMemberFromSnapshot(member, entity));
+    entity.pendingMembers = snapshot.pendingMembers();
     return entity;
   }
 

@@ -1,10 +1,14 @@
-import { Module } from "@nestjs/common";
+import { Module } from '@nestjs/common';
 import { PassportModule } from '@nestjs/passport';
 import { AuthController } from './controllers/auth.controller';
 import { ConfigService } from '@nestjs/config';
 import { Issuer } from 'openid-client';
 import { AuthService } from './services/auth.service';
 import { delay, lastValueFrom, of } from 'rxjs';
+import { CreateNewUserCommandHandler, UserCreationService } from '@family-planning/application';
+import { KeycloakUserCreationService } from './services/keycloak-user-creation.service';
+import { EventBus } from '@family-planning/domain';
+import { EventBus as NestEventBus } from '@nestjs/cqrs/dist/event-bus';
 
 @Module({
   imports: [PassportModule],
@@ -20,6 +24,15 @@ import { delay, lastValueFrom, of } from 'rxjs';
       inject: [ConfigService]
     },
     AuthService,
+    {
+      provide: UserCreationService,
+      useClass: KeycloakUserCreationService,
+    },
+    {
+      provide: EventBus,
+      useClass: NestEventBus
+    },
+    CreateNewUserCommandHandler,
   ]
 })
 export class AuthModule {}

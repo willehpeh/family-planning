@@ -1,6 +1,10 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { CommandBus, QueryBus } from '@nestjs/cqrs';
-import { CreateNewHouseholdCommand, FindHouseholdForUserIdQuery } from '@family-planning/application';
+import {
+  CreateNewHouseholdCommand,
+  FindHouseholdForUserIdQuery,
+  InviteNewMemberCommand
+} from '@family-planning/application';
 import { HouseholdReadModel } from '@family-planning/domain';
 
 @Injectable()
@@ -27,5 +31,14 @@ export class HouseholdsService {
       throw new NotFoundException('No household found for user');
     }
     return household;
+  }
+
+  async inviteNewMember(householdId: string, lastName: string, firstName: string, email: string) {
+    await this.commandBus.execute(new InviteNewMemberCommand({
+      householdId,
+      email,
+      firstName,
+      lastName
+    }));
   }
 }
