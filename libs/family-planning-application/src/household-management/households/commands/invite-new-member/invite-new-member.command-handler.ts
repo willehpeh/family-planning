@@ -3,9 +3,10 @@ import { InviteNewMemberCommand } from './invite-new-member.command';
 import { Email, EventBus, FirstName, HouseholdRepository, LastName } from '@family-planning/domain';
 
 @CommandHandler(InviteNewMemberCommand)
-export class InviteNewMemberCommandHandler implements ICommandHandler<InviteNewMemberCommand>{
+export class InviteNewMemberCommandHandler implements ICommandHandler<InviteNewMemberCommand> {
   constructor(private readonly householdRepository: HouseholdRepository,
-              private readonly eventBus: EventBus) {}
+              private readonly eventBus: EventBus) {
+  }
 
   async execute(command: InviteNewMemberCommand): Promise<void> {
     const household = await this.householdRepository.findById(command.dto.householdId);

@@ -79,6 +79,9 @@ export class Household implements Entity<HouseholdSnapshot> {
   }
 
   inviteNewMember(memberDetails: { firstName: FirstName; lastName: LastName; email: Email }) {
+    if (this._pendingMembers.some(member => member.value().email === memberDetails.email.value())) {
+      throw new Error('Member with this email already exists');
+    }
     const member = new PendingHouseholdMember({
       householdId: this._id,
       id: HouseholdMemberId.new(),
