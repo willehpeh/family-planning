@@ -10,7 +10,7 @@ export class ConfirmNewMemberCommandHandler implements ICommandHandler<ConfirmNe
     const household = await this.householdRepository.findById(command.dto.householdId);
     const memberId = HouseholdMemberId.fromString(command.dto.memberId);
     const userId = new UserId(command.dto.userId);
-    household.confirmNewMember(memberId, userId);
+    household.confirmPendingMember(memberId, userId);
     await this.householdRepository.save(household);
   }
 }

@@ -4,6 +4,8 @@ import { FirstName } from './first-name';
 import { HouseholdId } from './household-id';
 import { LastName } from './last-name';
 import { HouseholdMemberId } from './household-member-id';
+import { HouseholdMember } from '../entities';
+import { UserId } from '../../../auth';
 
 export class PendingHouseholdMember implements ValueObject<{
   email: string,
@@ -58,5 +60,16 @@ export class PendingHouseholdMember implements ValueObject<{
 
   hasEmail(email: Email): boolean {
     return this._email.equals(email);
+  }
+
+  toHouseholdMember(userId: UserId): HouseholdMember {
+    return new HouseholdMember({
+      id: this._id,
+      userId,
+      householdId: this._householdId,
+      lastName: this._lastName,
+      firstName: this._firstName,
+      email: this._email,
+    });
   }
 }

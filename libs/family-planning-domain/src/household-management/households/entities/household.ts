@@ -82,15 +82,19 @@ export class Household implements Entity<HouseholdSnapshot> {
     if (this.cannotAddMember(memberDetails)) {
       throw new Error('Member already exists');
     }
-    const member = new PendingHouseholdMember({
+    const member = this.createNewPendingMember(memberDetails);
+    this._pendingMembers.push(member);
+    this.raiseEvent(new NewMemberInvitedEvent(member));
+  }
+
+  private createNewPendingMember(memberDetails: { firstName: FirstName; lastName: LastName; email: Email }) {
+    return new PendingHouseholdMember({
       householdId: this._id,
       id: HouseholdMemberId.new(),
       lastName: memberDetails.lastName,
       firstName: memberDetails.firstName,
       email: memberDetails.email,
     });
-    this._pendingMembers.push(member);
-    this.raiseEvent(new NewMemberInvitedEvent(member));
   }
 
   private cannotAddMember(memberDetails: { firstName: FirstName; lastName: LastName; email: Email }) {
@@ -120,22 +124,24 @@ export class Household implements Entity<HouseholdSnapshot> {
     this._events.push(event);
   }
 
-  confirmNewMember(memberId: HouseholdMemberId, userId: UserId) {
-    const pendingMember = this._pendingMembers.find(member => member.value().id === memberId.value());
+  confirmPendingMember(memberId: HouseholdMemberId, userId: UserId) {
+    const pendingMember = this.pendingMemberById(memberId);
     if (!pendingMember) {
       throw new Error('Member not found');
     }
-    this.addMember({
-      id: memberId,
-      userId,
-      lastName: new LastName(pendingMember.value().lastName),
-      firstName: new FirstName(pendingMember.value().firstName),
-      email: new Email(pendingMember.value().email),
-    })
-    this.removePendingMember(memberId);
+    this.convertPendingMember(pendingMember, userId);
   }
 
-  private removePendingMember(memberId: HouseholdMemberId) {
-    this._pendingMembers = this._pendingMembers.filter(member => member.value().id !== memberId.value());
+  private convertPendingMember(pendingMember: PendingHouseholdMember, userId: UserId) {
+    this._members.push(pendingMember.toHouseholdMember(userId));
+    this.removePendingMember(pendingMember);
+  }
+
+  private pendingMemberById(memberId: HouseholdMemberId) {
+    return this._pendingMembers.find(member => member.value().id === memberId.value());
+  }
+
+  private removePendingMember(pendingMember: PendingHouseholdMember) {
+    this._pendingMembers = this._pendingMembers.filter(member => !member.equals(pendingMember));
   }
 }
