@@ -2,7 +2,7 @@ import {
   InMemoryHouseholdRepository,
   TEST_HOUSEHOLD_ID,
   TEST_HOUSEHOLD_MEMBER_EMAIL,
-  TEST_HOUSEHOLD_SNAPSHOT
+  TEST_HOUSEHOLD_SNAPSHOT, TEST_HOUSEHOLD_SNAPSHOT_WITH_PENDING_MEMBER, TEST_PENDING_MEMBER_EMAIL
 } from '../../test-fixtures';
 import { InviteNewMemberCommand, InviteNewMemberCommandHandler, InviteNewMemberDto } from './';
 import { NewMemberInvitedEvent } from '@family-planning/domain';
@@ -30,11 +30,32 @@ describe('Invite new member', () => {
       handler = new InviteNewMemberCommandHandler(inMemoryHouseholdRepository, fakeEventBus);
     });
 
-    it('should not be able to invite a member that already exists in the household', async () => {
-      await handler.execute(command);
-      await expect(handler.execute(command)).rejects.toEqual(new Error('Member with this email already exists'));
+    it('should not be able to invite the member', async () => {
+      await expect(handler.execute(command)).rejects.toBeInstanceOf(Error);
     });
-  })
+
+  });
+
+  describe('Given invited member is already pending (email)', () => {
+
+    beforeEach(() => {
+      dto = {
+        householdId: TEST_HOUSEHOLD_ID.value(),
+        firstName: 'John',
+        lastName: 'Doe',
+        email: TEST_PENDING_MEMBER_EMAIL.value(),
+      };
+      command = new InviteNewMemberCommand(dto);
+      inMemoryHouseholdRepository = new InMemoryHouseholdRepository().withSnapshots([TEST_HOUSEHOLD_SNAPSHOT_WITH_PENDING_MEMBER]);
+      fakeEventBus = new FakeEventBus();
+      handler = new InviteNewMemberCommandHandler(inMemoryHouseholdRepository, fakeEventBus);
+    });
+
+    it('should not be able to invite the member', async () => {
+      await expect(handler.execute(command)).rejects.toBeInstanceOf(Error);
+    });
+
+  });
 
   describe('Given invited member does not already exist', () => {
     beforeEach(() => {

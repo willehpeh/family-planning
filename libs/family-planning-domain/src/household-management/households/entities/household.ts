@@ -79,8 +79,8 @@ export class Household implements Entity<HouseholdSnapshot> {
   }
 
   inviteNewMember(memberDetails: { firstName: FirstName; lastName: LastName; email: Email }) {
-    if (this._pendingMembers.some(member => member.value().email === memberDetails.email.value())) {
-      throw new Error('Member with this email already exists');
+    if (this.cannotAddMember(memberDetails)) {
+      throw new Error('Member already exists');
     }
     const member = new PendingHouseholdMember({
       householdId: this._id,
@@ -91,6 +91,18 @@ export class Household implements Entity<HouseholdSnapshot> {
     });
     this._pendingMembers.push(member);
     this.raiseEvent(new NewMemberInvitedEvent(member));
+  }
+
+  private cannotAddMember(memberDetails: { firstName: FirstName; lastName: LastName; email: Email }) {
+    return this.memberAlreadyExistsWithEmail(memberDetails.email) || this.pendingMemberAlreadyExistsWithEmail(memberDetails.email);
+  }
+
+  private pendingMemberAlreadyExistsWithEmail(email: Email) {
+    return this._pendingMembers.some(member => member.hasEmail(email));
+  }
+
+  private memberAlreadyExistsWithEmail(email: Email) {
+    return this._members.some(member => member.hasEmail(email));
   }
 
   private newMember(memberDetails: MemberDetails) {

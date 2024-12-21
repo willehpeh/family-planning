@@ -38,4 +38,8 @@ export class HouseholdMember implements Entity<HouseholdMemberSnapshot> {
       email: this._email,
     });
   }
+
+  hasEmail(email: Email) {
+    return this._email.equals(email);
+  }
 }

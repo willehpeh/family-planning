@@ -55,4 +55,8 @@ export class PendingHouseholdMember implements ValueObject<{
       this._householdId.equals(other._householdId) &&
       this._id.equals(other._id);
   }
+
+  hasEmail(email: Email): boolean {
+    return this._email.equals(email);
+  }
 }
