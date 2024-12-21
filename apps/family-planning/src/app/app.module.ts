@@ -9,6 +9,8 @@ import { CqrsModule } from '@nestjs/cqrs';
 import { AuthModule } from './auth/auth.module';
 import { UserIdMiddleware } from './middleware/user-id.middleware';
 import { HouseholdsModule } from './households/households.module';
+import { EventBus } from '@family-planning/domain';
+import { EventBus as NestEventBus } from '@nestjs/cqrs/dist/event-bus';
 
 const isDevEnvironment = process.env.APP_ENV === "development";
 
@@ -32,7 +34,13 @@ const isDevEnvironment = process.env.APP_ENV === "development";
     HouseholdsModule
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [
+    {
+      provide: EventBus,
+      useClass: NestEventBus
+    },
+    AppService
+  ],
 })
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer): void {

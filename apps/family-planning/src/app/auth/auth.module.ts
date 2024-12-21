@@ -1,5 +1,4 @@
 import { Module } from '@nestjs/common';
-import { PassportModule } from '@nestjs/passport';
 import { AuthController } from './controllers/auth.controller';
 import { ConfigService } from '@nestjs/config';
 import { Issuer } from 'openid-client';
@@ -9,9 +8,10 @@ import { CreateNewUserCommandHandler, UserCreationService } from '@family-planni
 import { KeycloakUserCreationService } from './services/keycloak-user-creation.service';
 import { EventBus } from '@family-planning/domain';
 import { EventBus as NestEventBus } from '@nestjs/cqrs/dist/event-bus';
+import { HttpModule } from '@nestjs/axios';
 
 @Module({
-  imports: [PassportModule],
+  imports: [HttpModule],
   controllers: [AuthController],
   providers: [
     { provide: 'KEYCLOAK_ISSUER',
@@ -30,7 +30,7 @@ import { EventBus as NestEventBus } from '@nestjs/cqrs/dist/event-bus';
     },
     {
       provide: EventBus,
-      useClass: NestEventBus
+      useExisting: NestEventBus
     },
     CreateNewUserCommandHandler,
   ]

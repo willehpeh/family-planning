@@ -24,7 +24,7 @@ import { EventBus as NestEventBus } from '@nestjs/cqrs';
   providers: [
     {
       provide: EventBus,
-      useClass: NestEventBus
+      useExisting: NestEventBus
     },
     CreateNewHouseholdCommandHandler,
     HouseholdsService,

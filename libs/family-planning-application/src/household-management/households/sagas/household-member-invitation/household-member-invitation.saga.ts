@@ -1,4 +1,4 @@
-import { filter, map, merge, Observable, share } from 'rxjs';
+import { filter, map, merge, Observable, share, tap } from 'rxjs';
 import { DomainEvent, NewMemberInvitedEvent, UserCreatedForHouseholdEvent } from '@family-planning/domain';
 import { CreateNewUserCommand } from '../../../../auth';
 import { ConfirmNewMemberCommand } from '../../commands';
@@ -11,6 +11,7 @@ export class HouseholdMemberInvitationSaga {
 
   constructor(private readonly events$: Observable<DomainEvent>) {
     this.createNewUser$ = this.events$.pipe(
+      tap(console.log),
       filter(event => event.eventName() === 'NewMemberInvited'),
       map(event => event as NewMemberInvitedEvent),
       map(event => new CreateNewUserCommand({
