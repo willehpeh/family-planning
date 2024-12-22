@@ -1,5 +1,5 @@
 <header class="p-5 flex justify-between max-w-screen-lg mx-auto mb-6 border-b-2 border-blue-700 relative">
-	<h1 class="text-4xl text-center">{{ title() }}</h1>
+	<h1 class="text-3xl text-center">{{ title() }}</h1>
 	@if (authenticated()) {
 		<app-button buttonStyle="outline" class="block" (click)="onOpenMenu()">
 			<fa-icon [icon]="faBars"/>
