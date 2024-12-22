@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, HostListener, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ButtonComponent } from '../../ui-elements/button/button.component';
 import { faArrowRightFromBracket, faHouse, faXmark } from '@fortawesome/free-solid-svg-icons';
@@ -32,5 +32,13 @@ export class SideMenuComponent {
   onLogout() {
     this.store.dispatch(CloseSideMenu());
     this.store.dispatch(Logout());
+  }
+
+  @HostListener('document:click', ['$event'])
+  onClick(event: MouseEvent) {
+    const target = event.target as HTMLElement;
+    if (!target.closest('app-side-menu')) {
+      this.store.dispatch(CloseSideMenu());
+    }
   }
 }
