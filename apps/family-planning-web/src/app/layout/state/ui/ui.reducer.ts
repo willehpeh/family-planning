@@ -1,5 +1,5 @@
 import { createReducer, on } from '@ngrx/store';
-import { OpenSideMenu } from './ui.actions';
+import { CloseSideMenu, OpenSideMenu } from './ui.actions';
 
 export const uiFeatureKey = 'ui';
 
@@ -14,4 +14,5 @@ export const initialState: UiState = {
 export const uiReducer = createReducer(
   initialState,
   on(OpenSideMenu, (state): UiState => ({ ...state, sideMenuOpen: true })),
+  on(CloseSideMenu, (state): UiState => ({ ...state, sideMenuOpen: false })),
 );
