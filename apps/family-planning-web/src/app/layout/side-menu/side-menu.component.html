@@ -6,7 +6,7 @@
 	</div>
 	<menu type="toolbar" class="p-5">
 		@for (item of menuItems; track item.label) {
-			<app-side-menu-item [label]="item.label" [iconDefinition]="item.iconDefinition" />
+			<app-side-menu-item [label]="item.label" [iconDefinition]="item.iconDefinition" (click)="item.action()"/>
 		}
 	</menu>
 </div>
