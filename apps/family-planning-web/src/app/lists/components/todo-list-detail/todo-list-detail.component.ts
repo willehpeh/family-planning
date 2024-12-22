@@ -1,6 +1,6 @@
 import { Component, computed, inject, input, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { HeaderComponent } from '../../../layout/header/header.component';
+import { ScaffoldingComponent } from '../../../layout/scaffolding/scaffolding.component';
 import { Store } from '@ngrx/store';
 import { listsFeature } from '../../state/lists.reducer';
 import { TodoListItemComponent } from './todo-list-item/todo-list-item.component';
@@ -13,7 +13,7 @@ import { SerializedTodoListItemFactory } from '../../models/factories/serialized
 @Component({
   selector: "app-todo-list-detail",
   standalone: true,
-  imports: [CommonModule, HeaderComponent, TodoListItemComponent, NewTodoListItemComponent],
+  imports: [CommonModule, ScaffoldingComponent, TodoListItemComponent, NewTodoListItemComponent],
   templateUrl: "./todo-list-detail.component.html",
   styleUrl: "./todo-list-detail.component.scss",
 })

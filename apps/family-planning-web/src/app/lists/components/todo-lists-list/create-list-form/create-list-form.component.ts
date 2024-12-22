@@ -1,6 +1,6 @@
 import { Component, inject, OnInit, Signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { HeaderComponent } from '../../../../layout/header/header.component';
+import { ScaffoldingComponent } from '../../../../layout/scaffolding/scaffolding.component';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ButtonComponent } from '../../../../ui-elements/button/button.component';
 import { Store } from '@ngrx/store';
@@ -10,7 +10,7 @@ import { listsFeature } from '../../../state/lists.reducer';
 @Component({
   selector: "app-create-list-form",
   standalone: true,
-  imports: [CommonModule, HeaderComponent, ReactiveFormsModule, ButtonComponent],
+  imports: [CommonModule, ScaffoldingComponent, ReactiveFormsModule, ButtonComponent],
   templateUrl: "./create-list-form.component.html",
   styleUrl: "./create-list-form.component.scss",
 })

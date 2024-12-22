@@ -11,11 +11,11 @@ import { OpenSideMenu } from '../state/ui/ui.actions';
   selector: "app-header",
   standalone: true,
   imports: [CommonModule, ButtonComponent, FaIconComponent],
-  templateUrl: "./header.component.html",
-  styleUrl: "./header.component.scss",
+  templateUrl: "./scaffolding.component.html",
+  styleUrl: "./scaffolding.component.scss",
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class HeaderComponent {
+export class ScaffoldingComponent {
   title = input<string>();
   private readonly store = inject(Store);
   authenticated = this.store.selectSignal(selectAuthenticated);
