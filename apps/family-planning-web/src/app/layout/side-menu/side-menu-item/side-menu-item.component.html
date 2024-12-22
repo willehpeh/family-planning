@@ -1,0 +1,6 @@
+<li class="p-2 flex items-center justify-between hover:bg-blue-800 cursor-pointer active:bg-blue-700">
+	<span class="block">{{ label() }}</span>
+	@if (iconDefinition(); as icon) {
+		<fa-icon [icon]="icon"/>
+	}
+</li>
