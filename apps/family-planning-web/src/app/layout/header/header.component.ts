@@ -1,11 +1,11 @@
 import { ChangeDetectionStrategy, Component, inject, input } from '@angular/core';
-import { CommonModule } from "@angular/common";
+import { CommonModule } from '@angular/common';
 import { Store } from '@ngrx/store';
 import { selectAuthenticated } from '../../auth/state/auth.selectors';
-import { Logout } from '../../auth/state/auth.actions';
 import { ButtonComponent } from '../../ui-elements/button/button.component';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
-import { faRightFromBracket } from '@fortawesome/free-solid-svg-icons';
+import { faBars } from '@fortawesome/free-solid-svg-icons';
+import { OpenSideMenu } from '../state/ui/ui.actions';
 
 @Component({
   selector: "app-header",
@@ -20,9 +20,9 @@ export class HeaderComponent {
   private readonly store = inject(Store);
   authenticated = this.store.selectSignal(selectAuthenticated);
 
-  onLogout() {
-    this.store.dispatch(Logout());
+  onOpenMenu() {
+    this.store.dispatch(OpenSideMenu());
   }
 
-  protected readonly faRightFromBracket = faRightFromBracket;
+  protected readonly faBars = faBars;
 }
