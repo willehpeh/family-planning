@@ -24,12 +24,12 @@ export class HouseholdsController {
   }
 
   @Post('invite-member')
-  inviteNewMember(@Req() req: Request) {
+  inviteNewMember(@Req() req: Request, @Body() memberDetails: { lastName: string, firstName: string, email: string }) {
     return this.householdsService.inviteNewMember(
       req['householdId'],
-      'InvitedLastName',
-      'InvitedFirstName',
-      'will_alexander@me.com'
+      memberDetails.lastName,
+      memberDetails.firstName,
+      memberDetails.email
     );
   }
 }
