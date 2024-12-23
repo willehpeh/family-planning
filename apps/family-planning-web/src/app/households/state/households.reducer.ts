@@ -1,4 +1,9 @@
-import { LoadHouseholdInfoFailure, LoadHouseholdInfoSuccess, StartInvitingNewMember } from './households.actions';
+import {
+  InviteNewMemberSuccess,
+  LoadHouseholdInfoFailure,
+  LoadHouseholdInfoSuccess,
+  StartInvitingNewMember
+} from './households.actions';
 import { createReducer, on } from '@ngrx/store';
 import { HouseholdInfo } from '../models/household-info';
 
@@ -19,4 +24,5 @@ export const householdsReducer = createReducer(
   on(LoadHouseholdInfoSuccess, (state, { myHousehold }): HouseholdsState => ({ ...state, myHousehold })),
   on(LoadHouseholdInfoFailure, (state): HouseholdsState => ({ ...state, myHousehold: null })),
   on(StartInvitingNewMember, (state): HouseholdsState => ({ ...state, invitingNewMember: true })),
+  on(InviteNewMemberSuccess, (state): HouseholdsState => ({ ...state, invitingNewMember: false }))
 );

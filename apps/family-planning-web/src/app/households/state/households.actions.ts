@@ -16,3 +16,11 @@ export const CreateHouseholdSuccess = createAction(
 );
 export const CreateHouseholdFailure = createAction('[Household API] Create Household Failure');
 export const StartInvitingNewMember = createAction('[MyHouseholdComponent] Start Inviting New Member');
+export const InviteNewMember = createAction(
+  '[MyHouseholdComponent] Invite New Member',
+  props<{ firstName: string, lastName: string, email: string }>()
+);
+export const InviteNewMemberSuccess = createAction(
+  '[Household API] Invite New Member Success',
+);
+export const InviteNewMemberFailure = createAction('[Household API] Invite New Member Failure');

@@ -11,13 +11,14 @@ import {
 } from '../state/households.selectors';
 import { HouseholdMemberInfo } from '../models/household-member-info';
 import { ButtonComponent } from '../../ui-elements/button/button.component';
-import { StartInvitingNewMember } from '../state/households.actions';
+import { InviteNewMember, StartInvitingNewMember } from '../state/households.actions';
 import { MyHouseholdInfoRowComponent } from './my-household-info-row/my-household-info-row.component';
+import { MemberInvitationFormComponent } from './member-invitation-form/member-invitation-form.component';
 
 @Component({
   selector: "app-my-household",
   standalone: true,
-  imports: [CommonModule, ScaffoldingComponent, CardComponent, ButtonComponent, MyHouseholdInfoRowComponent],
+  imports: [CommonModule, ScaffoldingComponent, CardComponent, ButtonComponent, MyHouseholdInfoRowComponent, MemberInvitationFormComponent],
   templateUrl: "./my-household.component.html",
   styleUrl: "./my-household.component.scss",
 })
@@ -37,5 +38,9 @@ export class MyHouseholdComponent {
 
   onStartInvitingNewMember() {
     this.store.dispatch(StartInvitingNewMember());
+  }
+
+  onInviteMember(member: { firstName: string; lastName: string; email: string }) {
+    this.store.dispatch(InviteNewMember(member))
   }
 }

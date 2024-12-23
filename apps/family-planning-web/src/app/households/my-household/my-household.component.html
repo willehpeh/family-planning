@@ -20,8 +20,14 @@
 				</ul>
 			</app-my-household-info-row>
 		}
-		<app-button class="block mt-6"
-								buttonStyle="primary"
-								(click)="onStartInvitingNewMember()">INVITE NEW MEMBER</app-button>
+		@if (!invitingNewMember()) {
+			<app-button class="block mt-6"
+									buttonStyle="primary"
+									(click)="onStartInvitingNewMember()">INVITE NEW MEMBER
+			</app-button>
+		}
+		@if (invitingNewMember()) {
+			<app-member-invitation-form class="block mt-12" (memberInvite)="onInviteMember($event)"/>
+		}
 	</app-card>
 </div>

@@ -4,7 +4,7 @@ import { LoadUserInfoSuccess } from '../../auth/state/auth.actions';
 import { catchError, map, of, switchMap, tap } from 'rxjs';
 import {
   CreateHousehold,
-  CreateHouseholdFailure, CreateHouseholdSuccess,
+  CreateHouseholdFailure, CreateHouseholdSuccess, InviteNewMember, InviteNewMemberFailure, InviteNewMemberSuccess,
   LoadHouseholdInfo,
   LoadHouseholdInfoFailure,
   LoadHouseholdInfoSuccess
@@ -49,6 +49,19 @@ export class HouseholdsEffects {
 
   loadHouseholdInfoOnCreateHouseholdSuccess$ = createEffect(() => this.actions$.pipe(
     ofType(CreateHouseholdSuccess),
+    map(() => LoadHouseholdInfo())
+  ));
+
+  inviteNewMember$ = createEffect(() => this.actions$.pipe(
+    ofType(InviteNewMember),
+    switchMap(action => this.householdsService.inviteNewMember({ firstName: action.firstName, lastName: action.lastName, email: action.email }).pipe(
+      map(() => InviteNewMemberSuccess()),
+      catchError(() => of(InviteNewMemberFailure()))
+    ))
+  ));
+
+  reloadHouseholdInfoOnInviteNewMemberSuccess$ = createEffect(() => this.actions$.pipe(
+    ofType(InviteNewMemberSuccess),
     map(() => LoadHouseholdInfo())
   ));
 }

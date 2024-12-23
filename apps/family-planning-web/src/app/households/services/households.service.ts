@@ -26,4 +26,8 @@ export class HouseholdsService {
   redirectToDashboard(): void {
     this.router.navigate(['/dashboard']);
   }
+
+  inviteNewMember(memberDetails: { lastName: string, firstName: string, email: string }): Observable<void> {
+    return this.http.post<void>('/api/households/invite-member', memberDetails);
+  }
 }
