@@ -15,3 +15,4 @@ export const CreateHouseholdSuccess = createAction(
   '[Household API] Create Household Success',
 );
 export const CreateHouseholdFailure = createAction('[Household API] Create Household Failure');
+export const StartInvitingNewMember = createAction('[MyHouseholdComponent] Start Inviting New Member');

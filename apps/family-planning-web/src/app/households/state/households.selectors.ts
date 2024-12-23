@@ -23,3 +23,7 @@ export const selectMyHouseholdPendingMembers = createSelector(
   selectMyHousehold,
   (household: HouseholdInfo | null) => household?.pendingMembers || []
 );
+export const selectInvitingNewMember = createSelector(
+  selectHouseholdsState,
+  (state: HouseholdsState) => state.invitingNewMember
+);
