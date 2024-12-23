@@ -4,8 +4,8 @@ import { Component, input } from '@angular/core';
   selector: 'app-my-household-info-row',
   standalone: true,
   template: `
-		<div class="flex justify-center gap-6 mb-3">
-      <p class="text-right flex-1 font-bold">{{ label() }}:</p>
+		<div class="flex flex-col md:flex-row justify-center md:gap-6 mb-6">
+      <p class="text-left w-full md:w-1/3 font-bold">{{ label() }}:</p>
       <div class="flex-1 text-left">
         <ng-content/>
       </div>

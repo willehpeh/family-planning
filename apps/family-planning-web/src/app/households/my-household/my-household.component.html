@@ -7,7 +7,7 @@
 		<app-my-household-info-row label="Members">
 			<ul>
 				@for (member of householdMembers(); track member.id) {
-					<li>{{ member.firstName }}{{ member.lastName }} - {{ member.email }}</li>
+					<li class="mb-3">{{ member.firstName }} {{ member.lastName }}<br>{{ member.email }}</li>
 				}
 			</ul>
 		</app-my-household-info-row>
@@ -15,7 +15,7 @@
 			<app-my-household-info-row label="Pending members">
 				<ul>
 					@for (member of pendingHouseholdMembers(); track member.id) {
-						<li>{{ member.firstName }}{{ member.lastName }} - {{ member.email }}</li>
+						<li class="mb-3">{{ member.firstName }} {{ member.lastName }}<br>{{ member.email }}</li>
 					}
 				</ul>
 			</app-my-household-info-row>
