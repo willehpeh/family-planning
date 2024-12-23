@@ -14,7 +14,11 @@ export class OrmHouseholdRepository implements HouseholdRepository {
   }
 
   async findByUserId(userId: string): Promise<HouseholdReadModel | null> {
-    return this.householdRepository.findOne({ relations: ['members'], where: { members: { userId } } });
+    return this.householdRepository
+      .createQueryBuilder('household')
+      .innerJoin('household.members', 'member', 'member.userId = :userId', { userId })
+      .leftJoinAndSelect('household.members', 'allMembers') // Fetch all members
+      .getOne();
   }
 
   async findById(householdId: string): Promise<Household> {
