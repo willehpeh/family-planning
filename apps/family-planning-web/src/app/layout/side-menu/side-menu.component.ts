@@ -1,7 +1,7 @@
 import { Component, HostListener, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ButtonComponent } from '../../ui-elements/button/button.component';
-import { faArrowRightFromBracket, faHouse, faXmark } from '@fortawesome/free-solid-svg-icons';
+import { faArrowRightFromBracket, faHouse, faTableCellsLarge, faXmark } from '@fortawesome/free-solid-svg-icons';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { Store } from '@ngrx/store';
 import { CloseSideMenu } from '../state/ui/ui.actions';
@@ -21,6 +21,7 @@ export class SideMenuComponent {
   protected readonly faArrowRightFromBracket = faArrowRightFromBracket;
   protected readonly faHouse = faHouse;
   protected readonly menuItems = [
+    { label: 'Dashboard', iconDefinition: faTableCellsLarge, action: () => this.onGoToDashboard() },
     { label: 'My Household', iconDefinition: faHouse, action: () => this.onGoToMyHousehold() },
     { label: 'Logout', iconDefinition: faArrowRightFromBracket, action: () => this.onLogout() },
   ]
@@ -47,5 +48,10 @@ export class SideMenuComponent {
     if (!target.closest('app-side-menu')) {
       this.store.dispatch(CloseSideMenu());
     }
+  }
+
+  private onGoToDashboard() {
+    this.store.dispatch(CloseSideMenu());
+    this.router.navigate(['dashboard']);
   }
 }
