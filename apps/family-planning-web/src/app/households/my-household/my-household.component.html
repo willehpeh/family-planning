@@ -5,7 +5,7 @@
 			<p class="text-right flex-1 font-bold">Name:</p>
 			<p class="flex-1 text-left">{{ householdName() }}</p>
 		</div>
-		<div class="flex justify-center gap-6 mb-6">
+		<div class="flex justify-center gap-6 mb-3">
 			<p class="text-right flex-1 font-bold">Members:</p>
 			<ul class="text-left flex-1">
 				@for (member of householdMembers(); track member.id) {
@@ -13,6 +13,16 @@
 				}
 			</ul>
 		</div>
-		<app-button buttonStyle="primary">INVITE NEW MEMBER</app-button>
+		@if (pendingHouseholdMembers().length > 0) {
+			<div class="flex justify-center gap-6 mb-3">
+				<p class="text-right flex-1 font-bold">Pending members:</p>
+				<ul class="text-left flex-1">
+					@for (member of pendingHouseholdMembers(); track member.id) {
+						<li>{{ member.firstName }}{{ member.lastName }} - {{ member.email }}</li>
+					}
+				</ul>
+			</div>
+		}
+		<app-button class="block mt-6" buttonStyle="primary">INVITE NEW MEMBER</app-button>
 	</app-card>
 </div>
