@@ -32,6 +32,7 @@ export class SideMenuComponent {
   }
 
   onGoToMyHousehold() {
+    this.store.dispatch(CloseSideMenu());
     this.router.navigate(['households', 'my-household']);
   }
 
