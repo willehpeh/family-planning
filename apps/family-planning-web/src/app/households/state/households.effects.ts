@@ -24,7 +24,7 @@ export class HouseholdsEffects {
   loadHouseholdInfo$ = createEffect(() => this.actions$.pipe(
     ofType(LoadHouseholdInfo),
     switchMap(() => this.householdsService.loadHouseholdInfo().pipe(
-      map(({ householdId, householdName }) => LoadHouseholdInfoSuccess({ householdId, householdName})),
+      map(myHousehold => LoadHouseholdInfoSuccess({ myHousehold })),
       catchError(() => of(LoadHouseholdInfoFailure()))
     ))
   ));

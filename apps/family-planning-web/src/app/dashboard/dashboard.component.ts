@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { CardsContainerComponent } from './cards-container/cards-container.component';
 import { ScaffoldingComponent } from '../layout/scaffolding/scaffolding.component';
 import { Store } from '@ngrx/store';
-import { selectHouseholdName } from '../households/state/households.selectors';
+import { selectMyHouseholdName } from '../households/state/households.selectors';
 
 @Component({
   selector: 'app-dashboard',
@@ -18,7 +18,7 @@ export class DashboardComponent {
   private householdName: Signal<string>;
 
   constructor() {
-    this.householdName = this.store.selectSignal(selectHouseholdName);
+    this.householdName = this.store.selectSignal(selectMyHouseholdName);
     this.dashboardTitle = computed(() => `${ this.householdName().toLocaleUpperCase() } COMMAND CENTRE`);
   }
 }

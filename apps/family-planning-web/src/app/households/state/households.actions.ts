@@ -1,9 +1,10 @@
 import { createAction, props } from '@ngrx/store';
+import { HouseholdInfo } from '../models/household-info';
 
 export const LoadHouseholdInfo = createAction('[@Effect loadHouseholdInfoOnLoadUserInfoSuccess$] Load Household Info');
 export const LoadHouseholdInfoSuccess = createAction(
   '[Household API] Load Household Info Success',
-  props<{ householdId: string, householdName: string }>()
+  props<{ myHousehold: HouseholdInfo }>()
 );
 export const LoadHouseholdInfoFailure = createAction('[Household API] Load Household Info Failure');
 export const CreateHousehold = createAction(
