@@ -7,6 +7,7 @@ import { Store } from '@ngrx/store';
 import { CloseSideMenu } from '../state/ui/ui.actions';
 import { SideMenuItemComponent } from './side-menu-item/side-menu-item.component';
 import { Logout } from '../../auth/state/auth.actions';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-side-menu',
@@ -20,13 +21,18 @@ export class SideMenuComponent {
   protected readonly faArrowRightFromBracket = faArrowRightFromBracket;
   protected readonly faHouse = faHouse;
   protected readonly menuItems = [
-    { label: 'My Household', iconDefinition: faHouse, action: () => {} },
+    { label: 'My Household', iconDefinition: faHouse, action: () => this.onGoToMyHousehold() },
     { label: 'Logout', iconDefinition: faArrowRightFromBracket, action: () => this.onLogout() },
   ]
   private readonly store = inject(Store);
+  private readonly router = inject(Router);
 
   onCloseMenu() {
     this.store.dispatch(CloseSideMenu());
+  }
+
+  onGoToMyHousehold() {
+    this.router.navigate(['households', 'my-household']);
   }
 
   onLogout() {
