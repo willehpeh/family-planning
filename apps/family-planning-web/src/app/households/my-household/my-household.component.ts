@@ -14,11 +14,12 @@ import { ButtonComponent } from '../../ui-elements/button/button.component';
 import { InviteNewMember, StartInvitingNewMember } from '../state/households.actions';
 import { MyHouseholdInfoRowComponent } from './my-household-info-row/my-household-info-row.component';
 import { MemberInvitationFormComponent } from './member-invitation-form/member-invitation-form.component';
+import { MyHouseholdMemberListComponent } from './my-household-member-list/my-household-member-list.component';
 
 @Component({
   selector: "app-my-household",
   standalone: true,
-  imports: [CommonModule, ScaffoldingComponent, CardComponent, ButtonComponent, MyHouseholdInfoRowComponent, MemberInvitationFormComponent],
+  imports: [CommonModule, ScaffoldingComponent, CardComponent, ButtonComponent, MyHouseholdInfoRowComponent, MemberInvitationFormComponent, MyHouseholdMemberListComponent],
   templateUrl: "./my-household.component.html",
   styleUrl: "./my-household.component.scss",
 })

@@ -1,23 +1,18 @@
 <app-header title="MY HOUSEHOLD"/>
 <div class="max-w-screen-md mx-auto">
 	<app-card>
+
 		<app-my-household-info-row label="Name">
 			<p>{{ householdName() }}</p>
 		</app-my-household-info-row>
+
 		<app-my-household-info-row label="Members">
-			<ul>
-				@for (member of householdMembers(); track member.id) {
-					<li class="mb-3">{{ member.firstName }} {{ member.lastName }}<br>{{ member.email }}</li>
-				}
-			</ul>
+			<app-my-household-member-list [members]="householdMembers()"/>
 		</app-my-household-info-row>
+
 		@if (pendingHouseholdMembers().length > 0) {
 			<app-my-household-info-row label="Pending members">
-				<ul>
-					@for (member of pendingHouseholdMembers(); track member.id) {
-						<li class="mb-3">{{ member.firstName }} {{ member.lastName }}<br>{{ member.email }}</li>
-					}
-				</ul>
+				<app-my-household-member-list [members]="pendingHouseholdMembers()"/>
 			</app-my-household-info-row>
 		}
 		@if (!invitingNewMember()) {
