@@ -1,7 +1,25 @@
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
 import { CreateNewUserCommand } from './create-new-user.command';
 import { UserCreationService } from '../../providers';
-import { EventBus, UserCreatedForHouseholdEvent } from '@family-planning/domain';
+import { DomainEvent, EventBus, UserCreatedForHouseholdEvent } from '@family-planning/domain';
+
+class UserCreationFailedEvent implements DomainEvent {
+
+  private readonly _occurredOn: Date;
+
+  constructor() {
+    this._occurredOn = new Date();
+  }
+
+  eventName(): string {
+    return 'UserCreationFailed';
+  }
+
+  occurredOn(): Date {
+    return this._occurredOn;
+  }
+
+}
 
 @CommandHandler(CreateNewUserCommand)
 export class CreateNewUserCommandHandler implements ICommandHandler<CreateNewUserCommand> {
@@ -20,7 +38,7 @@ export class CreateNewUserCommandHandler implements ICommandHandler<CreateNewUse
 
       await this.eventBus.publish(new UserCreatedForHouseholdEvent({ userId, firstName, lastName, email, householdId, memberId }));
     } catch {
-      throw new Error('User creation failed');
+      await this.eventBus.publish(new UserCreationFailedEvent());
     }
   }
 }
