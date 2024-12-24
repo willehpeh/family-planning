@@ -1,4 +1,4 @@
-import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
+import { MiddlewareConsumer, Module, NestModule, RequestMethod } from '@nestjs/common';
 
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
@@ -11,6 +11,7 @@ import { UserIdMiddleware } from './middleware/user-id.middleware';
 import { HouseholdsModule } from './households/households.module';
 import { EventBus } from '@family-planning/domain';
 import { EventBus as NestEventBus } from '@nestjs/cqrs/dist/event-bus';
+import { TenantMiddleware } from './middleware/tenant.middleware';
 
 const isDevEnvironment = process.env.APP_ENV === "development";
 
@@ -45,5 +46,12 @@ const isDevEnvironment = process.env.APP_ENV === "development";
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer): void {
     consumer.apply(UserIdMiddleware).forRoutes("*");
+    consumer
+      .apply(TenantMiddleware)
+      .exclude(
+        { path: 'households/me', method: RequestMethod.GET },
+        { path: 'households/new', method: RequestMethod.POST },
+        { path: 'auth/*', method: RequestMethod.ALL }
+      );
   }
 }
