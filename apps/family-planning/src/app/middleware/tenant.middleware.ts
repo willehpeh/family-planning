@@ -13,11 +13,11 @@ export class TenantMiddleware implements NestMiddleware {
   async use(req: Request, res: Response, next: NextFunction) {
     const userId = req['userId'];
     if (!userId) {
-      throw new UnauthorizedException();
+      throw new UnauthorizedException('User ID is required');
     }
     const household: HouseholdReadModel = await this.queryBus.execute(new FindHouseholdForUserIdQuery(userId));
     if (!household) {
-      throw new UnauthorizedException();
+      throw new UnauthorizedException('No household found for user');
     }
     const householdId = household.id;
     req['householdId'] = householdId;
