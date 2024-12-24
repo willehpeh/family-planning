@@ -22,6 +22,9 @@ export class OrmHouseholdRepository implements HouseholdRepository {
   }
 
   async findById(householdId: string): Promise<Household> {
+    if (!householdId) {
+      throw new Error('Household ID is required');
+    }
     const entity = await this.householdRepository.findOne({ where: { id: householdId } });
     if (!entity) {
       throw new Error('Household not found');
