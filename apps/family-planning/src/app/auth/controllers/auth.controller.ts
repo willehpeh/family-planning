@@ -49,15 +49,17 @@ export class AuthController {
   }
 
   private setTokenCookies(res: Response, tokens: TokenSet): Response {
-    res.cookie('access_token', tokens.access_token, {
+    this.setTokenCookie(res, tokens.access_token, 'access_token', 3600 * 1000);
+    this.setTokenCookie(res, tokens.refresh_token, 'refresh_token', 7 * 24 * 3600 * 1000);
+
+    return res;
+  }
+
+  private setTokenCookie(res: Response, token: string, cookieName: string, maxAge: number): Response {
+    res.cookie(cookieName, token, {
       httpOnly: true,
       secure: this.configService.get('APP_ENV') === 'production',
-      maxAge: 3600 * 1000,
-    });
-    res.cookie('refresh_token', tokens.refresh_token, {
-      httpOnly: true,
-      secure: this.configService.get('APP_ENV') === 'production',
-      maxAge: 7 * 24 * 3600 * 1000,
+      maxAge,
     });
 
     return res;
