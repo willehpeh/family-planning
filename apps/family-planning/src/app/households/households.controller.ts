@@ -3,6 +3,7 @@ import { HouseholdsService } from './providers/households.service';
 import { AuthenticatedHouseholdRequest } from '../common/authenticated-household-request';
 import { AuthenticatedRequest } from '../common/authenticated-request';
 import { POSTNewHouseholdDto } from './dtos/POST.new-household.dto';
+import { POSTInviteNewMemberDto } from './dtos/POST.invite-new-member.dto';
 
 @Controller('households')
 export class HouseholdsController {
@@ -26,7 +27,7 @@ export class HouseholdsController {
   }
 
   @Post('invite-member')
-  inviteNewMember(@Req() req: AuthenticatedHouseholdRequest, @Body() memberDetails: { lastName: string, firstName: string, email: string }) {
+  inviteNewMember(@Req() req: AuthenticatedHouseholdRequest, @Body() memberDetails: POSTInviteNewMemberDto) {
     return this.householdsService.inviteNewMember(
       req.householdId,
       memberDetails.lastName,
