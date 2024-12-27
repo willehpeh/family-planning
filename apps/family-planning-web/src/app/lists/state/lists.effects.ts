@@ -50,7 +50,7 @@ export class ListsEffects {
 
   addItemToList$ = createEffect(() => this.actions$.pipe(
     ofType(AddItemToList),
-    mergeMap(({ listId, temporaryItem }) => this.listsService.addItemToList(listId, temporaryItem).pipe(
+    mergeMap(({ listId, temporaryItem }) => this.listsService.addItemToList(listId, { name: temporaryItem.name }).pipe(
       map(() => AddItemToListSuccess()),
       catchError((error: HttpErrorResponse) => of(AddItemToListFailure({ error, listId, transactionId: temporaryItem.id })))
     ))
