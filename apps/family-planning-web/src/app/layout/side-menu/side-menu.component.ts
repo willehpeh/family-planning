@@ -8,6 +8,7 @@ import { CloseSideMenu } from '../state/ui/ui.actions';
 import { SideMenuItemComponent } from './side-menu-item/side-menu-item.component';
 import { Logout } from '../../auth/state/auth.actions';
 import { Router } from '@angular/router';
+import { AuthFacade } from '../../auth/state/auth.facade';
 
 @Component({
   selector: 'app-side-menu',
@@ -27,6 +28,7 @@ export class SideMenuComponent {
   ]
   private readonly store = inject(Store);
   private readonly router = inject(Router);
+  private readonly authFacade = inject(AuthFacade);
 
   onCloseMenu() {
     this.store.dispatch(CloseSideMenu());
@@ -39,7 +41,7 @@ export class SideMenuComponent {
 
   onLogout() {
     this.store.dispatch(CloseSideMenu());
-    this.store.dispatch(Logout());
+    this.authFacade.logout();
   }
 
   @HostListener('document:click', ['$event'])

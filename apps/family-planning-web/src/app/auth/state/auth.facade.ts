@@ -2,7 +2,7 @@ import { inject, Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { filter, Observable } from 'rxjs';
 import { UserInfoDto } from '../types/user-info.dto';
-import { LoadUserInfo } from './auth.actions';
+import { LoadUserInfo, Logout } from './auth.actions';
 import { selectUserInfo } from './auth.selectors';
 
 @Injectable({
@@ -16,5 +16,9 @@ export class AuthFacade {
     return this.store.select(selectUserInfo).pipe(
       filter(userInfo => !!userInfo)
     );
+  }
+
+  logout(): void {
+    this.store.dispatch(Logout());
   }
 }
