@@ -1,9 +1,10 @@
-import { ApplicationConfig, provideZoneChangeDetection, } from '@angular/core';
+import { APP_INITIALIZER, ApplicationConfig, provideZoneChangeDetection, } from '@angular/core';
 import { provideRouter, withComponentInputBinding } from '@angular/router';
 import { appRoutes } from './app.routes';
 import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { storeProviders } from './store.providers';
 import { withCredentialsInterceptor } from './auth/interceptors/with-credentials.interceptor';
+import { Title } from '@angular/platform-browser';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -12,6 +13,11 @@ export const appConfig: ApplicationConfig = {
     provideRouter(appRoutes, withComponentInputBinding()),
     provideHttpClient(
       withInterceptors([withCredentialsInterceptor]),
-    )
+    ),
+    {
+      provide: APP_INITIALIZER,
+      useFactory: (title: Title) => title.setTitle('Family Planning'),
+      deps: [Title]
+    }
   ],
 };
