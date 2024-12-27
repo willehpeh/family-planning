@@ -2,8 +2,10 @@ import { inject, Injectable, Signal } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Router } from '@angular/router';
 import { SerializedTodoList } from '../models/serialized-todo-list';
-import { LoadAllLists } from './lists.actions';
+import { AddItemToList, LoadAllLists, LoadAllListsFromDetailView } from './lists.actions';
 import { listsFeature } from './lists.reducer';
+import { ItemDetails } from '@family-planning/application';
+import { SerializedTodoListItemFactory } from '../models/factories/serialized-todo-list-item.factory';
 
 @Injectable()
 export class ListsFacade {
@@ -13,6 +15,14 @@ export class ListsFacade {
   allLists(): Signal<SerializedTodoList[]> {
     this.store.dispatch(LoadAllLists());
     return this.store.selectSignal(listsFeature.selectAllLists);
+  }
+
+  listWithId(id: string): SerializedTodoList | undefined {
+    const list = this.store.selectSignal(listsFeature.selectListById(id));
+    if (!list()) {
+      this.store.dispatch(LoadAllListsFromDetailView());
+    }
+    return list();
   }
 
   loading(): Signal<boolean> {
@@ -25,5 +35,12 @@ export class ListsFacade {
 
   createList(): void {
     this.router.navigate(['/lists/todo/new']);
+  }
+
+  addItemToList(listId: string, item: ItemDetails): void {
+    this.store.dispatch(AddItemToList({
+      listId,
+      temporaryItem: SerializedTodoListItemFactory.temporaryItem(item)
+    }));
   }
 }
