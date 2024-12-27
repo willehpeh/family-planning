@@ -37,7 +37,7 @@ export class ListsEffects {
 
   createNewList$ = createEffect(() => this.actions$.pipe(
     ofType(CreateList),
-    switchMap(createListDto => this.listsService.createList(createListDto).pipe(
+    switchMap(({ createListDto }) => this.listsService.createList(createListDto).pipe(
       map(() => CreateListSuccess()),
       catchError((error: HttpErrorResponse) => of(CreateListFailure(error)))
     )),

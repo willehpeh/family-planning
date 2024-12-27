@@ -1,7 +1,8 @@
 import { Body, Controller, Get, Param, Post, Req } from '@nestjs/common';
-import { AddItemToTodoListDto, CreateTodoListDto, ItemDetails } from '@family-planning/application';
+import { AddItemToTodoListDto, ItemDetails } from '@family-planning/application';
 import { ListsService } from './lists.service';
 import { AuthenticatedHouseholdRequest } from '../common/authenticated-household-request';
+import { POSTCreateTodoListDto } from './dtos/POST.create-todo-list.dto';
 
 @Controller('lists')
 export class ListsController {
@@ -14,7 +15,7 @@ export class ListsController {
   }
 
   @Post('todo')
-  createTodoList(@Body() createTodoListDto: CreateTodoListDto, @Req() { householdId }: AuthenticatedHouseholdRequest) {
+  createTodoList(@Body() createTodoListDto: POSTCreateTodoListDto, @Req() { householdId }: AuthenticatedHouseholdRequest) {
     return this.listsService.createTodoList(createTodoListDto, householdId);
   }
 

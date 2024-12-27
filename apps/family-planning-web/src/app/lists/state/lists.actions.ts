@@ -24,7 +24,7 @@ export const LoadAllListsFailure = createAction(
 
 export const CreateList = createAction(
   '[CreateListFormComponent] Create List',
-  props<CreateTodoListDto>()
+  props<{ createListDto: CreateTodoListDto }>()
 );
 
 export const CreateListSuccess = createAction(

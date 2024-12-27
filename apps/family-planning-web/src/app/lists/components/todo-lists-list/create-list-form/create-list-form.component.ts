@@ -30,6 +30,6 @@ export class CreateListFormComponent implements OnInit {
   }
 
   onCreateNewList() {
-    this.store.dispatch(CreateList(this.newTodoListForm.value));
+    this.store.dispatch(CreateList({ createListDto: this.newTodoListForm.value }));
   }
 }
