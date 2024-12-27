@@ -1,10 +1,7 @@
 import { Route } from '@angular/router';
-import { provideState } from '@ngrx/store';
-import { listsFeature } from './lists/state/lists.reducer';
-import { provideEffects } from '@ngrx/effects';
-import { ListsEffects } from './lists/state/lists.effects';
 import { AuthGuard } from './auth/guards/auth.guard';
 import { userInfoResolver } from './command-centre/resolvers/user-info.resolver';
+import { LISTS_PROVIDERS } from './lists/lists.providers';
 
 export const appRoutes: Route[] = [
   { path: 'disclaimer', loadComponent: () => import('./disclaimer/disclaimer.component').then(m => m.DisclaimerComponent) },
@@ -13,10 +10,7 @@ export const appRoutes: Route[] = [
     loadComponent: () => import('./command-centre/command-centre.component').then(m => m.CommandCentreComponent) },
   { path: 'lists',
     canActivate: [AuthGuard],
-    providers: [
-      provideState(listsFeature),
-      provideEffects(ListsEffects)
-    ],
+    providers: LISTS_PROVIDERS,
     loadChildren: () => import('./lists/lists.routes').then(m => m.listRoutes) },
   { path: 'households',
     canActivate: [AuthGuard],
