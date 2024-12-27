@@ -12,7 +12,7 @@ export const NoHouseholdIdGuard: CanActivateFn = () => {
     map(householdId => !householdId),
     tap(noHouseholdId => {
       if (!noHouseholdId) {
-        router.navigate(['dashboard']);
+        router.navigate(['command-centre']);
       }
     })
   );

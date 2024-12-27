@@ -11,7 +11,7 @@ export const AuthGuard: CanActivateFn = () => {
     take(1),
     tap((authenticated) => {
       if (!authenticated) {
-        router.navigate(['dashboard']);
+        router.navigate(['command-centre']);
       }
     })
   );

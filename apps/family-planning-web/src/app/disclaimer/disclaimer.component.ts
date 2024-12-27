@@ -16,6 +16,6 @@ export class DisclaimerComponent {
   private router = inject(Router);
 
   onAcceptDisclaimer() {
-    this.router.navigate(['dashboard']);
+    this.router.navigate(['command-centre']);
   }
 }

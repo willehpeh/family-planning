@@ -3,12 +3,8 @@ import { CommonModule } from '@angular/common';
 import { ButtonComponent } from '../../ui-elements/button/button.component';
 import { faArrowRightFromBracket, faHouse, faTableCellsLarge, faXmark } from '@fortawesome/free-solid-svg-icons';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
-import { Store } from '@ngrx/store';
-import { CloseSideMenu } from '../state/ui/ui.actions';
 import { SideMenuItemComponent } from './side-menu-item/side-menu-item.component';
-import { Logout } from '../../auth/state/auth.actions';
-import { Router } from '@angular/router';
-import { AuthFacade } from '../../auth/state/auth.facade';
+import { SideMenuFacade } from '../state/side-menu.facade';
 
 @Component({
   selector: 'app-side-menu',
@@ -22,38 +18,37 @@ export class SideMenuComponent {
   protected readonly faArrowRightFromBracket = faArrowRightFromBracket;
   protected readonly faHouse = faHouse;
   protected readonly menuItems = [
-    { label: 'Dashboard', iconDefinition: faTableCellsLarge, action: () => this.onGoToDashboard() },
+    { label: 'Command Centre', iconDefinition: faTableCellsLarge, action: () => this.onGoToCommandCentre() },
     { label: 'My Household', iconDefinition: faHouse, action: () => this.onGoToMyHousehold() },
     { label: 'Logout', iconDefinition: faArrowRightFromBracket, action: () => this.onLogout() },
   ]
-  private readonly store = inject(Store);
-  private readonly router = inject(Router);
-  private readonly authFacade = inject(AuthFacade);
+  private readonly sideMenuFacade = inject(SideMenuFacade);
 
   onCloseMenu() {
-    this.store.dispatch(CloseSideMenu());
+    this.close();
   }
 
   onGoToMyHousehold() {
-    this.store.dispatch(CloseSideMenu());
-    this.router.navigate(['households', 'my-household']);
+    this.sideMenuFacade.goToMyHousehold();
   }
 
   onLogout() {
-    this.store.dispatch(CloseSideMenu());
-    this.authFacade.logout();
+    this.sideMenuFacade.logout();
   }
 
   @HostListener('document:click', ['$event'])
   onClick(event: MouseEvent) {
     const target = event.target as HTMLElement;
     if (!target.closest('app-side-menu')) {
-      this.store.dispatch(CloseSideMenu());
+      this.close();
     }
   }
 
-  private onGoToDashboard() {
-    this.store.dispatch(CloseSideMenu());
-    this.router.navigate(['dashboard']);
+  private onGoToCommandCentre() {
+    this.sideMenuFacade.goToCommandCentre();
+  }
+
+  private close(): void {
+    this.sideMenuFacade.close();
   }
 }

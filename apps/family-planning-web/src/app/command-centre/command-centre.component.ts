@@ -6,19 +6,19 @@ import { Store } from '@ngrx/store';
 import { selectMyHouseholdName } from '../households/state/households.selectors';
 
 @Component({
-  selector: 'app-dashboard',
+  selector: 'app-command-centre',
   standalone: true,
   imports: [CommonModule, CardsContainerComponent, ScaffoldingComponent],
-  templateUrl: './dashboard.component.html',
-  styleUrl: './dashboard.component.scss',
+  templateUrl: './command-centre.component.html',
+  styleUrl: './command-centre.component.scss',
 })
-export class DashboardComponent {
-  dashboardTitle: Signal<string>;
+export class CommandCentreComponent {
+  commandCentreTitle: Signal<string>;
   private store = inject(Store);
   private householdName: Signal<string>;
 
   constructor() {
     this.householdName = this.store.selectSignal(selectMyHouseholdName);
-    this.dashboardTitle = computed(() => `${ this.householdName().toLocaleUpperCase() } COMMAND CENTRE`);
+    this.commandCentreTitle = computed(() => `${ this.householdName().toLocaleUpperCase() } COMMAND CENTRE`);
   }
 }

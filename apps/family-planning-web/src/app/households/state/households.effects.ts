@@ -29,9 +29,9 @@ export class HouseholdsEffects {
     ))
   ));
 
-  navigateToDashboardOnLoadHouseholdInfoSuccess$ = createEffect(() => this.actions$.pipe(
+  navigateToCommandCentreOnLoadHouseholdInfoSuccess$ = createEffect(() => this.actions$.pipe(
     ofType(LoadHouseholdInfoSuccess),
-    tap(() => this.householdsService.redirectToDashboard())
+    tap(() => this.householdsService.redirectToCommandCentre())
   ), { dispatch: false });
 
   navigateToNewHouseholdPageOnLoadHouseholdInfoFailure$ = createEffect(() => this.actions$.pipe(

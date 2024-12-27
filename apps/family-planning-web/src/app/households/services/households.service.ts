@@ -23,8 +23,8 @@ export class HouseholdsService {
     this.router.navigate(['/households/new']);
   }
 
-  redirectToDashboard(): void {
-    this.router.navigate(['/dashboard']);
+  redirectToCommandCentre(): void {
+    this.router.navigate(['/command-centre']);
   }
 
   inviteNewMember(memberDetails: { lastName: string, firstName: string, email: string }): Observable<void> {
