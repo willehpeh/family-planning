@@ -2,6 +2,7 @@ import { Body, Controller, Get, Post, Req } from '@nestjs/common';
 import { HouseholdsService } from './providers/households.service';
 import { AuthenticatedHouseholdRequest } from '../common/authenticated-household-request';
 import { AuthenticatedRequest } from '../common/authenticated-request';
+import { POSTNewHouseholdDto } from './dtos/POST.new-household.dto';
 
 @Controller('households')
 export class HouseholdsController {
@@ -9,7 +10,7 @@ export class HouseholdsController {
   constructor(private readonly householdsService: HouseholdsService) {}
 
   @Post('new')
-  newHousehold(@Req() req: AuthenticatedRequest, @Body('householdName') householdName: string) {
+  newHousehold(@Req() req: AuthenticatedRequest, @Body() { householdName }: POSTNewHouseholdDto) {
     return this.householdsService.createNewHousehold(
       householdName,
       req.userId,
