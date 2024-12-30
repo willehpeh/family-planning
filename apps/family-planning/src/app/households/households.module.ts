@@ -8,7 +8,7 @@ import {
   InviteNewMemberCommandHandler
 } from '@family-planning/application';
 import { HouseholdsService } from './providers/households.service';
-import { HouseholdsController } from './households.controller';
+import { HouseholdsController } from './controllers/households.controller';
 import { HouseholdSagaRegistry } from './providers/household-saga-registry.service';
 import { EventBus, isDomainEvent } from '@family-planning/domain';
 import { filter } from 'rxjs';

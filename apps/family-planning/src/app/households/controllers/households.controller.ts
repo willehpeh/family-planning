@@ -1,9 +1,9 @@
 import { Body, Controller, Get, Post, Req } from '@nestjs/common';
-import { HouseholdsService } from './providers/households.service';
-import { AuthenticatedHouseholdRequest } from '../common/authenticated-household-request';
-import { AuthenticatedRequest } from '../common/authenticated-request';
-import { POSTNewHouseholdDto } from './dtos/POST.new-household.dto';
-import { POSTInviteNewMemberDto } from './dtos/POST.invite-new-member.dto';
+import { HouseholdsService } from '../providers/households.service';
+import { AuthenticatedHouseholdRequest } from '../../common/authenticated-household-request';
+import { AuthenticatedRequest } from '../../common/authenticated-request';
+import { POSTNewHouseholdDto } from '../dtos/POST.new-household.dto';
+import { POSTInviteNewMemberDto } from '../dtos/POST.invite-new-member.dto';
 
 @Controller('households')
 export class HouseholdsController {
