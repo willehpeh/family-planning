@@ -1,7 +1,4 @@
 import { MiddlewareConsumer, Module, NestModule, RequestMethod } from '@nestjs/common';
-
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
 import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ListsModule } from './lists/lists.module';
@@ -34,13 +31,11 @@ const isDevEnvironment = process.env.APP_ENV === "development";
     AuthModule,
     HouseholdsModule
   ],
-  controllers: [AppController],
   providers: [
     {
       provide: EventBus,
       useClass: NestEventBus
     },
-    AppService
   ],
 })
 export class AppModule implements NestModule {
