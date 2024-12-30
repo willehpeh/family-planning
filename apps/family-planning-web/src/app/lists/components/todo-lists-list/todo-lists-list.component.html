@@ -1,24 +1,18 @@
 <app-header title="TODO LISTS"/>
 <div class="flex justify-center gap-6 flex-wrap mb-6">
-	<app-card [clickable]="true"
-						borderColor="amber"
-						(click)="onCreateList()"
-						class="self-stretch w-1/2 sm:w-1/3 md:w-1/4 lg:w-1/6 max-w-52">
-		<fa-icon [icon]="faPlus" size="2x" class="text-amber-300"/>
-		<h2 class="mt-4 text-amber-300">NEW LIST</h2>
-	</app-card>
+	<app-todo-list-grid-cell
+			(click)="onCreateList()"
+			listName="NEW LIST"
+			[highlight]="true"
+			[icon]="faPlus"/>
 </div>
 @if (loading()) {
 	<p class="text-center">Loading...</p>
 } @else {
 	<div class="flex justify-center gap-6 flex-wrap">
 		@for (list of lists(); track list.id) {
-			<app-card [clickable]="true"
-								(click)="onClickList(list.id)"
-								class="self-stretch w-1/2 sm:w-1/3 md:w-1/4 lg:w-1/6 max-w-52">
-				<fa-icon [icon]="faListCheck" size="2x" class="text-white"/>
-				<h2 class="mt-4">{{ list.name }}</h2>
-			</app-card>
+			<app-todo-list-grid-cell (click)="onClickList(list.id)"
+															 [listName]="list.name"/>
 		}
 	</div>
 }
