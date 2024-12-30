@@ -28,14 +28,9 @@ export class CreateNewUserCommandHandler implements ICommandHandler<CreateNewUse
 
   async execute(command: CreateNewUserCommand): Promise<void> {
     try {
-      await this.userCreationService.createUser(
-        command.dto.firstName,
-        command.dto.lastName,
-        command.dto.email,
-      );
       const { firstName, lastName, email, householdId, memberId } = command.dto;
+      await this.userCreationService.createUser(firstName, lastName, email);
       const userId = await this.userCreationService.getUserIdForEmail(email);
-
       await this.eventBus.publish(new UserCreatedForHouseholdEvent({ userId, firstName, lastName, email, householdId, memberId }));
     } catch {
       await this.eventBus.publish(new UserCreationFailedEvent());
