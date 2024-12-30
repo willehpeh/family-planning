@@ -5,8 +5,8 @@ import {
   CreateTodoListCommandHandler,
   FindAllListsQueryHandler
 } from '@family-planning/application';
-import { ListsService } from './lists.service';
-import { ListsController } from './lists.controller';
+import { ListsService } from './providers/lists.service';
+import { ListsController } from './controllers/lists.controller';
 import { TenantMiddleware } from '../middleware/tenant.middleware';
 
 @Module({
