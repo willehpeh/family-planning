@@ -20,4 +20,8 @@ export class TodoListItemSnapshot implements EntitySnapshot {
   householdId(): string {
     return this._householdId.value();
   }
+
+  done(): boolean {
+    return true;
+  }
 }

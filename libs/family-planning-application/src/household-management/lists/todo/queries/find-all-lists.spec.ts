@@ -1,11 +1,5 @@
-import {
-  EMPTY_TODO_LIST_SNAPSHOT,
-  InMemoryTodoListsQueryRepository,
-  TODO_LIST_WITH_ONE_ITEM_SNAPSHOT,
-  TODO_LIST_WITH_TWO_ITEMS_SNAPSHOT
-} from '../test-fixtures';
-import { FindAllListsQuery } from './find-all-lists.query';
-import { FindAllListsQueryHandler } from './find-all-lists.query-handler';
+import { InMemoryTodoListsQueryRepository, RANDOM_EMPTY_TODO_LIST } from '../test-fixtures';
+import { FindAllListsQuery, FindAllListsQueryHandler } from '.';
 import { TodoListReadModel, TodoListSnapshot } from '@family-planning/domain';
 
 describe('Find all todo lists', () => {
@@ -34,9 +28,9 @@ describe('Find all todo lists', () => {
 
     beforeEach(() => {
       snapshots = [
-        EMPTY_TODO_LIST_SNAPSHOT,
-        TODO_LIST_WITH_ONE_ITEM_SNAPSHOT,
-        TODO_LIST_WITH_TWO_ITEMS_SNAPSHOT
+        RANDOM_EMPTY_TODO_LIST(),
+        RANDOM_EMPTY_TODO_LIST(),
+        RANDOM_EMPTY_TODO_LIST()
       ];
       inMemoryTodoListsRepository = new InMemoryTodoListsQueryRepository().withSnapshots(snapshots);
       findAllListsQueryHandler = new FindAllListsQueryHandler(inMemoryTodoListsRepository);
