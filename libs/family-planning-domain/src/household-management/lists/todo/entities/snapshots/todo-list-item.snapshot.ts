@@ -1,13 +1,13 @@
 import { EntitySnapshot } from '../../../../../common';
-import { TodoListItemId, TodoListItemName } from '../../value-objects';
+import { TodoListItemId, TodoListItemName, TodoListItemStatus } from '../../value-objects';
 import { HouseholdId } from '../../../../households';
 
 export class TodoListItemSnapshot implements EntitySnapshot {
 
   constructor(private readonly _id: TodoListItemId,
               private readonly _name: TodoListItemName,
-              private readonly _householdId: HouseholdId) {
-  }
+              private readonly _householdId: HouseholdId,
+              private readonly _status: TodoListItemStatus) {}
 
   id(): string {
     return this._id.value();
@@ -22,6 +22,6 @@ export class TodoListItemSnapshot implements EntitySnapshot {
   }
 
   done(): boolean {
-    return true;
+    return this._status.value() === 'done';
   }
 }

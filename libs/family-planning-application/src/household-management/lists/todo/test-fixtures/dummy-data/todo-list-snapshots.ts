@@ -2,7 +2,7 @@ import {
   HouseholdId,
   TodoListId, TodoListItemId,
   TodoListItemName,
-  TodoListItemSnapshot,
+  TodoListItemSnapshot, TodoListItemStatus,
   TodoListName,
   TodoListSnapshot
 } from '@family-planning/domain';
@@ -26,7 +26,8 @@ export const TODO_LIST_WITH_ONE_ITEM_SNAPSHOT = new TodoListSnapshot(
     new TodoListItemSnapshot(
       TEST_TODO_LIST_ITEM_ID,
       new TodoListItemName('My Item'),
-      TEST_HOUSEHOLD_ID
+      TEST_HOUSEHOLD_ID,
+      new TodoListItemStatus('pending'),
     )
   ],
   TEST_HOUSEHOLD_ID
@@ -39,12 +40,14 @@ export const TODO_LIST_WITH_TWO_ITEMS_SNAPSHOT = new TodoListSnapshot(
     new TodoListItemSnapshot(
       TEST_TODO_LIST_ITEM_ID,
       new TodoListItemName('My Item'),
-      TEST_HOUSEHOLD_ID
+      TEST_HOUSEHOLD_ID,
+      new TodoListItemStatus('pending'),
     ),
     new TodoListItemSnapshot(
       TEST_OTHER_TODO_LIST_ITEM_ID,
       new TodoListItemName('My Second Item'),
-      TEST_HOUSEHOLD_ID
+      TEST_HOUSEHOLD_ID,
+      new TodoListItemStatus('pending'),
     )
   ],
   TEST_HOUSEHOLD_ID

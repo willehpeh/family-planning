@@ -33,4 +33,12 @@ export class TodoList implements Entity<TodoListSnapshot> {
     list._items = snapshot.items().map(itemSnapshot => TodoListItem.fromSnapshot(itemSnapshot));
     return list;
   }
+
+  markItemAsDone(itemId: TodoListItemId) {
+    const item = this._items.find(item => item.hasId(itemId));
+    if (!item) {
+      throw new Error('Item not found');
+    }
+    item.markAsDone();
+  }
 }
