@@ -11,7 +11,11 @@ export class MarkItemAsDoneCommandHandler implements ICommandHandler<MarkItemAsD
   async execute(command: MarkItemAsDoneCommand): Promise<void> {
     const list = await this.repository.findById(command.dto.todoListId);
     const itemId = TodoListItemId.fromString(command.dto.itemId);
-    list.markItemAsDone(itemId);
-    await this.repository.save(list);
+    try {
+      list.markItemAsDone(itemId);
+      await this.repository.save(list);
+    } catch (error) {
+      return Promise.reject(error);
+    }
   }
 }

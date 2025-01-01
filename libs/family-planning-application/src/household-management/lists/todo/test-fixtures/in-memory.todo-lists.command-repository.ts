@@ -28,6 +28,14 @@ export class InMemoryTodoListsCommandRepository implements TodoListsCommandRepos
     return Array.from(this._lists.values());
   }
 
+  getListSnapshotById(listId: string): TodoListSnapshot {
+    const found = this.listSnapshots().find(list => list.id() === listId);
+    if (!found) {
+      throw new Error('List not found');
+    }
+    return found;
+  }
+
   withSnapshots(snapshots: TodoListSnapshot[]): InMemoryTodoListsCommandRepository {
     this._lists = new Map(snapshots.map(snapshot => [snapshot.id(), snapshot]));
     return this;

@@ -6,6 +6,7 @@ import { HouseholdId } from '../../../households';
 export class TodoListItem implements Entity<TodoListItemSnapshot> {
 
   private _status: TodoListItemStatus;
+  private _dateCompleted: Date | undefined;
 
   constructor(private readonly _id: TodoListItemId,
               private _name: TodoListItemName,
@@ -14,7 +15,7 @@ export class TodoListItem implements Entity<TodoListItemSnapshot> {
   }
 
   snapshot(): TodoListItemSnapshot {
-    return new TodoListItemSnapshot(this._id, this._name, this._householdId, this._status);
+    return new TodoListItemSnapshot(this._id, this._name, this._householdId, this._status, this._dateCompleted);
   }
 
   static fromSnapshot(snapshot: TodoListItemSnapshot): TodoListItem {
@@ -26,6 +27,10 @@ export class TodoListItem implements Entity<TodoListItemSnapshot> {
   }
 
   markAsDone() {
+    if (this._status.equals(new TodoListItemStatus('done'))) {
+      throw new Error('Item already completed');
+    }
     this._status = new TodoListItemStatus('done');
+    this._dateCompleted = new Date();
   }
 }
