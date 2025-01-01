@@ -46,7 +46,7 @@ services:
     env_file:
       - .env
     command: >
-      sh -c "npx typeorm migration:run -d type-orm.data-source"
+      sh -c "npx typeorm migration:run -d type-orm.data-source.prod"
   fp_db:
     image: postgres:17.0
     container_name: fp_db
