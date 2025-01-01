@@ -27,6 +27,12 @@ describe('Add item to todo list', () => {
     expect(listSnapshot.items().length).toBe(1);
   });
 
+  it('should add the item with the provided name', () => {
+    const listSnapshot = inMemoryTodoListsRepository.listSnapshots()[0];
+    const itemSnapshot = listSnapshot.items()[0];
+    expect(itemSnapshot.name()).toBe(dto.itemDetails.name);
+  });
+
   it('should add the item with a status of pending', () => {
     const listSnapshot = inMemoryTodoListsRepository.listSnapshots()[0];
     const itemSnapshot = listSnapshot.items()[0];
