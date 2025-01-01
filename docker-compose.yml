@@ -33,6 +33,20 @@ services:
       - "3000:3000"
     env_file:
       - .env
+    command: >
+      sh -c "node main.js"
+  migrations:
+    build:
+      context: .
+      dockerfile: api.Dockerfile
+    container_name: migrations
+    depends_on:
+      - fp_db
+      - keycloak
+    env_file:
+      - .env
+    command: >
+      sh -c "npx typeorm migration:run -d type-orm.data-source"
   fp_db:
     image: postgres:17.0
     container_name: fp_db
