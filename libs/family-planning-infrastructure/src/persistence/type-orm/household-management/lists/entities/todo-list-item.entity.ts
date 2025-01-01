@@ -15,7 +15,7 @@ export class TodoListItem {
   @Column()
   householdId: string;
 
-  @Column()
+  @Column({ default: 'pending' })
   status: 'pending' | 'done';
 
   @Column({ nullable: true })
