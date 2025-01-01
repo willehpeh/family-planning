@@ -29,11 +29,15 @@ export class TodoList implements Entity<TodoListSnapshot> {
   }
 
   markItemAsDone(itemId: TodoListItemId) {
-    const item = this._items.find(item => item.hasId(itemId));
+    const item = this.itemWithId(itemId);
     if (!item) {
       throw new Error('Item not found');
     }
     item.markAsDone();
+  }
+
+  private itemWithId(itemId: TodoListItemId) {
+    return this._items.find(item => item.hasId(itemId));
   }
 
   private createItem(itemName: string): TodoListItem {

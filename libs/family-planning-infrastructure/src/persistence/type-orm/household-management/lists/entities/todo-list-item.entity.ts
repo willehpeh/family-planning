@@ -9,9 +9,15 @@ export class TodoListItem {
   @Column()
   name: string;
 
-  @ManyToOne(() => TodoList, (list) => list.items)
+  @ManyToOne(() => TodoList, (list) => list.items, { onDelete: 'CASCADE', onUpdate: 'CASCADE' })
   list: TodoList;
 
   @Column()
   householdId: string;
+
+  @Column()
+  status: 'pending' | 'done';
+
+  @Column({ nullable: true })
+  dateCompleted: Date;
 }

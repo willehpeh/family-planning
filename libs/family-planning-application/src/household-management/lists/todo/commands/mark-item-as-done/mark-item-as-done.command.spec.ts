@@ -7,7 +7,7 @@ import {
 import { MarkItemAsDoneDto } from './mark-item-as-done.dto';
 import { MarkItemAsDoneCommand } from './mark-item-as-done.command';
 import { MarkItemAsDoneCommandHandler } from './mark-item-as-done.command-handler';
-import { TodoListItemSnapshot, TodoListSnapshot } from '@family-planning/domain';
+import { DateString, TodoListItemSnapshot, TodoListSnapshot } from '@family-planning/domain';
 
 function getItemSnapshotById(listSnapshot: TodoListSnapshot, itemId: string) {
   return listSnapshot?.items().find(item => item.id() === itemId);
@@ -37,16 +37,15 @@ describe('MarkItemAsDoneCommand', () => {
     it('should mark the item as done', async () => {
       await handler.execute(command);
       listSnapshot = inMemoryTodoListRepository.getListSnapshotById(TEST_TODO_LIST_ID.value());
-      itemSnapshot = getItemSnapshotById(listSnapshot, TEST_TODO_LIST_ITEM_ID.value());
-      expect(itemSnapshot?.done()).toBe(true);
+      itemSnapshot = getItemSnapshotById(listSnapshot, TEST_TODO_LIST_ITEM_ID.value())!;
+      expect(itemSnapshot.done()).toBe(true);
     });
 
     it('should mark the item as done today', async () => {
       await handler.execute(command);
       listSnapshot = inMemoryTodoListRepository.getListSnapshotById(TEST_TODO_LIST_ID.value());
-      itemSnapshot = getItemSnapshotById(listSnapshot, TEST_TODO_LIST_ITEM_ID.value());
-      const todayAsString = new Date().toISOString().split('T')[0];
-      expect(itemSnapshot?.dateCompleted()).toBe(todayAsString);
+      itemSnapshot = getItemSnapshotById(listSnapshot, TEST_TODO_LIST_ITEM_ID.value())!;
+      expect(new DateString(itemSnapshot.dateCompleted()).equals(DateString.now())).toBe(true);
     });
   });
 

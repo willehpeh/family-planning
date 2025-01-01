@@ -5,7 +5,7 @@ import {
   TodoListId,
   TodoListItemId,
   TodoListItemName,
-  TodoListItemSnapshot,
+  TodoListItemSnapshot, TodoListItemStatus,
   TodoListName,
   TodoListSnapshot
 } from '@family-planning/domain';
@@ -22,6 +22,8 @@ export class TodoListMapper {
       itemEntity.id = item.id();
       itemEntity.name = item.name();
       itemEntity.householdId = item.householdId();
+      itemEntity.status = item.status();
+      itemEntity.dateCompleted = item.dateCompleted();
       return itemEntity;
     });
     entity.householdId = snapshot.householdId();
@@ -35,7 +37,9 @@ export class TodoListMapper {
     const items = entity.items.map(item => {
       const itemId = TodoListItemId.fromString(item.id);
       const itemName = new TodoListItemName(item.name);
-      return new TodoListItemSnapshot(itemId, itemName, householdId);
+      const itemStatus = new TodoListItemStatus(item.status);
+      const dateComplated = item.dateCompleted ? new Date(item.dateCompleted) : undefined;
+      return new TodoListItemSnapshot(itemId, itemName, householdId, itemStatus, dateComplated);
     });
     const snapshot = new TodoListSnapshot(id, name, items, householdId);
     return TodoList.fromSnapshot(snapshot);

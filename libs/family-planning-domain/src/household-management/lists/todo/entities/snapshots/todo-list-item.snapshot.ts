@@ -27,11 +27,15 @@ export class TodoListItemSnapshot implements EntitySnapshot {
     return this._status.value() === 'done';
   }
 
-  dateCompleted(): string {
+  status(): 'pending' | 'done' {
+    return this._status.value();
+  }
+
+  dateCompleted(): Date {
     if (!this._dateCompleted) {
-      return '';
+      throw new Error('Item not completed');
     }
-    return this._dateCompleted.toISOString().split('T')[0];
+    return this._dateCompleted;
   }
 
   pending() {
