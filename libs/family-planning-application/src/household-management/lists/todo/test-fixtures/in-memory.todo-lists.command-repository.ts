@@ -4,16 +4,21 @@ import { Injectable } from '@nestjs/common';
 @Injectable()
 export class InMemoryTodoListsCommandRepository implements TodoListsCommandRepository {
 
-  private _lists = new Map<string, TodoListSnapshot>();
+  private _lists: TodoListSnapshot[] = [];
 
-  save(list: TodoList): Promise<void> {
+  async save(list: TodoList): Promise<void> {
     const snapshot = list.snapshot();
-    this._lists.set(snapshot.id(), snapshot);
-    return Promise.resolve();
+    const found = this._lists.find(foundList => foundList.id() === snapshot.id());
+    if (!found) {
+      this._lists.push(list.snapshot());
+      return Promise.resolve();
+    }
+    this._lists.splice(this._lists.indexOf(found), 1, snapshot);
+    await Promise.resolve();
   }
 
-  findById(listId: string): Promise<TodoList> {
-    const found = this._lists.get(listId);
+  async findById(listId: string): Promise<TodoList> {
+    const found = this._lists.find(list => list.id() === listId);
     if (!found) {
       return Promise.reject(new Error(`List with id ${listId} not found`));
     }
@@ -21,11 +26,11 @@ export class InMemoryTodoListsCommandRepository implements TodoListsCommandRepos
   }
 
   totalLists(): number {
-    return this._lists.size;
+    return this._lists.length;
   }
 
   listSnapshots(): TodoListSnapshot[] {
-    return Array.from(this._lists.values());
+    return this._lists.slice();
   }
 
   getListSnapshotById(listId: string): TodoListSnapshot {
@@ -37,7 +42,7 @@ export class InMemoryTodoListsCommandRepository implements TodoListsCommandRepos
   }
 
   withSnapshots(snapshots: TodoListSnapshot[]): InMemoryTodoListsCommandRepository {
-    this._lists = new Map(snapshots.map(snapshot => [snapshot.id(), snapshot]));
+    this._lists.push(...snapshots);
     return this;
   }
 

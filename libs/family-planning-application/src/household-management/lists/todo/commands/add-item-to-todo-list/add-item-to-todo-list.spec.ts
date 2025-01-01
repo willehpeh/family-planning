@@ -1,6 +1,5 @@
 import { EMPTY_TODO_LIST_SNAPSHOT, InMemoryTodoListsCommandRepository } from '../../test-fixtures';
-import { AddItemToTodoListCommand } from './add-item-to-todo-list.command';
-import { AddItemToTodoListCommandHandler } from './add-item-to-todo-list.command-handler';
+import { AddItemToTodoListCommand, AddItemToTodoListCommandHandler } from '.';
 import { AddItemToTodoListDto } from './add-item-to-todo-list.dto';
 
 describe('Add item to todo list', () => {
@@ -26,5 +25,11 @@ describe('Add item to todo list', () => {
   it('should add one item to the todo list', () => {
     const listSnapshot = inMemoryTodoListsRepository.listSnapshots()[0];
     expect(listSnapshot.items().length).toBe(1);
+  });
+
+  it('should add the item with a status of pending', () => {
+    const listSnapshot = inMemoryTodoListsRepository.listSnapshots()[0];
+    const itemSnapshot = listSnapshot.items()[0];
+    expect(itemSnapshot.pending()).toBe(true);
   });
 });

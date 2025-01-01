@@ -50,16 +50,14 @@ describe('MarkItemAsDoneCommand', () => {
     });
   });
 
-  describe('Before marking the item as done', () => {
-    it('should show the item as not done', () => {
-      listSnapshot = inMemoryTodoListRepository.getListSnapshotById(TEST_TODO_LIST_ID.value());
-      itemSnapshot = getItemSnapshotById(listSnapshot, TEST_TODO_LIST_ITEM_ID.value());
-      expect(itemSnapshot?.done()).toBe(false);
+  describe('Given the item exists and is already done', () => {
+
+    beforeEach(async () => {
+      await handler.execute(command);
     });
-    it('should throw an error if we ask for its completed date', () => {
-      listSnapshot = inMemoryTodoListRepository.getListSnapshotById(TEST_TODO_LIST_ID.value());
-      itemSnapshot = getItemSnapshotById(listSnapshot, TEST_TODO_LIST_ITEM_ID.value());
-      expect(() => itemSnapshot?.dateCompleted()).toThrow('Item not completed');
+
+    it('should throw an error', async () => {
+      await expect(handler.execute(command)).rejects.toThrow(new Error('Item already completed'));
     });
   });
 

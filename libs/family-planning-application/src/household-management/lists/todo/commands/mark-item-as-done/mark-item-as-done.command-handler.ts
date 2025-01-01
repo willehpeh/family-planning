@@ -1,11 +1,10 @@
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
 import { MarkItemAsDoneCommand } from './mark-item-as-done.command';
-import { InMemoryTodoListsCommandRepository } from '../../test-fixtures';
-import { TodoListItemId } from '@family-planning/domain';
+import { TodoListItemId, TodoListsCommandRepository } from '@family-planning/domain';
 
 @CommandHandler(MarkItemAsDoneCommand)
 export class MarkItemAsDoneCommandHandler implements ICommandHandler<MarkItemAsDoneCommand> {
-  constructor(private readonly repository: InMemoryTodoListsCommandRepository) {
+  constructor(private readonly repository: TodoListsCommandRepository) {
   }
 
   async execute(command: MarkItemAsDoneCommand): Promise<void> {
@@ -14,6 +13,7 @@ export class MarkItemAsDoneCommandHandler implements ICommandHandler<MarkItemAsD
     try {
       list.markItemAsDone(itemId);
       await this.repository.save(list);
+      return Promise.resolve();
     } catch (error) {
       return Promise.reject(error);
     }
