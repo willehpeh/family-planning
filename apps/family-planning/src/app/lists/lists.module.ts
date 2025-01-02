@@ -3,7 +3,8 @@ import { TypeOrmListsPersistenceModule } from '@family-planning/infrastructure';
 import {
   AddItemToTodoListCommandHandler,
   CreateTodoListCommandHandler,
-  FindAllListsQueryHandler
+  FindAllListsQueryHandler,
+  MarkItemAsDoneCommandHandler
 } from '@family-planning/application';
 import { ListsService } from './providers/lists.service';
 import { ListsController } from './controllers/lists.controller';
@@ -20,6 +21,7 @@ import { TenantMiddleware } from '../middleware/tenant.middleware';
     CreateTodoListCommandHandler,
     AddItemToTodoListCommandHandler,
     FindAllListsQueryHandler,
+    MarkItemAsDoneCommandHandler,
     ListsService,
   ]
 })
