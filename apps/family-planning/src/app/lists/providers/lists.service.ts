@@ -5,7 +5,9 @@ import {
   AddItemToTodoListDto,
   CreateTodoListCommand,
   CreateTodoListDto,
-  FindAllListsQuery
+  FindAllListsQuery,
+  MarkItemAsDoneCommand,
+  MarkItemAsDoneDto
 } from '@family-planning/application';
 import { TodoListReadModel } from '@family-planning/domain';
 
@@ -25,5 +27,9 @@ export class ListsService {
 
   async addItemToTodoList(dto: AddItemToTodoListDto): Promise<void> {
     return this.commandBus.execute(new AddItemToTodoListCommand(dto));
+  }
+
+  async markItemAsDone(dto: MarkItemAsDoneDto): Promise<void> {
+    return this.commandBus.execute(new MarkItemAsDoneCommand(dto));
   }
 }
