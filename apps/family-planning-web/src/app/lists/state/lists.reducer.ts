@@ -8,13 +8,16 @@ import {
   CreateListFailure,
   CreateListSuccess,
   LoadAllLists,
-  LoadAllListsFailure, LoadAllListsFromDetailView,
-  LoadAllListsSuccess
+  LoadAllListsFailure,
+  LoadAllListsFromDetailView,
+  LoadAllListsSuccess,
+  MarkItemAsDone,
+  MarkItemAsDoneFailure
 } from './lists.actions';
 
 export const featureKey = 'lists';
 
-export interface ListsState extends EntityState<SerializedTodoList>{
+export interface ListsState extends EntityState<SerializedTodoList> {
   loading: boolean;
   saving: boolean;
 }
@@ -57,7 +60,23 @@ export const listsFeature = createFeature({
           items: revertedListItems
         }
       }, state);
-    })
+    }),
+    on(MarkItemAsDone, (state, { listId, itemId }): ListsState => adapter.updateOne({
+      id: listId,
+      changes: {
+        items: state.entities[listId]?.items.map(item =>
+          item.id === itemId ? { ...item, status: 'done' } : item
+        )
+      }
+    }, state)),
+    on(MarkItemAsDoneFailure, (state, { listId, itemId }): ListsState => adapter.updateOne({
+      id: listId,
+      changes: {
+        items: state.entities[listId]?.items.map(item =>
+          item.id === itemId ? { ...item, status: 'pending' } : item
+        )
+      }
+    }, state))
   ),
   extraSelectors: ({ selectIds, selectEntities }) => ({
     selectAllLists: createSelector(

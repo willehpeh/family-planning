@@ -21,4 +21,8 @@ export class ListsService {
   addItemToList(listId: string, itemDetails: ItemDetails): Observable<void> {
     return this.http.post<void>(`api/lists/todo/${listId}/add-item`, itemDetails);
   }
+
+  markItemAsDone(listId: string, itemId: string): Observable<void> {
+    return this.http.post<void>(`api/lists/todo/${listId}/mark-item-as-done`, { itemId });
+  }
 }

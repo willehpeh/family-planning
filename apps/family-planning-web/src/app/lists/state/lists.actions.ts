@@ -49,3 +49,17 @@ export const AddItemToListFailure = createAction(
   '[Lists API] Add Item to List Failure',
   props<{ error: HttpErrorResponse, listId: string, transactionId: string }>()
 );
+
+export const MarkItemAsDone = createAction(
+  '[TodoListsDetailComponent] Mark Item as Done',
+  props<{ listId: string, itemId: string }>()
+);
+
+export const MarkItemAsDoneSuccess = createAction(
+  '[Lists API] Mark Item as Done Success',
+);
+
+export const MarkItemAsDoneFailure = createAction(
+  '[Lists API] Mark Item as Done Failure',
+  props<{ error: HttpErrorResponse, listId: string, itemId: string }>()
+);

@@ -10,7 +10,7 @@ import {
   LoadAllLists,
   LoadAllListsFailure,
   LoadAllListsFromDetailView,
-  LoadAllListsSuccess
+  LoadAllListsSuccess, MarkItemAsDone, MarkItemAsDoneFailure, MarkItemAsDoneSuccess
 } from './lists.actions';
 import { ListsService } from '../lists.service';
 import { catchError, map, mergeMap, of, switchMap } from 'rxjs';
@@ -59,6 +59,14 @@ export class ListsEffects {
   addItemToListSuccess$ = createEffect(() => this.actions$.pipe(
     ofType(AddItemToListSuccess),
     map(() => LoadAllListsFromDetailView())
+  ));
+
+  markItemAsDone$ = createEffect(() => this.actions$.pipe(
+    ofType(MarkItemAsDone),
+    mergeMap(({ listId, itemId }) => this.listsService.markItemAsDone(listId, itemId).pipe(
+      map(() => MarkItemAsDoneSuccess()),
+      catchError((error: HttpErrorResponse) => of(MarkItemAsDoneFailure({ error, listId, itemId })))
+    ))
   ));
 
 }

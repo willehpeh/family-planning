@@ -6,6 +6,7 @@ export class SerializedTodoListItemFactory {
     return {
       id: Date.now().toString(),
       name: itemDetails.name,
+      status: 'pending',
     };
   }
 }
