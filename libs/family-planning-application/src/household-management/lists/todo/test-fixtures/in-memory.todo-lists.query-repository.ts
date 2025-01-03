@@ -6,7 +6,15 @@ export class InMemoryTodoListsQueryRepository implements TodoListsQueryRepositor
 
   findAll(): Promise<TodoListReadModel[]> {
     return Promise.resolve(
-      Array.from(this._lists.values()).map(snapshot => new TodoListReadModel(snapshot))
+      Array.from(this._lists.values()).map(snapshot => ({
+        id: snapshot.id(),
+        name: snapshot.name(),
+        items: snapshot.items().map(item => ({
+          id: item.id(),
+          name: item.name(),
+          done: item.done(),
+        }))
+      }))
     );
   }
 
