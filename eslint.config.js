@@ -42,7 +42,8 @@ module.exports = [
             {
               sourceTag: 'family-planning:web-frontend',
               onlyDependOnLibsWithTags: [
-                'family-planning:application'
+                'family-planning:application',
+                'family-planning:domain'
               ]
             }
           ],

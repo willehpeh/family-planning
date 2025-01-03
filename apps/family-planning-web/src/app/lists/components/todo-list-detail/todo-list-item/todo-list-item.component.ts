@@ -12,7 +12,7 @@ import { SerializedTodoListItem } from '../../../models/serialized-todo-list-ite
 export class TodoListItemComponent {
   item = input.required<SerializedTodoListItem>();
   itemName = computed(() => this.item().name);
-  itemDone = computed(() => this.item().status === 'done');
+  itemDone = computed(() => this.item().done);
   tabIndex = input.required<number>();
 
   itemMarkedAsDone = output<string>();

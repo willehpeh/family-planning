@@ -1,5 +1,5 @@
 import { createEntityAdapter, EntityState } from '@ngrx/entity';
-import { NullSerializedTodoList, SerializedTodoList } from '../models/serialized-todo-list';
+import { NullTodoListReadModel } from '../models/serialized-todo-list';
 import { createFeature, createReducer, createSelector, on } from '@ngrx/store';
 import {
   AddItemToList,
@@ -14,15 +14,16 @@ import {
   MarkItemAsDone,
   MarkItemAsDoneFailure
 } from './lists.actions';
+import { TodoListReadModel } from '@family-planning/domain';
 
 export const featureKey = 'lists';
 
-export interface ListsState extends EntityState<SerializedTodoList> {
+export interface ListsState extends EntityState<TodoListReadModel> {
   loading: boolean;
   saving: boolean;
 }
 
-export const adapter = createEntityAdapter<SerializedTodoList>({
+export const adapter = createEntityAdapter<TodoListReadModel>({
   selectId: list => list.id,
   sortComparer: (a, b) => a.name.localeCompare(b.name)
 });
@@ -65,7 +66,7 @@ export const listsFeature = createFeature({
       id: listId,
       changes: {
         items: state.entities[listId]?.items.map(item =>
-          item.id === itemId ? { ...item, status: 'done' } : item
+          item.id === itemId ? { ...item, done: true } : item
         )
       }
     }, state)),
@@ -86,7 +87,7 @@ export const listsFeature = createFeature({
     ),
     selectListById: (id: string) => createSelector(
       selectEntities,
-      entities => entities[id] ?? NullSerializedTodoList
+      entities => entities[id] ?? NullTodoListReadModel
     ),
   })
 });

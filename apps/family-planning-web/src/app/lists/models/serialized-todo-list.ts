@@ -1,12 +1,6 @@
-import { SerializedTodoListItem } from './serialized-todo-list-item';
+import { TodoListReadModel } from '@family-planning/domain';
 
-export type SerializedTodoList = {
-  id: string;
-  name: string;
-  items: SerializedTodoListItem[]
-}
-
-export const NullSerializedTodoList: SerializedTodoList = {
+export const NullTodoListReadModel: TodoListReadModel = {
   id: '',
   name: '',
   items: []

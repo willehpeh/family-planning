@@ -8,6 +8,8 @@ export class FindAllListsQueryHandler implements IQueryHandler<FindAllListsQuery
   }
 
   async execute(query: FindAllListsQuery): Promise<TodoListReadModel[]> {
-    return await this.todoListsRepository.findAll();
+    const all = await this.todoListsRepository.findAll();
+    console.log(all);
+    return all;
   }
 }

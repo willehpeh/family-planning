@@ -7,7 +7,16 @@ export class OrmTodoListsQueryRepository implements TodoListsQueryRepository {
   constructor(@InjectRepository(TodoListEntity) private readonly todoListRepository: Repository<TodoListEntity>) {
   }
 
-  findAll(): Promise<TodoListReadModel[]> {
-    return this.todoListRepository.find();
+  async findAll(): Promise<TodoListReadModel[]> {
+    const lists = await this.todoListRepository.find();
+    return lists.map(list => ({
+      id: list.id,
+      name: list.name,
+      items: list.items.map(item => ({
+        id: item.id,
+        name: item.name,
+        done: item.status === 'done',
+      }))
+    }));
   }
 }

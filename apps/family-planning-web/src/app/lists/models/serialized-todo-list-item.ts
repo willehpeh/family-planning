@@ -1,6 +1,3 @@
-export type SerializedTodoListItem = {
-  id: string;
-  name: string;
-  status: 'pending' | 'done';
-  dateCompleted?: Date;
-};
+import { TodoListReadModel } from '@family-planning/domain';
+
+export type SerializedTodoListItem = TodoListReadModel['items'][number];

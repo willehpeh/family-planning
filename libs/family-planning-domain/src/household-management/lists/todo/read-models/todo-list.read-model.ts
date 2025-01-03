@@ -1,13 +1,5 @@
-import { TodoListSnapshot } from '../entities';
-
-export class TodoListReadModel {
+export type TodoListReadModel = {
   id: string;
   name: string;
-  items: { name: string }[];
-
-  constructor(snapshot: TodoListSnapshot) {
-    this.id = snapshot.id();
-    this.name = snapshot.name();
-    this.items = snapshot.items().map(item => ({ name: item.name() }));
-  }
+  items: { id: string, name: string, done: boolean }[];
 }
