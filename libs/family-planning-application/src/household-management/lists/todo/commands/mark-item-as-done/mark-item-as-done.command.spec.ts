@@ -4,9 +4,7 @@ import {
   TEST_TODO_LIST_ITEM_ID,
   TODO_LIST_WITH_TWO_ITEMS_SNAPSHOT
 } from '../../test-fixtures';
-import { MarkItemAsDoneDto } from './mark-item-as-done.dto';
-import { MarkItemAsDoneCommand } from './mark-item-as-done.command';
-import { MarkItemAsDoneCommandHandler } from './mark-item-as-done.command-handler';
+import { MarkItemAsDoneCommand, MarkItemAsDoneCommandHandler, MarkItemAsDoneDto } from './';
 import { DateString, TodoListItemSnapshot, TodoListSnapshot } from '@family-planning/domain';
 
 function getItemSnapshotById(listSnapshot: TodoListSnapshot, itemId: string) {
