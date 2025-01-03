@@ -1,7 +1,7 @@
 import { inject, Injectable, Signal } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Router } from '@angular/router';
-import { SerializedTodoList } from '../models/serialized-todo-list';
+import { NullSerializedTodoList, SerializedTodoList } from '../models/serialized-todo-list';
 import { AddItemToList, LoadAllLists, LoadAllListsFromDetailView, MarkItemAsDone } from './lists.actions';
 import { listsFeature } from './lists.reducer';
 import { ItemDetails } from '@family-planning/application';
@@ -17,10 +17,11 @@ export class ListsFacade {
     return this.store.selectSignal(listsFeature.selectAllLists);
   }
 
-  listWithId(id: string): SerializedTodoList | undefined {
+  listWithId(id: string): SerializedTodoList {
     const list = this.store.selectSignal(listsFeature.selectListById(id));
     if (!list()) {
       this.store.dispatch(LoadAllListsFromDetailView());
+      return NullSerializedTodoList;
     }
     return list();
   }

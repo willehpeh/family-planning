@@ -1,5 +1,5 @@
 import { createEntityAdapter, EntityState } from '@ngrx/entity';
-import { SerializedTodoList } from '../models/serialized-todo-list';
+import { NullSerializedTodoList, SerializedTodoList } from '../models/serialized-todo-list';
 import { createFeature, createReducer, createSelector, on } from '@ngrx/store';
 import {
   AddItemToList,
@@ -86,7 +86,7 @@ export const listsFeature = createFeature({
     ),
     selectListById: (id: string) => createSelector(
       selectEntities,
-      entities => entities[id]
+      entities => entities[id] ?? NullSerializedTodoList
     ),
   })
 });

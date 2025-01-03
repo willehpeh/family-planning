@@ -1,4 +1,4 @@
-<app-header [title]="list()?.name"/>
+<app-header [title]="listName()"/>
 <div class="max-w-screen-md m-auto">
 	@for (item of items(); track item.id; let index = $index) {
 		<app-todo-list-item [item]="item"

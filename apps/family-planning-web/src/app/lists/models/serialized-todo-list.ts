@@ -6,3 +6,8 @@ export type SerializedTodoList = {
   items: SerializedTodoListItem[]
 }
 
+export const NullSerializedTodoList: SerializedTodoList = {
+  id: '',
+  name: '',
+  items: []
+}

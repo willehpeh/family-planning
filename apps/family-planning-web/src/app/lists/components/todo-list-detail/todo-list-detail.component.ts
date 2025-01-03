@@ -8,21 +8,21 @@ import { ItemDetails } from '@family-planning/application';
 import { ListsFacade } from '../../state/lists.facade';
 
 @Component({
-  selector: "app-todo-list-detail",
+  selector: 'app-todo-list-detail',
   standalone: true,
   imports: [CommonModule, ScaffoldingComponent, TodoListItemComponent, NewTodoListItemComponent],
-  templateUrl: "./todo-list-detail.component.html",
-  styleUrl: "./todo-list-detail.component.scss",
+  templateUrl: './todo-list-detail.component.html',
+  styleUrl: './todo-list-detail.component.scss',
 })
 export class TodoListDetailComponent {
-  private readonly listsFacade = inject(ListsFacade);
-  id = input<string>('');
-  list = computed(() => this.listsFacade.listWithId(this.id()));
-  loading = this.listsFacade.loading();
-  loadingAndListEmpty = computed(() => this.loading() && !this.list());
-  items = computed(() => this.list()?.items);
-  newItemButtonTabIndex = computed(() => (this.items()?.length || 0) + 1);
+  id = input.required<string>();
   protected readonly faPlus = faPlus;
+  private readonly listsFacade = inject(ListsFacade);
+  private list = computed(() => this.listsFacade.listWithId(this.id()));
+  listName = computed(() => this.list().name);
+  loadingAndListEmpty = computed(() => this.listsFacade.loading() && !this.list().id);
+  items = computed(() => this.list().items ?? []);
+  newItemButtonTabIndex = computed(() => (this.items().length || 0) + 1);
 
   onCreateItem(itemDetails: ItemDetails): void {
     this.listsFacade.addItemToList(this.id(), itemDetails);
