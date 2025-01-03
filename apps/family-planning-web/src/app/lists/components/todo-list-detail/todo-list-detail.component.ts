@@ -27,4 +27,8 @@ export class TodoListDetailComponent {
   onCreateItem(itemDetails: ItemDetails): void {
     this.listsFacade.addItemToList(this.id(), itemDetails);
   }
+
+  onMarkItemAsDone(itemId: string) {
+    this.listsFacade.markItemAsDone(this.id(), itemId);
+  }
 }

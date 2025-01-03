@@ -1,4 +1,4 @@
-import { Component, computed, input } from '@angular/core';
+import { Component, computed, input, output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { SerializedTodoListItem } from '../../../models/serialized-todo-list-item';
 
@@ -13,6 +13,14 @@ export class TodoListItemComponent {
   item = input.required<SerializedTodoListItem>();
   itemName = computed(() => this.item().name);
   itemDone = computed(() => this.item().status === 'done');
-
   tabIndex = input.required<number>();
+
+  itemMarkedAsDone = output<string>();
+
+  onMarkItemAsDone(): void {
+    if (this.itemDone()) {
+      return;
+    }
+    this.itemMarkedAsDone.emit(this.item().id);
+  }
 }

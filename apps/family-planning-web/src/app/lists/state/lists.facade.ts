@@ -2,7 +2,7 @@ import { inject, Injectable, Signal } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Router } from '@angular/router';
 import { SerializedTodoList } from '../models/serialized-todo-list';
-import { AddItemToList, LoadAllLists, LoadAllListsFromDetailView } from './lists.actions';
+import { AddItemToList, LoadAllLists, LoadAllListsFromDetailView, MarkItemAsDone } from './lists.actions';
 import { listsFeature } from './lists.reducer';
 import { ItemDetails } from '@family-planning/application';
 import { SerializedTodoListItemFactory } from '../models/factories/serialized-todo-list-item.factory';
@@ -42,5 +42,9 @@ export class ListsFacade {
       listId,
       temporaryItem: SerializedTodoListItemFactory.temporaryItem(item)
     }));
+  }
+
+  markItemAsDone(listId: string, itemId: string): void {
+    this.store.dispatch(MarkItemAsDone({ listId, itemId }));
   }
 }

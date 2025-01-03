@@ -2,7 +2,9 @@
 <div class="max-w-screen-md m-auto">
 	@for (item of items(); track item.id; let index = $index) {
 		<app-todo-list-item [item]="item"
-												[tabIndex]="index + 1"/>
+												[tabIndex]="index + 1"
+												(itemMarkedAsDone)="onMarkItemAsDone($event)"
+		/>
 	}
 	@if (loadingAndListEmpty()) {
 		<p class="text-center">Loading...</p>
