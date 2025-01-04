@@ -1,7 +1,4 @@
 <div class="bg-black bg-opacity-60 p-6 m-auto max-w-screen-md rounded-md flex gap-6 items-center" [tabIndex]="tabIndex()">
-	<label class="block">
-		<input type="checkbox" class="hidden" [checked]="itemDone()" (change)="onMarkItemAsDone()" />
-		<span class="w-4 h-4 border-2 border-blue-300 flex items-center justify-center" [class.bg-blue-300]="itemDone()"></span>
-	</label>
+	<app-checkbox [checked]="itemDone()" (change)="onMarkItemAsDone()" />
 	<p [class.italic]="itemDone()" [class.line-through]="itemDone()">{{ itemName() }}</p>
 </div>

@@ -1,11 +1,12 @@
 import { Component, computed, input, output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { SerializedTodoListItem } from '../../../models/serialized-todo-list-item';
+import { CheckboxComponent } from '../../../../ui-elements/checkbox/checkbox.component';
 
 @Component({
   selector: "app-todo-list-item",
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, CheckboxComponent],
   templateUrl: "./todo-list-item.component.html",
   styleUrl: "./todo-list-item.component.scss",
 })
