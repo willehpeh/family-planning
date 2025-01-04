@@ -32,10 +32,18 @@ export class TodoListItem implements Entity<TodoListItemSnapshot> {
   }
 
   markAsDone() {
-    if (this._status.equals(new TodoListItemStatus('done'))) {
+    if (this.alreadyDone()) {
       throw new Error('Item already completed');
     }
+    this.setStatusAndCompletionDate();
+  }
+
+  private setStatusAndCompletionDate() {
     this._status = new TodoListItemStatus('done');
     this._dateCompleted = new Date();
+  }
+
+  private alreadyDone() {
+    return this._status.equals(new TodoListItemStatus('done'));
   }
 }
