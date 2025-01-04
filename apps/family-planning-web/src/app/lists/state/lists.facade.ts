@@ -2,7 +2,13 @@ import { inject, Injectable, Signal } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Router } from '@angular/router';
 import { NullTodoListReadModel } from '../models/serialized-todo-list';
-import { AddItemToList, LoadAllLists, LoadAllListsFromDetailView, MarkItemAsDone } from './lists.actions';
+import {
+  AddItemToList,
+  LoadAllLists,
+  LoadAllListsFromDetailView,
+  MarkItemAsDone,
+  ToggleDisplayCompletedItems
+} from './lists.actions';
 import { listsFeature } from './lists.reducer';
 import { ItemDetails } from '@family-planning/application';
 import { SerializedTodoListItemFactory } from '../models/factories/serialized-todo-list-item.factory';
@@ -48,5 +54,13 @@ export class ListsFacade {
 
   markItemAsDone(listId: string, itemId: string): void {
     this.store.dispatch(MarkItemAsDone({ listId, itemId }));
+  }
+
+  toggleDisplayCompletedItems(): void {
+    this.store.dispatch(ToggleDisplayCompletedItems());
+  }
+
+  completedItemsShouldBeDisplayed(): Signal<boolean> {
+    return this.store.selectSignal(listsFeature.selectDisplayCompleted);
   }
 }

@@ -12,7 +12,7 @@ import {
   LoadAllListsFromDetailView,
   LoadAllListsSuccess,
   MarkItemAsDone,
-  MarkItemAsDoneFailure
+  MarkItemAsDoneFailure, ToggleDisplayCompletedItems
 } from './lists.actions';
 import { TodoListReadModel } from '@family-planning/domain';
 
@@ -21,6 +21,7 @@ export const featureKey = 'lists';
 export interface ListsState extends EntityState<TodoListReadModel> {
   loading: boolean;
   saving: boolean;
+  displayCompleted: boolean;
 }
 
 export const adapter = createEntityAdapter<TodoListReadModel>({
@@ -31,6 +32,7 @@ export const adapter = createEntityAdapter<TodoListReadModel>({
 export const initialState: ListsState = adapter.getInitialState({
   loading: false,
   saving: false,
+  displayCompleted: false
 });
 
 export const listsFeature = createFeature({
@@ -77,7 +79,8 @@ export const listsFeature = createFeature({
           item.id === itemId ? { ...item, status: 'pending' } : item
         )
       }
-    }, state))
+    }, state)),
+    on(ToggleDisplayCompletedItems, state => ({ ...state, displayCompleted: !state.displayCompleted }))
   ),
   extraSelectors: ({ selectIds, selectEntities }) => ({
     selectAllLists: createSelector(

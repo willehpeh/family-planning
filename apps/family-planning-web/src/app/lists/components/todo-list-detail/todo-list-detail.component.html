@@ -1,5 +1,10 @@
 <app-header [title]="listName()"/>
 <div class="max-w-screen-md m-auto">
+	<div class="mb-4 flex justify-end">
+		<app-checkbox [checked]="showCompletedItems()"
+									(valueChange)="onToggleDisplayCompletedItems()"
+									label="Show completed items"/>
+	</div>
 	<app-new-todo-list-item (itemCreated)="onCreateItem($event)"
 													[tabIndex]="newItemButtonTabIndex()"/>
 	@for (item of pendingItems(); track item.id; let index = $index) {
@@ -8,10 +13,12 @@
 												(itemMarkedAsDone)="onMarkItemAsDone($event)"
 		/>
 	}
-	@for (item of doneItems(); track item.id; let index = $index) {
-		<app-todo-list-item [item]="item"
-												[tabIndex]="index + 1"
-		/>
+	@if (showCompletedItems()) {
+		@for (item of doneItems(); track item.id; let index = $index) {
+			<app-todo-list-item [item]="item"
+													[tabIndex]="index + 1"
+			/>
+		}
 	}
 	@if (loadingAndListEmpty()) {
 		<p class="text-center">Loading...</p>

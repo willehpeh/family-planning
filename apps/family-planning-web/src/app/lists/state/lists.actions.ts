@@ -63,3 +63,7 @@ export const MarkItemAsDoneFailure = createAction(
   '[Lists API] Mark Item as Done Failure',
   props<{ error: HttpErrorResponse, listId: string, itemId: string }>()
 );
+
+export const ToggleDisplayCompletedItems = createAction(
+  '[TodoListsDetailComponent] Toggle Display Completed Items',
+);
