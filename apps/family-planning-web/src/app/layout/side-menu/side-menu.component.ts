@@ -40,6 +40,8 @@ export class SideMenuComponent {
   onClick(event: MouseEvent) {
     const target = event.target as HTMLElement;
     if (!target.closest('app-side-menu')) {
+      event.stopPropagation();
+      event.preventDefault();
       this.close();
     }
   }
