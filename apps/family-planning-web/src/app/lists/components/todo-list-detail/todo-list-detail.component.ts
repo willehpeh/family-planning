@@ -22,6 +22,8 @@ export class TodoListDetailComponent {
   listName = computed(() => this.list().name);
   loadingAndListEmpty = computed(() => this.listsFacade.loading() && !this.list().id);
   items = computed(() => this.list().items ?? []);
+  pendingItems = computed(() => this.items().filter((item) => !item.done).reverse());
+  doneItems = computed(() => this.items().filter((item) => item.done).reverse());
   newItemButtonTabIndex = computed(() => (this.items().length || 0) + 1);
 
   onCreateItem(itemDetails: ItemDetails): void {
