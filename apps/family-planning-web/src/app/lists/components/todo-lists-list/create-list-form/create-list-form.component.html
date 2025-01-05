@@ -2,7 +2,7 @@
 <form [formGroup]="newTodoListForm" class="relative">
 	<div class="mx-4 md:mx-auto max-w-screen-md">
 		<label for="listName" class="block mb-3">List name</label>
-		<input type="text" id="listName" formControlName="name" class="bg-gray-900 p-3 w-full">
+		<input type="text" id="listName" formControlName="name" class="border-blue-500 border-2 bg-gray-900 p-3 w-full">
 	</div>
 	<div class="w-full text-center mt-6">
 		<app-button (click)="onCreateNewList()" [disabled]="saving()">CREATE LIST</app-button>
