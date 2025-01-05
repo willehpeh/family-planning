@@ -17,11 +17,11 @@ export class TodoListItemComponent {
   tabIndex = input.required<number>();
 
   itemMarkedAsDone = output<string>();
+  doneItemMarkedAsPending = output<string>();
 
   onMarkItemAsDone(): void {
-    if (this.itemDone()) {
-      return;
-    }
-    this.itemMarkedAsDone.emit(this.item().id);
+    return this.itemDone() ?
+      this.doneItemMarkedAsPending.emit(this.item().id) :
+      this.itemMarkedAsDone.emit(this.item().id);
   }
 }

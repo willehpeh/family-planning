@@ -5,7 +5,7 @@ import { NullTodoListReadModel } from '../models/serialized-todo-list';
 import {
   AddItemToList,
   LoadAllLists,
-  LoadAllListsFromDetailView,
+  LoadAllListsFromDetailView, MarkDoneItemAsPending,
   MarkItemAsDone,
   ToggleDisplayCompletedItems
 } from './lists.actions';
@@ -30,6 +30,7 @@ export class ListsFacade {
       this.store.dispatch(LoadAllListsFromDetailView());
       return NullTodoListReadModel;
     }
+    console.log(list());
     return list();
   }
 
@@ -54,6 +55,10 @@ export class ListsFacade {
 
   markItemAsDone(listId: string, itemId: string): void {
     this.store.dispatch(MarkItemAsDone({ listId, itemId }));
+  }
+
+  markDoneItemAsPending(listId: string, itemId: string): void {
+    this.store.dispatch(MarkDoneItemAsPending({ listId, itemId }));
   }
 
   toggleDisplayCompletedItems(): void {

@@ -14,10 +14,6 @@ export class TodoListItem implements Entity<TodoListItemSnapshot> {
     this._status = new TodoListItemStatus('pending');
   }
 
-  snapshot(): TodoListItemSnapshot {
-    return new TodoListItemSnapshot(this._id, this._name, this._householdId, this._status, this._dateCompleted);
-  }
-
   static fromSnapshot(snapshot: TodoListItemSnapshot): TodoListItem {
     const item = new TodoListItem(TodoListItemId.fromString(snapshot.id()), new TodoListItemName(snapshot.name()), HouseholdId.fromString(snapshot.householdId()));
     item._status = snapshot.done() ? new TodoListItemStatus('done') : new TodoListItemStatus('pending');
@@ -25,6 +21,10 @@ export class TodoListItem implements Entity<TodoListItemSnapshot> {
       item._dateCompleted = snapshot.dateCompleted();
     }
     return item;
+  }
+
+  snapshot(): TodoListItemSnapshot {
+    return new TodoListItemSnapshot(this._id, this._name, this._householdId, this._status, this._dateCompleted);
   }
 
   hasId(itemId: TodoListItemId) {
@@ -35,15 +35,35 @@ export class TodoListItem implements Entity<TodoListItemSnapshot> {
     if (this.alreadyDone()) {
       throw new Error('Item already completed');
     }
-    this.setStatusAndCompletionDate();
+    this.setDoneStatusAndCompletionDate();
   }
 
-  private setStatusAndCompletionDate() {
+  markAsPending() {
+    if (this.alreadyPending()) {
+      throw new Error('Item already pending');
+    }
+    this.setPendingStatus();
+    this.clearCompletionDate();
+  }
+
+  private setDoneStatusAndCompletionDate() {
     this._status = new TodoListItemStatus('done');
     this._dateCompleted = new Date();
   }
 
   private alreadyDone() {
     return this._status.equals(new TodoListItemStatus('done'));
+  }
+
+  private alreadyPending() {
+    return this._status.equals(new TodoListItemStatus('pending'));
+  }
+
+  private setPendingStatus() {
+    this._status = new TodoListItemStatus('pending');
+  }
+
+  private clearCompletionDate() {
+    this._dateCompleted = undefined;
   }
 }

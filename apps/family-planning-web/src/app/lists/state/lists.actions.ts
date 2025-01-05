@@ -64,6 +64,20 @@ export const MarkItemAsDoneFailure = createAction(
   props<{ error: HttpErrorResponse, listId: string, itemId: string }>()
 );
 
+export const MarkDoneItemAsPending = createAction(
+  '[TodoListsDetailComponent] Mark Done Item as Pending',
+  props<{ listId: string, itemId: string }>()
+);
+
+export const MarkDoneItemAsPendingSuccess = createAction(
+  '[Lists API] Mark Done Item as Pending Success',
+);
+
+export const MarkDoneItemAsPendingFailure = createAction(
+  '[Lists API] Mark Done Item as Pending Failure',
+  props<{ error: HttpErrorResponse, listId: string, itemId: string }>()
+);
+
 export const ToggleDisplayCompletedItems = createAction(
   '[TodoListsDetailComponent] Toggle Display Completed Items',
 );

@@ -17,6 +17,7 @@
 		@for (item of doneItems(); track item.id; let index = $index) {
 			<app-todo-list-item [item]="item"
 													[tabIndex]="index + 1"
+													(doneItemMarkedAsPending)="onMarkDoneItemAsPending($event)"
 			/>
 		}
 	}

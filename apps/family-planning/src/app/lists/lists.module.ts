@@ -4,6 +4,7 @@ import {
   AddItemToTodoListCommandHandler,
   CreateTodoListCommandHandler,
   FindAllListsQueryHandler,
+  MarkDoneItemAsPendingCommandHandler,
   MarkItemAsDoneCommandHandler
 } from '@family-planning/application';
 import { ListsService } from './providers/lists.service';
@@ -22,6 +23,7 @@ import { TenantMiddleware } from '../middleware/tenant.middleware';
     AddItemToTodoListCommandHandler,
     FindAllListsQueryHandler,
     MarkItemAsDoneCommandHandler,
+    MarkDoneItemAsPendingCommandHandler,
     ListsService,
   ]
 })
@@ -30,3 +32,4 @@ export class ListsModule implements NestModule {
     consumer.apply(TenantMiddleware).forRoutes(ListsController);
   }
 }
+

@@ -36,6 +36,10 @@ export class TodoListDetailComponent {
     this.listsFacade.markItemAsDone(this.id(), itemId);
   }
 
+  onMarkDoneItemAsPending(itemId: string) {
+    this.listsFacade.markDoneItemAsPending(this.id(), itemId);
+  }
+
   onToggleDisplayCompletedItems() {
     this.listsFacade.toggleDisplayCompletedItems();
   }

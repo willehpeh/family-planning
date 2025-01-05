@@ -53,6 +53,21 @@ export const TODO_LIST_WITH_TWO_ITEMS_SNAPSHOT = new TodoListSnapshot(
   TEST_HOUSEHOLD_ID
 );
 
+export const TODO_LIST_WITH_ONE_COMPLETED_ITEM_SNAPSHOT = new TodoListSnapshot(
+  TEST_TODO_LIST_ID,
+  new TodoListName('My List'),
+  [
+    new TodoListItemSnapshot(
+      TEST_TODO_LIST_ITEM_ID,
+      new TodoListItemName('My Item'),
+      TEST_HOUSEHOLD_ID,
+      new TodoListItemStatus('done'),
+      new Date()
+    )
+  ],
+  TEST_HOUSEHOLD_ID
+);
+
 export const RANDOM_EMPTY_TODO_LIST = () => new TodoListSnapshot(
   TodoListId.new(),
   new TodoListName('Random List'),

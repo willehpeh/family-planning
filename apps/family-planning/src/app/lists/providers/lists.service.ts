@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { CommandBus, QueryBus } from '@nestjs/cqrs';
 import {
   AddItemToTodoListCommand,
@@ -6,6 +6,8 @@ import {
   CreateTodoListCommand,
   CreateTodoListDto,
   FindAllListsQuery,
+  MarkDoneItemAsPendingCommand,
+  MarkDoneItemAsPendingDto,
   MarkItemAsDoneCommand,
   MarkItemAsDoneDto
 } from '@family-planning/application';
@@ -30,6 +32,18 @@ export class ListsService {
   }
 
   async markItemAsDone(dto: MarkItemAsDoneDto): Promise<void> {
-    return this.commandBus.execute(new MarkItemAsDoneCommand(dto));
+    try {
+      await this.commandBus.execute(new MarkItemAsDoneCommand(dto));
+    } catch (error) {
+      throw new BadRequestException(error.message);
+    }
+  }
+
+  async markDoneItemAsPending(dto: MarkDoneItemAsPendingDto) {
+    try {
+      await this.commandBus.execute(new MarkDoneItemAsPendingCommand(dto));
+    } catch (error) {
+      throw new BadRequestException(error.message);
+    }
   }
 }

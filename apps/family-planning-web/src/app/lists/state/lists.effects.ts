@@ -10,7 +10,12 @@ import {
   LoadAllLists,
   LoadAllListsFailure,
   LoadAllListsFromDetailView,
-  LoadAllListsSuccess, MarkItemAsDone, MarkItemAsDoneFailure, MarkItemAsDoneSuccess
+  LoadAllListsSuccess,
+  MarkDoneItemAsPending, MarkDoneItemAsPendingFailure,
+  MarkDoneItemAsPendingSuccess,
+  MarkItemAsDone,
+  MarkItemAsDoneFailure,
+  MarkItemAsDoneSuccess
 } from './lists.actions';
 import { ListsService } from '../lists.service';
 import { catchError, map, mergeMap, of, switchMap } from 'rxjs';
@@ -66,6 +71,14 @@ export class ListsEffects {
     mergeMap(({ listId, itemId }) => this.listsService.markItemAsDone(listId, itemId).pipe(
       map(() => MarkItemAsDoneSuccess()),
       catchError((error: HttpErrorResponse) => of(MarkItemAsDoneFailure({ error, listId, itemId })))
+    ))
+  ));
+
+  markDoneItemAsPending$ = createEffect(() => this.actions$.pipe(
+    ofType(MarkDoneItemAsPending),
+    mergeMap(({ listId, itemId }) => this.listsService.markDoneItemAsPending(listId, itemId).pipe(
+      map(() => MarkDoneItemAsPendingSuccess()),
+      catchError((error: HttpErrorResponse) => of(MarkDoneItemAsPendingFailure({ error, listId, itemId })))
     ))
   ));
 

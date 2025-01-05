@@ -10,7 +10,7 @@ import {
   LoadAllLists,
   LoadAllListsFailure,
   LoadAllListsFromDetailView,
-  LoadAllListsSuccess,
+  LoadAllListsSuccess, MarkDoneItemAsPending, MarkDoneItemAsPendingFailure,
   MarkItemAsDone,
   MarkItemAsDoneFailure, ToggleDisplayCompletedItems
 } from './lists.actions';
@@ -64,7 +64,7 @@ export const listsFeature = createFeature({
         }
       }, state);
     }),
-    on(MarkItemAsDone, (state, { listId, itemId }): ListsState => adapter.updateOne({
+    on(MarkItemAsDone, MarkDoneItemAsPendingFailure, (state, { listId, itemId }): ListsState => adapter.updateOne({
       id: listId,
       changes: {
         items: state.entities[listId]?.items.map(item =>
@@ -72,11 +72,11 @@ export const listsFeature = createFeature({
         )
       }
     }, state)),
-    on(MarkItemAsDoneFailure, (state, { listId, itemId }): ListsState => adapter.updateOne({
+    on(MarkItemAsDoneFailure, MarkDoneItemAsPending, (state, { listId, itemId }): ListsState => adapter.updateOne({
       id: listId,
       changes: {
         items: state.entities[listId]?.items.map(item =>
-          item.id === itemId ? { ...item, status: 'pending' } : item
+          item.id === itemId ? { ...item, done: false } : item
         )
       }
     }, state)),

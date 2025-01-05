@@ -45,4 +45,12 @@ export class TodoList implements Entity<TodoListSnapshot> {
     const name = new TodoListItemName(itemName);
     return new TodoListItem(id, name, this.householdId);
   }
+
+  markDoneItemAsPending(itemId: TodoListItemId) {
+    const item = this.itemWithId(itemId);
+    if (!item) {
+      throw new Error('Item not found');
+    }
+    item.markAsPending();
+  }
 }

@@ -38,7 +38,15 @@ describe('Find all todo lists', () => {
 
     it('should return the lists in persistence as read models', async () => {
       const result = await findAllListsQueryHandler.execute(query);
-      expect(result).toEqual(snapshots.map(snapshot => new TodoListReadModel(snapshot)));
+      expect(result).toEqual(snapshots.map(snapshot => ({
+        id: snapshot.id(),
+        name: snapshot.name(),
+        items: snapshot.items().map(item => ({
+          id: item.id(),
+          name: item.name(),
+          done: item.done(),
+        }))
+      } as TodoListReadModel)));
     });
   });
 
