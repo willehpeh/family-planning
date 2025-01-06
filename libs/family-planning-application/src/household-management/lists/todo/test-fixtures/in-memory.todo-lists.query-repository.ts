@@ -2,11 +2,11 @@ import { TodoListReadModel, TodoListSnapshot, TodoListsQueryRepository } from '@
 
 export class InMemoryTodoListsQueryRepository implements TodoListsQueryRepository {
 
-  private  _lists = new Map<string, TodoListSnapshot>()
+  private _listsObj: Record<string, TodoListSnapshot> = {};
 
   findAll(): Promise<TodoListReadModel[]> {
     return Promise.resolve(
-      Array.from(this._lists.values()).map(snapshot => ({
+      Object.values(this._listsObj).map(snapshot => ({
         id: snapshot.id(),
         name: snapshot.name(),
         items: snapshot.items().map(item => ({
@@ -19,7 +19,7 @@ export class InMemoryTodoListsQueryRepository implements TodoListsQueryRepositor
   }
 
   withSnapshots(snapshots: TodoListSnapshot[]): InMemoryTodoListsQueryRepository {
-    this._lists = new Map(snapshots.map(snapshot => [snapshot.id(), snapshot]));
+    snapshots.forEach(snapshot => this._listsObj[snapshot.id()] = snapshot);
     return this;
   }
 }
