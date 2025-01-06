@@ -20,7 +20,12 @@ export class TodoList implements Entity<TodoListSnapshot> {
   }
 
   snapshot(): TodoListSnapshot {
-    return new TodoListSnapshot(this._id, this._name, this._items.map(item => item.snapshot()), this.householdId);
+    return new TodoListSnapshot({
+      id: this._id,
+      name: this._name,
+      items: this._items.map(item => item.snapshot()),
+      householdId: this.householdId
+    });
   }
 
   addNewItem(itemName: string): void {

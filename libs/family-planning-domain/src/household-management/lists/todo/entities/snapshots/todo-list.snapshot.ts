@@ -5,10 +5,21 @@ import { HouseholdId } from '../../../../households';
 
 export class TodoListSnapshot implements EntitySnapshot {
 
-  constructor(private readonly _id: TodoListId,
-              private readonly _name: TodoListName,
-              private readonly _items: TodoListItemSnapshot[],
-              private readonly _householdId: HouseholdId) {
+  private readonly _id: TodoListId;
+  private readonly _name: TodoListName;
+  private readonly _items: TodoListItemSnapshot[];
+  private readonly _householdId: HouseholdId;
+
+  constructor(snapshot: {
+    id: TodoListId,
+    name: TodoListName,
+    items: TodoListItemSnapshot[],
+    householdId: HouseholdId
+  }) {
+    this._id = snapshot.id;
+    this._name = snapshot.name;
+    this._items = snapshot.items;
+    this._householdId = snapshot.householdId;
   }
 
   id(): string {

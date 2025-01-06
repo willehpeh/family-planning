@@ -28,7 +28,7 @@ export class TodoListMapper {
     const name = new TodoListName(entity.name);
     const householdId = HouseholdId.fromString(entity.householdId);
     const items = entity.items.map(item => this.itemEntityToDomainItem(item, householdId));
-    const snapshot = new TodoListSnapshot(id, name, items, householdId);
+    const snapshot = new TodoListSnapshot({ id, name, items, householdId });
     return TodoList.fromSnapshot(snapshot);
   }
 
