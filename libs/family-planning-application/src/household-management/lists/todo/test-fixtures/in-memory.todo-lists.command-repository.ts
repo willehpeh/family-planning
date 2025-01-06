@@ -4,45 +4,31 @@ import { Injectable } from '@nestjs/common';
 @Injectable()
 export class InMemoryTodoListsCommandRepository implements TodoListsCommandRepository {
 
-  private _lists: TodoListSnapshot[] = [];
+  private _lists: Record<string, TodoListSnapshot> = {};
 
   async save(list: TodoList): Promise<void> {
-    const snapshot = list.snapshot();
-    const found = this._lists.find(foundList => foundList.id() === snapshot.id());
-    if (!found) {
-      this._lists.push(list.snapshot());
-      return Promise.resolve();
-    }
-    this._lists.splice(this._lists.indexOf(found), 1, snapshot);
-    await Promise.resolve();
+    this._lists[list.snapshot().id()] = list.snapshot();
+    return Promise.resolve();
   }
 
   async findById(listId: string): Promise<TodoList> {
-    const found = this._lists.find(list => list.id() === listId);
-    if (!found) {
-      return Promise.reject(new Error(`List with id ${listId} not found`));
-    }
-    return Promise.resolve(TodoList.fromSnapshot(found));
+    return Promise.resolve(TodoList.fromSnapshot(this._lists[listId]));
   }
 
   totalLists(): number {
-    return this._lists.length;
+    return Object.keys(this._lists).length;
   }
 
   listSnapshots(): TodoListSnapshot[] {
-    return this._lists.slice();
+    return Object.values(this._lists);
   }
 
   getListSnapshotById(listId: string): TodoListSnapshot {
-    const found = this.listSnapshots().find(list => list.id() === listId);
-    if (!found) {
-      throw new Error('List not found');
-    }
-    return found;
+    return this._lists[listId];
   }
 
   withSnapshots(snapshots: TodoListSnapshot[]): InMemoryTodoListsCommandRepository {
-    this._lists.push(...snapshots);
+    snapshots.forEach(snapshot => this._lists[snapshot.id()] = snapshot);
     return this;
   }
 
