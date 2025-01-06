@@ -50,8 +50,19 @@ export class TodoListMapper {
     const itemStatus = new TodoListItemStatus(item.status);
     if (itemStatus.value() === 'done') {
       const dateComplated = new Date(item.dateCompleted);
-      return new TodoListItemSnapshot(itemId, itemName, householdId, itemStatus, dateComplated);
+      return new TodoListItemSnapshot({
+        id: itemId,
+        name: itemName,
+        householdId,
+        status: itemStatus,
+        dateCompleted: dateComplated
+      });
     }
-    return new TodoListItemSnapshot(itemId, itemName, householdId, itemStatus);
+    return new TodoListItemSnapshot({
+      id: itemId,
+      name: itemName,
+      householdId,
+      status: itemStatus
+    });
   }
 }

@@ -24,7 +24,13 @@ export class TodoListItem implements Entity<TodoListItemSnapshot> {
   }
 
   snapshot(): TodoListItemSnapshot {
-    return new TodoListItemSnapshot(this._id, this._name, this._householdId, this._status, this._dateCompleted);
+    return new TodoListItemSnapshot({
+      id: this._id,
+      name: this._name,
+      householdId: this._householdId,
+      status: this._status,
+      dateCompleted: this._dateCompleted
+    });
   }
 
   hasId(itemId: TodoListItemId) {

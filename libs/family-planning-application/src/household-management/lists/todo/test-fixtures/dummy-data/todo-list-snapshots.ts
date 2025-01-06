@@ -23,12 +23,12 @@ export const TODO_LIST_WITH_ONE_ITEM_SNAPSHOT = new TodoListSnapshot(
   TEST_TODO_LIST_ID,
   new TodoListName('My List'),
   [
-    new TodoListItemSnapshot(
-      TEST_TODO_LIST_ITEM_ID,
-      new TodoListItemName('My Item'),
-      TEST_HOUSEHOLD_ID,
-      new TodoListItemStatus('pending'),
-    )
+    new TodoListItemSnapshot({
+      id: TEST_TODO_LIST_ITEM_ID,
+      name: new TodoListItemName('My Item'),
+      householdId: TEST_HOUSEHOLD_ID,
+      status: new TodoListItemStatus('pending'),
+    })
   ],
   TEST_HOUSEHOLD_ID
 );
@@ -37,18 +37,18 @@ export const TODO_LIST_WITH_TWO_ITEMS_SNAPSHOT = new TodoListSnapshot(
   TEST_TODO_LIST_ID,
   new TodoListName('My List'),
   [
-    new TodoListItemSnapshot(
-      TEST_TODO_LIST_ITEM_ID,
-      new TodoListItemName('My Item'),
-      TEST_HOUSEHOLD_ID,
-      new TodoListItemStatus('pending'),
-    ),
-    new TodoListItemSnapshot(
-      TEST_OTHER_TODO_LIST_ITEM_ID,
-      new TodoListItemName('My Second Item'),
-      TEST_HOUSEHOLD_ID,
-      new TodoListItemStatus('pending'),
-    )
+    new TodoListItemSnapshot({
+      id: TEST_TODO_LIST_ITEM_ID,
+      name: new TodoListItemName('My Item'),
+      householdId: TEST_HOUSEHOLD_ID,
+      status: new TodoListItemStatus('pending'),
+    }),
+    new TodoListItemSnapshot({
+      id: TEST_OTHER_TODO_LIST_ITEM_ID,
+      name: new TodoListItemName('My Second Item'),
+      householdId: TEST_HOUSEHOLD_ID,
+      status: new TodoListItemStatus('pending'),
+    })
   ],
   TEST_HOUSEHOLD_ID
 );
@@ -57,13 +57,13 @@ export const TODO_LIST_WITH_ONE_COMPLETED_ITEM_SNAPSHOT = new TodoListSnapshot(
   TEST_TODO_LIST_ID,
   new TodoListName('My List'),
   [
-    new TodoListItemSnapshot(
-      TEST_TODO_LIST_ITEM_ID,
-      new TodoListItemName('My Item'),
-      TEST_HOUSEHOLD_ID,
-      new TodoListItemStatus('done'),
-      new Date()
-    )
+    new TodoListItemSnapshot({
+      id: TEST_TODO_LIST_ITEM_ID,
+      name: new TodoListItemName('My Item'),
+      householdId: TEST_HOUSEHOLD_ID,
+      status: new TodoListItemStatus('done'),
+      dateCompleted: new Date()
+    })
   ],
   TEST_HOUSEHOLD_ID
 );
