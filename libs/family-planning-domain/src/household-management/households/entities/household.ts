@@ -44,17 +44,8 @@ export class Household implements Entity<HouseholdSnapshot> {
   }
 
   static createNew(
-    householdDetails: {
-      id: HouseholdId,
-      name: HouseholdName,
-    },
-    memberDetails: {
-      id: HouseholdMemberId,
-      userId: UserId,
-      lastName: LastName,
-      firstName: FirstName,
-      email: Email,
-    }
+    householdDetails: HouseholdDetails,
+    memberDetails: MemberDetails
   ): Household {
     return Household.householdWithMembers(householdDetails, [memberDetails]);
   }
