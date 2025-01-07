@@ -1,6 +1,7 @@
 import { EntitySnapshot } from '../../../../common';
 import { Email, FirstName, HouseholdId, HouseholdMemberId, LastName } from '../../value-objects';
 import { UserId } from '../../../../auth';
+import { MemberDetails } from '../household';
 
 export class HouseholdMemberSnapshot implements EntitySnapshot {
 
@@ -53,5 +54,15 @@ export class HouseholdMemberSnapshot implements EntitySnapshot {
 
   pending(): boolean {
     return true;
+  }
+
+  toMemberDetails(): MemberDetails {
+    return {
+      id: this._id,
+      userId: this._userId,
+      lastName: this._lastName,
+      firstName: this._firstName,
+      email: this._email,
+    };
   }
 }

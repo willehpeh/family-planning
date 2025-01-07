@@ -13,12 +13,12 @@ import { HouseholdMember } from './household-member';
 import { UserId } from '../../../auth';
 import { NewMemberInvitedEvent } from '../events';
 
-type HouseholdDetails = {
+export type HouseholdDetails = {
   id: HouseholdId,
   name: HouseholdName,
 }
 
-type MemberDetails = {
+export type MemberDetails = {
   id: HouseholdMemberId,
   userId: UserId,
   lastName: LastName,
@@ -36,18 +36,11 @@ export class Household implements Entity<HouseholdSnapshot> {
                       private _name: HouseholdName) {
   }
 
-  static householdWithMembers(householdDetails: HouseholdDetails, memberDetails: MemberDetails[], pendingMembers?: PendingHouseholdMember[]): Household {
+  static create(householdDetails: HouseholdDetails, memberDetails: MemberDetails[], pendingMembers?: PendingHouseholdMember[]): Household {
     const household = new Household(householdDetails.id, householdDetails.name);
     memberDetails.forEach(memberDetail => household.addMember(memberDetail));
     household._pendingMembers = pendingMembers || [];
     return household;
-  }
-
-  static createNew(
-    householdDetails: HouseholdDetails,
-    memberDetails: MemberDetails
-  ): Household {
-    return Household.householdWithMembers(householdDetails, [memberDetails]);
   }
 
   snapshot(): HouseholdSnapshot {
@@ -70,7 +63,7 @@ export class Household implements Entity<HouseholdSnapshot> {
   }
 
   inviteNewMember(memberDetails: { firstName: FirstName; lastName: LastName; email: Email }) {
-    if (this.cannotAddMember(memberDetails)) {
+    if (this.cannotAddMember(memberDetails.email)) {
       throw new Error('Member already exists');
     }
     const member = this.createNewPendingMember(memberDetails);
@@ -80,16 +73,14 @@ export class Household implements Entity<HouseholdSnapshot> {
 
   private createNewPendingMember(memberDetails: { firstName: FirstName; lastName: LastName; email: Email }) {
     return new PendingHouseholdMember({
+      ...memberDetails,
       householdId: this._id,
       id: HouseholdMemberId.new(),
-      lastName: memberDetails.lastName,
-      firstName: memberDetails.firstName,
-      email: memberDetails.email,
     });
   }
 
-  private cannotAddMember(memberDetails: { firstName: FirstName; lastName: LastName; email: Email }) {
-    return this.memberAlreadyExistsWithEmail(memberDetails.email) || this.pendingMemberAlreadyExistsWithEmail(memberDetails.email);
+  private cannotAddMember(email: Email) {
+    return this.memberAlreadyExistsWithEmail(email) || this.pendingMemberAlreadyExistsWithEmail(email);
   }
 
   private pendingMemberAlreadyExistsWithEmail(email: Email) {

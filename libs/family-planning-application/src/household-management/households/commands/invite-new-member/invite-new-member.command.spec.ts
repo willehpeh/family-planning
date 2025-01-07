@@ -2,7 +2,9 @@ import {
   InMemoryHouseholdRepository,
   TEST_HOUSEHOLD_ID,
   TEST_HOUSEHOLD_MEMBER_EMAIL,
-  TEST_HOUSEHOLD_SNAPSHOT, TEST_HOUSEHOLD_SNAPSHOT_WITH_PENDING_MEMBER, TEST_PENDING_MEMBER_EMAIL
+  TEST_HOUSEHOLD_SNAPSHOT,
+  TEST_HOUSEHOLD_SNAPSHOT_WITH_PENDING_MEMBER,
+  TEST_PENDING_MEMBER_EMAIL
 } from '../../test-fixtures';
 import { InviteNewMemberCommand, InviteNewMemberCommandHandler, InviteNewMemberDto } from './';
 import { NewMemberInvitedEvent } from '@family-planning/domain';
@@ -25,7 +27,7 @@ describe('Invite new member', () => {
         email: TEST_HOUSEHOLD_MEMBER_EMAIL.value(),
       };
       command = new InviteNewMemberCommand(dto);
-      inMemoryHouseholdRepository = new InMemoryHouseholdRepository().withSnapshots([TEST_HOUSEHOLD_SNAPSHOT]);
+      inMemoryHouseholdRepository = new InMemoryHouseholdRepository().withSnapshots([TEST_HOUSEHOLD_SNAPSHOT()]);
       fakeEventBus = new FakeEventBus();
       handler = new InviteNewMemberCommandHandler(inMemoryHouseholdRepository, fakeEventBus);
     });
@@ -66,10 +68,14 @@ describe('Invite new member', () => {
         email: 'john.doe@example.com',
       };
       command = new InviteNewMemberCommand(dto);
-      inMemoryHouseholdRepository = new InMemoryHouseholdRepository().withSnapshots([TEST_HOUSEHOLD_SNAPSHOT]);
+      inMemoryHouseholdRepository = new InMemoryHouseholdRepository().withSnapshots([TEST_HOUSEHOLD_SNAPSHOT()]);
       fakeEventBus = new FakeEventBus();
       handler = new InviteNewMemberCommandHandler(inMemoryHouseholdRepository, fakeEventBus);
     });
+
+    afterEach(() => {
+      inMemoryHouseholdRepository = new InMemoryHouseholdRepository();
+    })
 
     it('should add a pending member to the household', async () => {
       await handler.execute(command);

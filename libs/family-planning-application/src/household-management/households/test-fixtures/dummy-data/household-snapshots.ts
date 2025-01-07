@@ -29,7 +29,7 @@ export const TEST_HOUSEHOLD_MEMBER_SNAPSHOT = new HouseholdMemberSnapshot({
   email: TEST_HOUSEHOLD_MEMBER_EMAIL
 });
 
-export const TEST_HOUSEHOLD_SNAPSHOT = new HouseholdSnapshot({
+export const TEST_HOUSEHOLD_SNAPSHOT = () => new HouseholdSnapshot({
   id: TEST_HOUSEHOLD_ID,
   name: TEST_HOUSEHOLD_NAME,
   members: [TEST_HOUSEHOLD_MEMBER_SNAPSHOT],

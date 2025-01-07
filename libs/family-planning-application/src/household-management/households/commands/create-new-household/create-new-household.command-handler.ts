@@ -30,7 +30,7 @@ export class CreateNewHouseholdCommandHandler implements ICommandHandler<CreateN
         firstName: new FirstName(member.firstName),
         email: new Email(member.email),
       };
-      const household = Household.createNew(householdDetails, foundingMember);
+      const household = Household.create(householdDetails, [foundingMember]);
       await repositories.householdRepository().save(household);
     });
   }

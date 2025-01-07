@@ -1,6 +1,7 @@
 import { EntitySnapshot } from '../../../../common';
 import { HouseholdId, HouseholdName, PendingHouseholdMember } from '../../value-objects';
 import { HouseholdMemberSnapshot } from './household-member.snapshot';
+import { Household } from '../household';
 
 export class HouseholdSnapshot implements EntitySnapshot {
 
@@ -45,5 +46,16 @@ export class HouseholdSnapshot implements EntitySnapshot {
     householdId: string,
   }[] {
     return this._pendingMembers.map(member => member.value());
+  }
+
+  toHousehold(): Household {
+    return Household.create(
+      {
+        id: this._id,
+        name: this._name,
+      },
+      this._members.map(snapshot => snapshot.toMemberDetails()),
+      this._pendingMembers
+    );
   }
 }

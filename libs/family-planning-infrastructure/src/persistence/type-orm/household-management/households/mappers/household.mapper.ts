@@ -20,7 +20,7 @@ export class HouseholdMapper {
   }
 
   static toDomain(entity: OrmHouseholdEntity): Household {
-    return Household.householdWithMembers({
+    return Household.create({
         id: HouseholdId.fromString(entity.id),
         name: new HouseholdName(entity.name),
       },
