@@ -1,14 +1,11 @@
-<header class="p-5 flex justify-between max-w-screen-lg mx-auto mb-6 border-b-2 border-blue-700 relative">
-	<h1 class="text-3xl text-center">{{ title() }}</h1>
+<header class="p-3 flex justify-end max-w-screen-lg mx-auto mb-6 border-b-2 border-blue-700 relative">
 	@if (authenticated()) {
 		<app-button buttonStyle="outline" class="block" (click)="onOpenMenu()">
 			<fa-icon [icon]="faBars"/>
 		</app-button>
 	}
 	@if (sideMenuOpen()) {
-		<app-side-menu class="absolute top-0 right-0 z-10 w-full
-													md:w-1/2 bg-black bg-opacity-85"
-		/>
+		<app-side-menu/>
 	}
 </header>
 <router-outlet/>

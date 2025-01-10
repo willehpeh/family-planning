@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, inject, input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Store } from '@ngrx/store';
 import { selectAuthenticated } from '../../auth/state/auth.selectors';
@@ -19,7 +19,6 @@ import { RouterOutlet } from '@angular/router';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ScaffoldingComponent {
-  title = input<string>();
   private readonly store = inject(Store);
   authenticated = this.store.selectSignal(selectAuthenticated);
   sideMenuOpen = this.store.selectSignal(selectSideMenuOpen);
