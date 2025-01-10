@@ -1,6 +1,6 @@
-<app-header [title]="listName()"/>
+<h1 class="text-3xl text-center mb-6">{{ listName() }}</h1>
 <div class="max-w-screen-md m-auto">
-	<div class="mb-4 flex justify-end">
+	<div class="mb-4 flex justify-end mr-3 md:mr-0">
 		<app-checkbox [checked]="showCompletedItems()"
 									(valueChange)="onToggleDisplayCompletedItems()"
 									label="Show completed items"/>

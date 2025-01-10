@@ -8,11 +8,12 @@ import { faBars } from '@fortawesome/free-solid-svg-icons';
 import { OpenSideMenu } from '../state/ui/ui.actions';
 import { SideMenuComponent } from '../side-menu/side-menu.component';
 import { selectSideMenuOpen } from '../state/ui/ui.selectors';
+import { RouterOutlet } from '@angular/router';
 
 @Component({
   selector: "app-header",
   standalone: true,
-  imports: [CommonModule, ButtonComponent, FaIconComponent, SideMenuComponent],
+  imports: [CommonModule, ButtonComponent, FaIconComponent, SideMenuComponent, RouterOutlet],
   templateUrl: "./scaffolding.component.html",
   styleUrl: "./scaffolding.component.scss",
   changeDetection: ChangeDetectionStrategy.OnPush
