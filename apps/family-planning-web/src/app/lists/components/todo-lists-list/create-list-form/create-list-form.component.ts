@@ -2,9 +2,7 @@ import { Component, inject, OnInit, Signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ButtonComponent } from '../../../../ui-elements/button/button.component';
-import { Store } from '@ngrx/store';
-import { CreateList } from '../../../state/lists.actions';
-import { listsFeature } from '../../../state/lists.reducer';
+import { ListsFacade } from '../../../state/lists.facade';
 
 @Component({
   selector: "app-create-list-form",
@@ -15,10 +13,10 @@ import { listsFeature } from '../../../state/lists.reducer';
 })
 export class CreateListFormComponent implements OnInit {
 
-  private store = inject(Store);
+  private listsFacade = inject(ListsFacade);
 
   newTodoListForm!: FormGroup;
-  saving: Signal<boolean> = this.store.selectSignal(listsFeature.selectSaving);
+  saving: Signal<boolean> = this.listsFacade.saving();
 
   constructor(private formBuilder: FormBuilder) {}
 
@@ -29,6 +27,6 @@ export class CreateListFormComponent implements OnInit {
   }
 
   onCreateNewList() {
-    this.store.dispatch(CreateList({ createListDto: this.newTodoListForm.value }));
+    this.listsFacade.createList(this.newTodoListForm.value);
   }
 }

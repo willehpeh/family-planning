@@ -3,14 +3,14 @@ import { Store } from '@ngrx/store';
 import { Router } from '@angular/router';
 import { NullTodoListReadModel } from '../models/serialized-todo-list';
 import {
-  AddItemToList,
+  AddItemToList, CreateList,
   LoadAllLists,
   LoadAllListsFromDetailView, MarkDoneItemAsPending,
   MarkItemAsDone,
   ToggleDisplayCompletedItems
 } from './lists.actions';
 import { listsFeature } from './lists.reducer';
-import { ItemDetails } from '@family-planning/application';
+import { CreateTodoListDto, ItemDetails } from '@family-planning/application';
 import { SerializedTodoListItemFactory } from '../models/factories/serialized-todo-list-item.factory';
 import { TodoListReadModel } from '@family-planning/domain';
 
@@ -42,7 +42,7 @@ export class ListsFacade {
     this.router.navigate(['/lists/todo', id]);
   }
 
-  createList(): void {
+  goToCreateList(): void {
     this.router.navigate(['/lists/todo/new']);
   }
 
@@ -67,5 +67,13 @@ export class ListsFacade {
 
   completedItemsShouldBeDisplayed(): Signal<boolean> {
     return this.store.selectSignal(listsFeature.selectDisplayCompleted);
+  }
+
+  createList(createListDto: CreateTodoListDto): void {
+    this.store.dispatch(CreateList({ createListDto }));
+  }
+
+  saving(): Signal<boolean> {
+    return this.store.selectSignal(listsFeature.selectSaving);
   }
 }

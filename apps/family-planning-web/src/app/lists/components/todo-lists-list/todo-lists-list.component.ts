@@ -23,6 +23,6 @@ export class TodoListsListComponent {
   }
 
   onCreateList() {
-    this.listsFacade.createList();
+    this.listsFacade.goToCreateList();
   }
 }
