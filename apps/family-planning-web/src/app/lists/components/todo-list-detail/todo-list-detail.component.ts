@@ -1,11 +1,11 @@
-import { Component, computed, inject, input } from '@angular/core';
+import { Component, computed, inject, input, Signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TodoListItemComponent } from './todo-list-item/todo-list-item.component';
-import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import { NewTodoListItemComponent } from './new-todo-list-item/new-todo-list-item.component';
 import { ItemDetails } from '@family-planning/application';
 import { ListsFacade } from '../../state/lists.facade';
 import { CheckboxComponent } from '../../../ui-elements/checkbox/checkbox.component';
+import { TodoListItemReadModel } from '@family-planning/domain';
 
 @Component({
   selector: 'app-todo-list-detail',
@@ -16,16 +16,23 @@ import { CheckboxComponent } from '../../../ui-elements/checkbox/checkbox.compon
 })
 export class TodoListDetailComponent {
   id = input.required<string>();
-  protected readonly faPlus = faPlus;
   private readonly listsFacade = inject(ListsFacade);
-  showCompletedItems = this.listsFacade.completedItemsShouldBeDisplayed();
+  protected readonly showCompletedItems = this.listsFacade.completedItemsShouldBeDisplayed();
   private list = computed(() => this.listsFacade.listWithId(this.id()));
-  listName = computed(() => this.list().name);
-  loadingAndListEmpty = computed(() => this.listsFacade.loading() && !this.list().id);
+  protected readonly listName = computed(() => this.list().name);
+  protected readonly loadingAndListEmpty = computed(() => this.listsFacade.loading() && !this.list().id);
   private readonly items = computed(() => this.list().items ?? []);
-  pendingItems = computed(() => this.items().filter((item) => !item.done).reverse());
-  doneItems = computed(() => this.items().filter((item) => item.done).reverse());
-  newItemButtonTabIndex = computed(() => (this.items().length || 0) + 1);
+  protected readonly pendingItems = this._pendingItems();
+  protected readonly doneItems = this._doneItems();
+  protected readonly newItemButtonTabIndex = computed(() => (this.items().length || 0) + 1);
+
+  private _pendingItems(): Signal<TodoListItemReadModel[]> {
+    return computed(() => this.items().filter((item) => !item.done).reverse());
+  }
+
+  private _doneItems(): Signal<TodoListItemReadModel[]> {
+    return computed(() => this.items().filter((item) => item.done).reverse());
+  }
 
   onCreateItem(itemDetails: ItemDetails): void {
     this.listsFacade.addItemToList(this.id(), itemDetails);

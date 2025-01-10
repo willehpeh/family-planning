@@ -30,7 +30,6 @@ export class ListsFacade {
       this.store.dispatch(LoadAllListsFromDetailView());
       return NullTodoListReadModel;
     }
-    console.log(list());
     return list();
   }
 
