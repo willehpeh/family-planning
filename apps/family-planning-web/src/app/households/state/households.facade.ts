@@ -6,7 +6,7 @@ import {
   selectMyHouseholdName,
   selectMyHouseholdPendingMembers
 } from './households.selectors';
-import { InviteNewMember } from './households.actions';
+import { CreateHousehold, InviteNewMember } from './households.actions';
 import { MemberInvitationInfo } from '../models/member-invitation-info';
 
 @Injectable()
@@ -23,5 +23,9 @@ export class HouseholdsFacade {
 
   inviteMemberToHousehold(info: MemberInvitationInfo) {
     this.store.dispatch(InviteNewMember({ info }));
+  }
+
+  createNewHousehold(householdName: string) {
+    this.store.dispatch(CreateHousehold({ householdName }));
   }
 }
