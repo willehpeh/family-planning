@@ -8,12 +8,11 @@ import { faBars } from '@fortawesome/free-solid-svg-icons';
 import { OpenSideMenu } from '../state/ui/ui.actions';
 import { SideMenuComponent } from '../side-menu/side-menu.component';
 import { selectSideMenuOpen } from '../state/ui/ui.selectors';
-import { RouterOutlet } from '@angular/router';
 
 @Component({
-  selector: "app-header",
+  selector: "app-toolbar",
   standalone: true,
-  imports: [CommonModule, ButtonComponent, FaIconComponent, SideMenuComponent, RouterOutlet],
+  imports: [CommonModule, ButtonComponent, FaIconComponent, SideMenuComponent],
   templateUrl: "./toolbar.component.html",
   styleUrl: "./toolbar.component.scss",
   changeDetection: ChangeDetectionStrategy.OnPush

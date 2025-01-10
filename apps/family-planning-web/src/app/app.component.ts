@@ -1,12 +1,15 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { RouterModule } from '@angular/router';
+import { ToolbarComponent } from './layout/toolbar/toolbar.component';
 
 @Component({
   standalone: true,
-  imports: [RouterModule],
+  imports: [RouterModule, ToolbarComponent],
   selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrl: './app.component.scss',
+  template: `
+		<app-toolbar/>
+		<router-outlet/>
+  `,
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AppComponent {
