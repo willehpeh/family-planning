@@ -9,7 +9,7 @@ import { HouseholdMemberInfo } from '../../models/household-member-info';
   template: `
 		<ul>
 			@for (member of members(); track member.id) {
-				<li class="mb-3">{{ member.firstName }} {{ member.lastName }}<br>{{ member.email }}</li>
+				<li class="mb-3 ml-3 md:ml-0">{{ member.firstName }} {{ member.lastName }}<br>{{ member.email }}</li>
 			}
 		</ul>
   `

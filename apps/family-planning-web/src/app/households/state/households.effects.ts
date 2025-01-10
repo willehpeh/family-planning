@@ -54,7 +54,7 @@ export class HouseholdsEffects {
 
   inviteNewMember$ = createEffect(() => this.actions$.pipe(
     ofType(InviteNewMember),
-    switchMap(action => this.householdsService.inviteNewMember({ firstName: action.firstName, lastName: action.lastName, email: action.email }).pipe(
+    switchMap(action => this.householdsService.inviteNewMember(action.info).pipe(
       map(() => InviteNewMemberSuccess()),
       catchError(() => of(InviteNewMemberFailure()))
     ))

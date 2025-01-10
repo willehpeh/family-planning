@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Router } from '@angular/router';
 import { HouseholdInfo } from '../models/household-info';
+import { MemberInvitationInfo } from '../models/member-invitation-info';
 
 @Injectable({
   providedIn: 'root'
@@ -27,7 +28,7 @@ export class HouseholdsService {
     this.router.navigate(['/command-centre']);
   }
 
-  inviteNewMember(memberDetails: { lastName: string, firstName: string, email: string }): Observable<void> {
-    return this.http.post<void>('/api/households/invite-member', memberDetails);
+  inviteNewMember(info: MemberInvitationInfo): Observable<void> {
+    return this.http.post<void>('/api/households/invite-member', info);
   }
 }

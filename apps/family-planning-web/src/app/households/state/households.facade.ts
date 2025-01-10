@@ -6,6 +6,8 @@ import {
   selectMyHouseholdName,
   selectMyHouseholdPendingMembers
 } from './households.selectors';
+import { InviteNewMember } from './households.actions';
+import { MemberInvitationInfo } from '../models/member-invitation-info';
 
 @Injectable()
 export class HouseholdsFacade {
@@ -17,5 +19,9 @@ export class HouseholdsFacade {
       members: this.store.selectSignal(selectMyHouseholdMembers),
       pendingMembers: this.store.selectSignal(selectMyHouseholdPendingMembers),
     };
+  }
+
+  inviteMemberToHousehold(info: MemberInvitationInfo) {
+    this.store.dispatch(InviteNewMember({ info }));
   }
 }
