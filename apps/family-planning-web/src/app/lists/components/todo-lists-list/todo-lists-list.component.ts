@@ -1,6 +1,6 @@
 import { Component, inject, Signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { faListCheck, faPlus } from '@fortawesome/free-solid-svg-icons';
+import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import { ListsFacade } from '../../state/lists.facade';
 import { TodoListGridCellComponent } from '../todo-list-grid-cell/todo-list-grid-cell.component';
 import { TodoListReadModel } from '@family-planning/domain';
@@ -17,7 +17,6 @@ export class TodoListsListComponent {
   lists: Signal<TodoListReadModel[]> = this.listsFacade.allLists();
   loading = this.listsFacade.loading();
   readonly faPlus = faPlus;
-  readonly faListCheck = faListCheck;
 
   onClickList(id: string) {
     this.listsFacade.openList(id);
