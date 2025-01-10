@@ -19,7 +19,7 @@ import { NgClass } from '@angular/common';
 		              hover:bg-gray-900
 		              active:bg-gray-800"
 				 [title]="listName()"
-         [ngClass]="colorClasses()"
+         [ngClass]="classes()"
     >
 			<fa-icon [icon]="icon()" size="2x"/>
 			<h2 class="mt-2"
@@ -35,15 +35,10 @@ export class TodoListGridCellComponent {
   icon = input<IconDefinition>(faListCheck);
   shortenedListName = computed(() => this.listName().length <= 10 ? this.listName() :`${this.listName().slice(0, 10)}...`);
 
-  protected readonly colorClasses = computed(() => {
-    return {
-      'border-blue-300': !this.highlight(),
-      'hover:border-blue-500': !this.highlight(),
-      'active:bg-blue-800': !this.highlight(),
-      'border-amber-300': this.highlight(),
-      'hover:border-amber-500': this.highlight(),
-      'active:bg-amber-800': this.highlight(),
-    };
+  protected readonly classes = computed(() => {
+    return this.highlight() ?
+      'border-amber-300 hover:border-amber-500 active:bg-amber-800' :
+      'border-blue-300 hover:border-blue-500 active:bg-blue-800';
   });
 
   @HostBinding('class') get hostClasses() {
