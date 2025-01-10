@@ -3,13 +3,17 @@ import { Store } from '@ngrx/store';
 import { filter, Observable } from 'rxjs';
 import { UserInfoDto } from '../types/user-info.dto';
 import { LoadUserInfo, Logout } from './auth.actions';
-import { selectUserGivenName, selectUserInfo } from './auth.selectors';
+import { selectAuthenticated, selectUserGivenName, selectUserInfo } from './auth.selectors';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthFacade {
   private readonly store = inject(Store);
+
+  authenticated(): Signal<boolean> {
+    return this.store.selectSignal(selectAuthenticated);
+  }
 
   userInfo(): Observable<UserInfoDto> {
     this.store.dispatch(LoadUserInfo());

@@ -1,13 +1,11 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Store } from '@ngrx/store';
-import { selectAuthenticated } from '../../auth/state/auth.selectors';
 import { ButtonComponent } from '../../ui-elements/button/button.component';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { faBars } from '@fortawesome/free-solid-svg-icons';
-import { OpenSideMenu } from '../state/ui/ui.actions';
 import { SideMenuComponent } from '../side-menu/side-menu.component';
-import { selectSideMenuOpen } from '../state/ui/ui.selectors';
+import { AuthFacade } from '../../auth/state/auth.facade';
+import { SideMenuFacade } from '../state/side-menu.facade';
 
 @Component({
   selector: "app-toolbar",
@@ -18,12 +16,13 @@ import { selectSideMenuOpen } from '../state/ui/ui.selectors';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ToolbarComponent {
-  private readonly store = inject(Store);
-  authenticated = this.store.selectSignal(selectAuthenticated);
-  sideMenuOpen = this.store.selectSignal(selectSideMenuOpen);
+  private readonly authFacade = inject(AuthFacade);
+  private readonly sideMenuFacade = inject(SideMenuFacade);
+  authenticated = this.authFacade.authenticated();
+  sideMenuOpen = this.sideMenuFacade.isOpen();
 
   onOpenMenu() {
-    this.store.dispatch(OpenSideMenu());
+    this.sideMenuFacade.open();
   }
 
   protected readonly faBars = faBars;
