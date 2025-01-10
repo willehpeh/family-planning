@@ -8,6 +8,7 @@ import { CommonModule } from '@angular/common';
   template: `
 		<button (click)="onClick($event)"
 						[disabled]="disabled()"
+            class="py-1 px-4 box-border border-2"
 						[ngClass]="classes()"
 		>
 			<ng-content/>
@@ -18,15 +19,10 @@ export class ButtonComponent {
 
   disabled = input<boolean>(false);
   click = output<MouseEvent>();
-  buttonStyle = input<'primary' | 'secondary' | 'outline'>('primary');
+  buttonStyle = input<'primary' | 'outline'>('primary');
   primary = computed(() => this.buttonStyle() === 'primary');
-  secondary = computed(() => this.buttonStyle() === 'secondary');
   outline = computed(() => this.buttonStyle() === 'outline');
   classes = computed(() => ({
-    'py-1': true,
-    'px-4': true,
-    'box-border': true,
-    'border-2': true,
     'text-gray-900': this.primary(),
     'bg-amber-300': this.primary() && !this.disabled(),
     'border-amber-300': this.primary() && !this.disabled(),
