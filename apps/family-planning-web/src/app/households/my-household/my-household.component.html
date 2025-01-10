@@ -15,14 +15,13 @@
 				<app-my-household-member-list [members]="pendingHouseholdMembers()"/>
 			</app-my-household-info-row>
 		}
-		@if (!invitingNewMember()) {
+		@if (invitingNewMember()) {
+			<app-member-invitation-form class="block mt-12" (memberInvite)="onInviteMember($event)"/>
+		} @else {
 			<app-button class="block mt-6"
 									buttonStyle="primary"
 									(click)="onStartInvitingNewMember()">INVITE NEW MEMBER
 			</app-button>
-		}
-		@if (invitingNewMember()) {
-			<app-member-invitation-form class="block mt-12" (memberInvite)="onInviteMember($event)"/>
 		}
 	</app-card>
 </div>
