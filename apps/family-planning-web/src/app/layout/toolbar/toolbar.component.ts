@@ -14,11 +14,11 @@ import { RouterOutlet } from '@angular/router';
   selector: "app-header",
   standalone: true,
   imports: [CommonModule, ButtonComponent, FaIconComponent, SideMenuComponent, RouterOutlet],
-  templateUrl: "./scaffolding.component.html",
-  styleUrl: "./scaffolding.component.scss",
+  templateUrl: "./toolbar.component.html",
+  styleUrl: "./toolbar.component.scss",
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class ScaffoldingComponent {
+export class ToolbarComponent {
   private readonly store = inject(Store);
   authenticated = this.store.selectSignal(selectAuthenticated);
   sideMenuOpen = this.store.selectSignal(selectSideMenuOpen);

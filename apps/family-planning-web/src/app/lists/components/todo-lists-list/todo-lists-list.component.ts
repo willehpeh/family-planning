@@ -1,6 +1,5 @@
 import { Component, inject, Signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ScaffoldingComponent } from '../../../layout/scaffolding/scaffolding.component';
 import { faListCheck, faPlus } from '@fortawesome/free-solid-svg-icons';
 import { ListsFacade } from '../../state/lists.facade';
 import { TodoListGridCellComponent } from '../todo-list-grid-cell/todo-list-grid-cell.component';
@@ -9,7 +8,7 @@ import { TodoListReadModel } from '@family-planning/domain';
 @Component({
   selector: 'app-todo-lists-list',
   standalone: true,
-  imports: [CommonModule, ScaffoldingComponent, TodoListGridCellComponent],
+  imports: [CommonModule, TodoListGridCellComponent],
   templateUrl: './todo-lists-list.component.html',
   styleUrl: './todo-lists-list.component.scss',
 })

@@ -1,6 +1,5 @@
 import { Component, computed, inject, input } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ScaffoldingComponent } from '../../../layout/scaffolding/scaffolding.component';
 import { TodoListItemComponent } from './todo-list-item/todo-list-item.component';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import { NewTodoListItemComponent } from './new-todo-list-item/new-todo-list-item.component';
@@ -11,7 +10,7 @@ import { CheckboxComponent } from '../../../ui-elements/checkbox/checkbox.compon
 @Component({
   selector: 'app-todo-list-detail',
   standalone: true,
-  imports: [CommonModule, ScaffoldingComponent, TodoListItemComponent, NewTodoListItemComponent, CheckboxComponent],
+  imports: [CommonModule, TodoListItemComponent, NewTodoListItemComponent, CheckboxComponent],
   templateUrl: './todo-list-detail.component.html',
   styleUrl: './todo-list-detail.component.scss',
 })

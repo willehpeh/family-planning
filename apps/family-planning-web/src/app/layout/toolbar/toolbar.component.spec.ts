@@ -1,16 +1,16 @@
 import { ComponentFixture, TestBed } from "@angular/core/testing";
-import { ScaffoldingComponent } from "./scaffolding.component";
+import { ToolbarComponent } from "./toolbar.component";
 
 describe("HeaderComponent", () => {
-  let component: ScaffoldingComponent;
-  let fixture: ComponentFixture<ScaffoldingComponent>;
+  let component: ToolbarComponent;
+  let fixture: ComponentFixture<ToolbarComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [ScaffoldingComponent],
+      imports: [ToolbarComponent],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(ScaffoldingComponent);
+    fixture = TestBed.createComponent(ToolbarComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

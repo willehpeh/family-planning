@@ -1,6 +1,5 @@
 import { Component, inject, Signal } from '@angular/core';
-import { CommonModule } from "@angular/common";
-import { ScaffoldingComponent } from '../../layout/scaffolding/scaffolding.component';
+import { CommonModule } from '@angular/common';
 import { CardComponent } from '../../ui-elements/card/card.component';
 import { Store } from '@ngrx/store';
 import {
@@ -19,7 +18,7 @@ import { MyHouseholdMemberListComponent } from './my-household-member-list/my-ho
 @Component({
   selector: "app-my-household",
   standalone: true,
-  imports: [CommonModule, ScaffoldingComponent, CardComponent, ButtonComponent, MyHouseholdInfoRowComponent, MemberInvitationFormComponent, MyHouseholdMemberListComponent],
+  imports: [CommonModule, CardComponent, ButtonComponent, MyHouseholdInfoRowComponent, MemberInvitationFormComponent, MyHouseholdMemberListComponent],
   templateUrl: "./my-household.component.html",
   styleUrl: "./my-household.component.scss",
 })
