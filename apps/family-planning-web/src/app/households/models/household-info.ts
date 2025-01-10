@@ -1,8 +1,12 @@
 import { HouseholdMemberInfo } from './household-member-info';
 
-export type HouseholdInfo = {
-  id: string;
-  name: string;
-  members: HouseholdMemberInfo[]
-  pendingMembers: HouseholdMemberInfo[]
+export class HouseholdInfo {
+  id = '';
+  name = '';
+  members: HouseholdMemberInfo[] = [];
+  pendingMembers: HouseholdMemberInfo[] = [];
+
+  static null(): HouseholdInfo {
+    return new HouseholdInfo();
+  }
 }

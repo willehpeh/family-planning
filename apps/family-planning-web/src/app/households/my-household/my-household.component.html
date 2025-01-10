@@ -1,18 +1,22 @@
+@let householdName = myHousehold.name();
+@let householdMembers = myHousehold.members();
+@let pendingHouseholdMembers = myHousehold.pendingMembers();
+
 <h1 class="text-3xl text-center mb-6">MY HOUSEHOLD</h1>
 <div class="max-w-screen-md mx-auto">
 	<app-card>
 
 		<app-my-household-info-row label="Name">
-			<p>{{ householdName() }}</p>
+			<p>{{ householdName }}</p>
 		</app-my-household-info-row>
 
 		<app-my-household-info-row label="Members">
-			<app-my-household-member-list [members]="householdMembers()"/>
+			<app-my-household-member-list [members]="householdMembers"/>
 		</app-my-household-info-row>
 
-		@if (pendingHouseholdMembers().length > 0) {
+		@if (pendingHouseholdMembers.length > 0) {
 			<app-my-household-info-row label="Pending members">
-				<app-my-household-member-list [members]="pendingHouseholdMembers()"/>
+				<app-my-household-member-list [members]="pendingHouseholdMembers"/>
 			</app-my-household-info-row>
 		}
 		@if (invitingNewMember()) {

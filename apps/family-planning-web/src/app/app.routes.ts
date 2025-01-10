@@ -3,6 +3,7 @@ import { ToolbarComponent } from './layout/toolbar/toolbar.component';
 import { userInfoResolver } from './command-centre/resolvers/user-info.resolver';
 import { AuthGuard } from './auth/guards/auth.guard';
 import { LISTS_PROVIDERS } from './lists/lists.providers';
+import { HOUSEHOLDS_PROVIDERS } from './households/households.providers';
 
 export const appRoutes: Route[] = [
   {
@@ -17,6 +18,7 @@ export const appRoutes: Route[] = [
         loadChildren: () => import('./lists/lists.routes').then(m => m.listRoutes) },
       { path: 'households',
         canActivate: [AuthGuard],
+        providers: HOUSEHOLDS_PROVIDERS,
         loadChildren: () => import('./households/households.routes').then(m => m.householdsRoutes)
       },
     ]
