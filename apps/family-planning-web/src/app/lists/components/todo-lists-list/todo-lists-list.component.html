@@ -9,9 +9,10 @@
 @if (loading()) {
 	<p class="text-center">Loading...</p>
 } @else {
-	<div class="flex justify-center gap-6 flex-wrap">
+	<div>
 		@for (list of lists(); track list.id) {
 			<app-todo-list-grid-cell (click)="onClickList(list.id)"
+															 [index]="$index"
 															 [listName]="list.name"/>
 		}
 	</div>
