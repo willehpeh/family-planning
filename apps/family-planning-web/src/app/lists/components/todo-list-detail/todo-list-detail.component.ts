@@ -1,4 +1,4 @@
-import { Component, computed, inject, input, Signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, inject, input, Signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TodoListItemComponent } from './todo-list-item/todo-list-item.component';
 import { NewTodoListItemComponent } from './new-todo-list-item/new-todo-list-item.component';
@@ -13,6 +13,7 @@ import { TodoListItemReadModel } from '@family-planning/domain';
   imports: [CommonModule, TodoListItemComponent, NewTodoListItemComponent, CheckboxComponent],
   templateUrl: './todo-list-detail.component.html',
   styleUrl: './todo-list-detail.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TodoListDetailComponent {
   id = input.required<string>();

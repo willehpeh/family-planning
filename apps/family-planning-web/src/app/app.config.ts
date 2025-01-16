@@ -5,6 +5,7 @@ import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { storeProviders } from './store.providers';
 import { withCredentialsInterceptor } from './auth/interceptors/with-credentials.interceptor';
 import { Title } from '@angular/platform-browser';
+import { provideAnimations } from '@angular/platform-browser/animations';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -14,6 +15,7 @@ export const appConfig: ApplicationConfig = {
     provideHttpClient(
       withInterceptors([withCredentialsInterceptor]),
     ),
+    provideAnimations(),
     {
       provide: APP_INITIALIZER,
       useFactory: (title: Title) => title.setTitle('Family Planning'),

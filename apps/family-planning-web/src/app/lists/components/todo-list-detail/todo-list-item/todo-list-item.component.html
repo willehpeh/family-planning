@@ -1,4 +1,9 @@
-<div class="bg-black bg-opacity-60 p-6 m-auto max-w-screen-md rounded-md flex gap-6 items-center" [tabIndex]="tabIndex()">
-	<app-checkbox [checked]="itemDone()" (valueChange)="onMarkItemAsDone()" />
-	<p [class.italic]="itemDone()" [class.line-through]="itemDone()">{{ itemName() }}</p>
-</div>
+@if (item()) {
+	<div class="bg-black bg-opacity-60 p-6 m-auto max-w-screen-md rounded-md flex gap-6 items-center"
+			 [tabIndex]="tabIndex()"
+			 [@listItem]="animationState$ | async"
+	>
+		<app-checkbox [checked]="done" (valueChange)="onToggleItem($event)"/>
+		<p [class.italic]="itemDone()" [class.line-through]="itemDone()">{{ itemName() }}</p>
+	</div>
+}
