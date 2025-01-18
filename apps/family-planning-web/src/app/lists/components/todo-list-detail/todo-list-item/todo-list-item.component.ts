@@ -86,7 +86,7 @@ export class TodoListItemComponent implements OnInit {
   private emitStatusChangeAfterAnimationFinished(checkedChanged$: Observable<boolean>) {
     checkedChanged$.pipe(
       takeUntilDestroyed(),
-      delay(320),
+      delay(320), // allow animation to complete
       tap(checked => checked ? this.markItemAsDone() : this.markDoneItemAsPending())
     ).subscribe();
   }
