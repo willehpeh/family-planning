@@ -1,16 +1,16 @@
 <header class="p-3 flex justify-between items-center max-w-screen-lg mx-auto mb-6 border-b-2 border-blue-700 relative">
 	<div class="w-12">
 		@if (backButtonPath()) {
-			<app-button buttonStyle="outline" (click)="onGoBack()">
-				<fa-icon [icon]="faArrowLeft"/>
+			<app-button buttonStyle="none" (click)="onGoBack()">
+				<fa-icon [icon]="faArrowLeft" size="lg"/>
 			</app-button>
 		}
 	</div>
 	<h1>FAMILY PLANNING</h1>
 	<div>
 		@if (authenticated()) {
-			<app-button buttonStyle="outline" (click)="onOpenMenu()">
-				<fa-icon [icon]="faBars"/>
+			<app-button buttonStyle="none" (click)="onOpenMenu()">
+				<fa-icon [icon]="faBars" size="lg"/>
 			</app-button>
 		}
 	</div>
