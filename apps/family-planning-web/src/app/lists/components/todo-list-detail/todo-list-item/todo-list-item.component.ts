@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, computed, input, OnInit, output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, input, OnInit, output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { SerializedTodoListItem } from '../../../models/serialized-todo-list-item';
 import { CheckboxComponent } from '../../../../ui-elements/checkbox/checkbox.component';
@@ -13,13 +13,11 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
     CommonModule,
     CheckboxComponent,
   ],
-  templateUrl: './todo-list-item.component.html',
-  styleUrl: './todo-list-item.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
   animations: [
     trigger('listItem', [
-      state('out', style({ transform: 'scaleY(0)' })),
       state('in', style({ transform: 'scaleY(1)' })),
+      state('out', style({ transform: 'scaleY(0)' })),
       transition('void => *', [
         style({ transform: 'scaleY(0)' }),
         animate('0.3s ease-in-out')
@@ -28,53 +26,86 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
         animate('0.3s ease-in-out')
       ])
     ])
-  ]
+  ],
+  template: `
+		@if (item()) {
+			<div class="bg-black bg-opacity-60 p-6 m-auto max-w-screen-md rounded-md flex gap-6 items-center"
+					 [tabIndex]="tabIndex()"
+					 [@listItem]="animationState$ | async">
+				<app-checkbox [checked]="checkboxChecked" (valueChange)="onToggleItem($event)"/>
+				<p [class.italic]="item().done" [class.line-through]="item().done">{{ item().name }}</p>
+			</div>
+		}
+  `,
 })
 export class TodoListItemComponent implements OnInit {
   item = input.required<SerializedTodoListItem>();
-  itemName = computed(() => this.item().name);
-  itemDone = computed(() => this.item().done);
-  done = false;
-  animationState$: Observable<'in' | 'out'>;
   tabIndex = input.required<number>();
 
   itemMarkedAsDone = output<string>();
   doneItemMarkedAsPending = output<string>();
 
+  checkboxChecked = false;
+  animationState$: Observable<'in' | 'out'>;
+
   private readonly _checked$ = new Subject<boolean>;
 
   constructor() {
-    const checkedChanged$ = this._checked$.pipe(
+    const checkedChanged$ = this.debouncedStatusChange();
+    this.animationState$ = this.triggerAnimationOnStatusChange(checkedChanged$);
+    this.emitStatusChangeAfterAnimationFinished(checkedChanged$);
+  }
+
+  ngOnInit(): void {
+    this.setCheckboxStatus(this.item().done);
+  }
+
+  onToggleItem(checked: boolean): void {
+    this.setCheckboxStatus(!this.checkboxChecked);
+    this._checked$.next(checked);
+  }
+
+  /**
+   * Allow user time to see status change and correct if mistake
+   * @private
+   */
+  private debouncedStatusChange() {
+    return this._checked$.pipe(
       debounceTime(500),
-      filter(checked => checked !== this.itemDone()),
+      filter(checked => this.statusChanged(checked)),
     );
-    this.animationState$ = concat(
+  }
+
+  private triggerAnimationOnStatusChange(checkedChanged$: Observable<boolean>) {
+    return concat(
       of('in' as const),
       checkedChanged$.pipe(
         map(() => 'out' as const)
       )
     );
+  }
+
+  private emitStatusChangeAfterAnimationFinished(checkedChanged$: Observable<boolean>) {
     checkedChanged$.pipe(
       takeUntilDestroyed(),
       delay(320),
-      tap(checked => this.emitItemStatus(checked))
+      tap(checked => checked ? this.markItemAsDone() : this.markDoneItemAsPending())
     ).subscribe();
   }
 
-  ngOnInit(): void {
-    this.done = this.item().done;
+  private statusChanged(checked: boolean) {
+    return checked !== this.item().done;
   }
 
-  onToggleItem(checked: boolean): void {
-    this.done = !this.done;
-    this._checked$.next(checked);
+  private setCheckboxStatus(done: boolean) {
+    this.checkboxChecked = done;
   }
 
-  private emitItemStatus(checked: boolean) {
-    if (checked) {
-      this.itemMarkedAsDone.emit(this.item().id);
-      return;
-    }
+  private markDoneItemAsPending() {
     this.doneItemMarkedAsPending.emit(this.item().id);
+  }
+
+  private markItemAsDone() {
+    this.itemMarkedAsDone.emit(this.item().id);
   }
 }

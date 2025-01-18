@@ -4,7 +4,7 @@ import { Component, input, output } from '@angular/core';
   selector: 'app-checkbox',
   standalone: true,
   template: `
-		<label class="flex items-center gap-3 w-fit">
+		<label class="flex items-center gap-3 w-fit cursor-pointer">
 			<input type="checkbox" class="hidden" [checked]="checked()" (change)="onChange()"/>
       <span>{{ label() }}</span>
 			<span class="w-4 h-4 border-2 border-blue-300 flex items-center justify-center"
