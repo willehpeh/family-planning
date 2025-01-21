@@ -10,12 +10,16 @@
   "targets": {
     "build": {
       "executor": "@angular-devkit/build-angular:application",
-      "outputs": ["{options.outputPath}"],
+      "outputs": [
+        "{options.outputPath}"
+      ],
       "options": {
         "outputPath": "dist/apps/family-planning-web",
         "index": "apps/family-planning-web/src/index.html",
         "browser": "apps/family-planning-web/src/main.ts",
-        "polyfills": ["zone.js"],
+        "polyfills": [
+          "zone.js"
+        ],
         "tsConfig": "apps/family-planning-web/tsconfig.app.json",
         "inlineStyleLanguage": "scss",
         "assets": [
@@ -24,7 +28,9 @@
             "input": "apps/family-planning-web/public"
           }
         ],
-        "styles": ["apps/family-planning-web/src/styles.scss"],
+        "styles": [
+          "apps/family-planning-web/src/styles.scss"
+        ],
         "scripts": []
       },
       "configurations": {
@@ -41,7 +47,8 @@
               "maximumError": "4kb"
             }
           ],
-          "outputHashing": "all"
+          "outputHashing": "all",
+          "serviceWorker": "apps/family-planning-web/ngsw-config.json"
         },
         "development": {
           "optimization": false,
@@ -79,7 +86,9 @@
     },
     "test": {
       "executor": "@nx/jest:jest",
-      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "outputs": [
+        "{workspaceRoot}/coverage/{projectRoot}"
+      ],
       "options": {
         "jestConfig": "apps/family-planning-web/jest.config.ts"
       }
