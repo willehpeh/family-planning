@@ -3,14 +3,13 @@ import { RouterModule } from '@angular/router';
 import { ToolbarComponent } from './layout/toolbar/toolbar.component';
 
 @Component({
-  standalone: true,
-  imports: [RouterModule, ToolbarComponent],
-  selector: 'app-root',
-  template: `
+    imports: [RouterModule, ToolbarComponent],
+    selector: 'app-root',
+    template: `
 		<app-toolbar/>
 		<router-outlet/>
   `,
-  changeDetection: ChangeDetectionStrategy.OnPush
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AppComponent {
 }

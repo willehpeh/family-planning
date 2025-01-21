@@ -4,11 +4,10 @@ import { ButtonComponent } from '../ui-elements/button/button.component';
 import { Router } from '@angular/router';
 
 @Component({
-  selector: "app-disclaimer",
-  standalone: true,
-  imports: [CommonModule, ButtonComponent],
-  templateUrl: "./disclaimer.component.html",
-  styleUrl: "./disclaimer.component.scss",
+    selector: "app-disclaimer",
+    imports: [CommonModule, ButtonComponent],
+    templateUrl: "./disclaimer.component.html",
+    styleUrl: "./disclaimer.component.scss"
 })
 export class DisclaimerComponent {
 

@@ -1,5 +1,5 @@
 import { CreateNewHouseholdCommand, CreateNewHouseholdCommandHandler } from '.';
-import { InMemoryHouseholdRepository, InMemoryUnitOfWork } from '../../test-fixtures';
+import { InMemoryHouseholdRepository } from '../../test-fixtures';
 import { CreateNewHouseholdDto } from './create-new-household.dto';
 import { HouseholdSnapshot } from '@family-planning/domain';
 
@@ -7,15 +7,13 @@ describe('CreateNewHouseholdCommand', () => {
   let command: CreateNewHouseholdCommand;
   let handler: CreateNewHouseholdCommandHandler;
   let inMemoryHouseholdRepository: InMemoryHouseholdRepository;
-  let inMemoryUnitOfWork: InMemoryUnitOfWork;
   let dto: CreateNewHouseholdDto;
 
   let createdHouseholdSnapshot: HouseholdSnapshot;
 
   beforeEach(async () => {
     inMemoryHouseholdRepository = new InMemoryHouseholdRepository();
-    inMemoryUnitOfWork = new InMemoryUnitOfWork(inMemoryHouseholdRepository);
-    handler = new CreateNewHouseholdCommandHandler(inMemoryUnitOfWork);
+    handler = new CreateNewHouseholdCommandHandler(inMemoryHouseholdRepository);
     dto = {
       householdName: 'newHouseholdName',
       foundingMember: {

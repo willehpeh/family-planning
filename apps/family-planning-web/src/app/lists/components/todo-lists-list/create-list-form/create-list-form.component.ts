@@ -5,11 +5,10 @@ import { ButtonComponent } from '../../../../ui-elements/button/button.component
 import { ListsFacade } from '../../../state/lists.facade';
 
 @Component({
-  selector: "app-create-list-form",
-  standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, ButtonComponent],
-  templateUrl: "./create-list-form.component.html",
-  styleUrl: "./create-list-form.component.scss",
+    selector: "app-create-list-form",
+    imports: [CommonModule, ReactiveFormsModule, ButtonComponent],
+    templateUrl: "./create-list-form.component.html",
+    styleUrl: "./create-list-form.component.scss"
 })
 export class CreateListFormComponent implements OnInit {
 

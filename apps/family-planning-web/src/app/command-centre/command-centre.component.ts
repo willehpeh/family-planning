@@ -5,11 +5,10 @@ import { Store } from '@ngrx/store';
 import { selectMyHouseholdName } from '../households/state/households.selectors';
 
 @Component({
-  selector: 'app-command-centre',
-  standalone: true,
-  imports: [CommonModule, CardsContainerComponent],
-  templateUrl: './command-centre.component.html',
-  styleUrl: './command-centre.component.scss',
+    selector: 'app-command-centre',
+    imports: [CommonModule, CardsContainerComponent],
+    templateUrl: './command-centre.component.html',
+    styleUrl: './command-centre.component.scss'
 })
 export class CommandCentreComponent {
   commandCentreTitle: Signal<string>;

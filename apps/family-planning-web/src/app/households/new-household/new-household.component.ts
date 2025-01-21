@@ -9,11 +9,10 @@ import { HouseholdsFacade } from '../state/households.facade';
 import { AuthFacade } from '../../auth/state/auth.facade';
 
 @Component({
-  selector: 'app-new-household',
-  standalone: true,
-  imports: [CommonModule, ButtonComponent, CardComponent, ReactiveFormsModule],
-  templateUrl: './new-household.component.html',
-  styleUrl: './new-household.component.scss',
+    selector: 'app-new-household',
+    imports: [CommonModule, ButtonComponent, CardComponent, ReactiveFormsModule],
+    templateUrl: './new-household.component.html',
+    styleUrl: './new-household.component.scss'
 })
 export class NewHouseholdComponent {
   userGivenName: Signal<string>;

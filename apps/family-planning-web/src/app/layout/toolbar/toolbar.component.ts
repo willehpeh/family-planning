@@ -10,12 +10,11 @@ import { NavFacade } from '../state/nav.facade';
 import { Router } from '@angular/router';
 
 @Component({
-  selector: "app-toolbar",
-  standalone: true,
-  imports: [CommonModule, ButtonComponent, FaIconComponent, SideMenuComponent],
-  templateUrl: "./toolbar.component.html",
-  styleUrl: "./toolbar.component.scss",
-  changeDetection: ChangeDetectionStrategy.OnPush
+    selector: "app-toolbar",
+    imports: [CommonModule, ButtonComponent, FaIconComponent, SideMenuComponent],
+    templateUrl: "./toolbar.component.html",
+    styleUrl: "./toolbar.component.scss",
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ToolbarComponent {
   private readonly authFacade = inject(AuthFacade);

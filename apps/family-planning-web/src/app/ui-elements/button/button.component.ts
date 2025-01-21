@@ -2,10 +2,9 @@ import { Component, computed, input, output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 @Component({
-  selector: "app-button",
-  standalone: true,
-  imports: [CommonModule],
-  template: `
+    selector: "app-button",
+    imports: [CommonModule],
+    template: `
 		<button (click)="onClick($event)"
 						[disabled]="disabled()"
             class="py-1 px-4 box-border border-2"

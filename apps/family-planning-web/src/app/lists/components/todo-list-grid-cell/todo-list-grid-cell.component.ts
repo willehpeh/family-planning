@@ -3,12 +3,11 @@ import { FaIconComponent, IconDefinition } from '@fortawesome/angular-fontawesom
 import { faListCheck } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
-  selector: 'app-todo-list-grid-cell',
-  standalone: true,
-  imports: [
-    FaIconComponent,
-  ],
-  template: `
+    selector: 'app-todo-list-grid-cell',
+    imports: [
+        FaIconComponent,
+    ],
+    template: `
 		<div [title]="listName()"
          [class]="classes()"
     >
@@ -18,7 +17,7 @@ import { faListCheck } from '@fortawesome/free-solid-svg-icons';
         {{ listName() }}
       </h2>
 		</div>
-  `,
+  `
 })
 export class TodoListGridCellComponent {
   listName = input.required<string>();

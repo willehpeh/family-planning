@@ -7,11 +7,10 @@ import { SideMenuItemComponent } from './side-menu-item/side-menu-item.component
 import { SideMenuFacade } from '../state/side-menu.facade';
 
 @Component({
-  selector: 'app-side-menu',
-  standalone: true,
-  imports: [CommonModule, ButtonComponent, FaIconComponent, SideMenuItemComponent],
-  templateUrl: './side-menu.component.html',
-  styleUrl: './side-menu.component.scss',
+    selector: 'app-side-menu',
+    imports: [CommonModule, ButtonComponent, FaIconComponent, SideMenuItemComponent],
+    templateUrl: './side-menu.component.html',
+    styleUrl: './side-menu.component.scss'
 })
 export class SideMenuComponent {
   protected readonly faXmark = faXmark;

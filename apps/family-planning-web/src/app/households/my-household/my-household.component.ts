@@ -9,11 +9,10 @@ import { HouseholdsFacade } from '../state/households.facade';
 import { MemberInvitationInfo } from '../models/member-invitation-info';
 
 @Component({
-  selector: "app-my-household",
-  standalone: true,
-  imports: [CommonModule, CardComponent, ButtonComponent, MyHouseholdInfoRowComponent, MemberInvitationFormComponent, MyHouseholdMemberListComponent],
-  templateUrl: "./my-household.component.html",
-  styleUrl: "./my-household.component.scss",
+    selector: "app-my-household",
+    imports: [CommonModule, CardComponent, ButtonComponent, MyHouseholdInfoRowComponent, MemberInvitationFormComponent, MyHouseholdMemberListComponent],
+    templateUrl: "./my-household.component.html",
+    styleUrl: "./my-household.component.scss"
 })
 export class MyHouseholdComponent {
   private readonly householdFacade = inject(HouseholdsFacade);

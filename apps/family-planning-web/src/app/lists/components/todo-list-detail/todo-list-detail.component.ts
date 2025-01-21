@@ -9,12 +9,11 @@ import { TodoListItemReadModel } from '@family-planning/domain';
 import { NavFacade } from '../../../layout/state/nav.facade';
 
 @Component({
-  selector: 'app-todo-list-detail',
-  standalone: true,
-  imports: [CommonModule, TodoListItemComponent, NewTodoListItemComponent, CheckboxComponent],
-  templateUrl: './todo-list-detail.component.html',
-  styleUrl: './todo-list-detail.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush,
+    selector: 'app-todo-list-detail',
+    imports: [CommonModule, TodoListItemComponent, NewTodoListItemComponent, CheckboxComponent],
+    templateUrl: './todo-list-detail.component.html',
+    styleUrl: './todo-list-detail.component.scss',
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TodoListDetailComponent implements OnInit, OnDestroy {
   id = input.required<string>();

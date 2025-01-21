@@ -7,15 +7,14 @@ import { Router } from '@angular/router';
 
 
 @Component({
-  selector: "app-cards-container",
-  standalone: true,
-  imports: [
-    CommonModule,
-    CardComponent,
-    FontAwesomeModule
-  ],
-  templateUrl: "./cards-container.component.html",
-  styleUrl: "./cards-container.component.scss",
+    selector: "app-cards-container",
+    imports: [
+        CommonModule,
+        CardComponent,
+        FontAwesomeModule
+    ],
+    templateUrl: "./cards-container.component.html",
+    styleUrl: "./cards-container.component.scss"
 })
 export class CardsContainerComponent {
   faListCheck = faListCheck;

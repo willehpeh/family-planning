@@ -7,11 +7,10 @@ import { TodoListReadModel } from '@family-planning/domain';
 import { NavFacade } from '../../../layout/state/nav.facade';
 
 @Component({
-  selector: 'app-todo-lists-list',
-  standalone: true,
-  imports: [CommonModule, TodoListGridCellComponent],
-  templateUrl: './todo-lists-list.component.html',
-  styleUrl: './todo-lists-list.component.scss',
+    selector: 'app-todo-lists-list',
+    imports: [CommonModule, TodoListGridCellComponent],
+    templateUrl: './todo-lists-list.component.html',
+    styleUrl: './todo-lists-list.component.scss'
 })
 export class TodoListsListComponent implements OnInit, OnDestroy {
   private listsFacade = inject(ListsFacade);

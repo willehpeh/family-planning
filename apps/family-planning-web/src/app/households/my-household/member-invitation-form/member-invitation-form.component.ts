@@ -4,11 +4,10 @@ import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { ButtonComponent } from '../../../ui-elements/button/button.component';
 
 @Component({
-  selector: "app-member-invitation-form",
-  standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, ButtonComponent],
-  templateUrl: "./member-invitation-form.component.html",
-  styleUrl: "./member-invitation-form.component.scss",
+    selector: "app-member-invitation-form",
+    imports: [CommonModule, ReactiveFormsModule, ButtonComponent],
+    templateUrl: "./member-invitation-form.component.html",
+    styleUrl: "./member-invitation-form.component.scss"
 })
 export class MemberInvitationFormComponent {
 

@@ -7,11 +7,10 @@ import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { ButtonComponent } from '../../../../ui-elements/button/button.component';
 
 @Component({
-  selector: "app-new-todo-list-item",
-  standalone: true,
-  imports: [CommonModule, FaIconComponent, ReactiveFormsModule, ButtonComponent],
-  templateUrl: "./new-todo-list-item.component.html",
-  styleUrl: "./new-todo-list-item.component.scss",
+    selector: "app-new-todo-list-item",
+    imports: [CommonModule, FaIconComponent, ReactiveFormsModule, ButtonComponent],
+    templateUrl: "./new-todo-list-item.component.html",
+    styleUrl: "./new-todo-list-item.component.scss"
 })
 export class NewTodoListItemComponent implements OnInit {
   protected readonly faPlus = faPlus;
