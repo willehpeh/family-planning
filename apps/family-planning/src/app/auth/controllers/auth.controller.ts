@@ -25,7 +25,7 @@ export class AuthController {
   async callback(@Req() req: Request, @Res() res: Response): Promise<void> {
     try {
       const tokens = await this.authService.exchangeCodeForTokens(req);
-      this.setTokenCookies(res, tokens).redirect(`${this.configService.get('FRONTEND_URL')}/dashboard`);
+      this.setTokenCookies(res, tokens).redirect(`${this.configService.get('FRONTEND_URL')}/command-centre`);
     } catch {
       res.redirect(this.authUrl);
     }
