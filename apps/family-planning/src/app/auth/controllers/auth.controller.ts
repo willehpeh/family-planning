@@ -8,11 +8,8 @@ import { AuthGuard } from '../guards/auth.guard';
 @Controller('auth')
 export class AuthController {
 
-  private readonly authUrl: string;
-
   constructor(private authService: AuthService,
               private configService: ConfigService) {
-    this.authUrl = this.authService.authUrl();
   }
 
   @Get('userinfo')
@@ -27,13 +24,13 @@ export class AuthController {
       const tokens = await this.authService.exchangeCodeForTokens(req);
       this.setTokenCookies(res, tokens).redirect(`${this.configService.get('FRONTEND_URL')}/command-centre`);
     } catch {
-      res.redirect(this.authUrl);
+      this.authService.redirectToLogin(res);
     }
   }
 
   @Get('login')
   async login(@Res() res: Response) {
-    res.redirect(this.authUrl);
+    this.authService.redirectToLogin(res);
   }
 
   @Get('logout')

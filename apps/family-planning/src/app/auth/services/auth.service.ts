@@ -1,7 +1,7 @@
 import { Inject, Injectable, UnauthorizedException } from '@nestjs/common';
 import { BaseClient, generators, Issuer, TokenSet, UserinfoResponse } from 'openid-client';
 import { ConfigService } from '@nestjs/config';
-import { Request } from 'express';
+import { Request, Response } from 'express';
 
 @Injectable()
 export class AuthService {
@@ -44,6 +44,10 @@ export class AuthService {
     return this.client.userinfo(token).catch((error) => {
       throw new UnauthorizedException(error);
     });
+  }
+
+  redirectToLogin(res: Response): void {
+    res.redirect(this.authUrl());
   }
 
   async refreshToken(refreshToken: string): Promise<TokenSet> {
