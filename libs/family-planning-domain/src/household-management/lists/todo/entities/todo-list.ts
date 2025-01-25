@@ -41,6 +41,14 @@ export class TodoList implements Entity<TodoListSnapshot> {
     item.markAsDone();
   }
 
+  markDoneItemAsPending(itemId: TodoListItemId) {
+    const item = this.itemWithId(itemId);
+    if (!item) {
+      throw new Error('Item not found');
+    }
+    item.markAsPending();
+  }
+
   private itemWithId(itemId: TodoListItemId) {
     return this._items.find(item => item.hasId(itemId));
   }
@@ -49,13 +57,5 @@ export class TodoList implements Entity<TodoListSnapshot> {
     const id = TodoListItemId.new();
     const name = new TodoListItemName(itemName);
     return new TodoListItem(id, name, this.householdId);
-  }
-
-  markDoneItemAsPending(itemId: TodoListItemId) {
-    const item = this.itemWithId(itemId);
-    if (!item) {
-      throw new Error('Item not found');
-    }
-    item.markAsPending();
   }
 }
