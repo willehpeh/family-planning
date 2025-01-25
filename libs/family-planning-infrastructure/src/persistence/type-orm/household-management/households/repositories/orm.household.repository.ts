@@ -1,11 +1,13 @@
 import { Household, HouseholdReadModel, HouseholdRepository } from '@family-planning/domain';
-import { OrmHouseholdEntity as HouseholdEntity } from '../entities/household.entity';
+import { OrmHouseholdEntity } from '../entities/household.entity';
 import { Repository } from 'typeorm';
 import { HouseholdMapper } from '../mappers/household.mapper';
+import { OrmHouseholdMemberEntity } from '../entities/household-member.entity';
 
 export class OrmHouseholdRepository implements HouseholdRepository {
 
-  constructor(private readonly householdRepository: Repository<HouseholdEntity>) {
+  constructor(private readonly householdRepository: Repository<OrmHouseholdEntity>,
+              private readonly memberRepository: Repository<OrmHouseholdMemberEntity>) {
   }
 
   async save(household: Household): Promise<void> {
@@ -14,11 +16,13 @@ export class OrmHouseholdRepository implements HouseholdRepository {
   }
 
   async findByUserId(userId: string): Promise<HouseholdReadModel | null> {
-    return this.householdRepository
-      .createQueryBuilder('household')
-      .innerJoin('household.members', 'member', 'member.userId = :userId', { userId })
-      .leftJoinAndSelect('household.members', 'allMembers') // Fetch all members
-      .getOne();
+    const member = await this.memberRepository
+      .createQueryBuilder('member')
+      .where('member.userId = :userId', { userId })
+      .leftJoinAndSelect('member.household', 'household')
+      .getOneOrFail();
+
+    return member.household;
   }
 
   async findById(householdId: string): Promise<Household> {

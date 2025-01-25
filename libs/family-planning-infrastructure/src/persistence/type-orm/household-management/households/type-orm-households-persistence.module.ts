@@ -20,7 +20,8 @@ import { HouseholdByUserIdView } from './view-entities/household-by-user-id.view
       provide: HouseholdRepository,
       useFactory: (dataSource: DataSource) =>
         new OrmHouseholdRepository(
-          dataSource.getRepository(OrmHouseholdEntity)
+          dataSource.getRepository(OrmHouseholdEntity),
+          dataSource.getRepository(OrmHouseholdMemberEntity)
         ),
       inject: [DataSource]
     },
