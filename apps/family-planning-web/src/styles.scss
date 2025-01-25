@@ -3,8 +3,8 @@
 @tailwind utilities;
 
 body {
-  background: rgb(2,0,36);
-  background: linear-gradient(48deg, rgba(2,0,36,1) 0%, rgb(7, 7, 84) 55%, rgb(1, 13, 81) 100%);
+  background: rgb(36,36,36);
+  background: linear-gradient(48deg, rgba(22,22,22,1) 0%, rgb(32, 32, 32) 55%, rgb(13, 13, 13) 100%);
   background-repeat: no-repeat;
   background-attachment: fixed;
   font-family: "Roboto Mono", monospace;
@@ -12,6 +12,6 @@ body {
 
 @layer base {
   * {
-    @apply text-blue-300;
+    @apply text-gray-200;
   }
 }
