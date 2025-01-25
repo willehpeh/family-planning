@@ -1,6 +1,6 @@
 import { inject, Injectable, Signal } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { filter, Observable } from 'rxjs';
+import { filter, Observable, tap } from 'rxjs';
 import { UserInfoDto } from '../types/user-info.dto';
 import { LoadUserInfo, Logout } from './auth.actions';
 import { selectAuthenticated, selectUserGivenName, selectUserInfo } from './auth.selectors';
@@ -16,8 +16,12 @@ export class AuthFacade {
   }
 
   userInfo(): Observable<UserInfoDto> {
-    this.store.dispatch(LoadUserInfo());
     return this.store.select(selectUserInfo).pipe(
+      tap(userInfo => {
+        if (!userInfo) {
+          this.store.dispatch(LoadUserInfo());
+        }
+      }),
       filter(userInfo => !!userInfo)
     );
   }
