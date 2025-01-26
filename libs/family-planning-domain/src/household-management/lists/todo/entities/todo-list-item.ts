@@ -17,9 +17,7 @@ export class TodoListItem implements Entity<TodoListItemSnapshot> {
   static fromSnapshot(snapshot: TodoListItemSnapshot): TodoListItem {
     const item = new TodoListItem(TodoListItemId.fromString(snapshot.id()), new TodoListItemName(snapshot.name()), HouseholdId.fromString(snapshot.householdId()));
     item._status = snapshot.done() ? new TodoListItemStatus('done') : new TodoListItemStatus('pending');
-    if (snapshot.done()) {
-      item._dateCompleted = snapshot.dateCompleted();
-    }
+    item._dateCompleted = snapshot.dateCompleted() ?? undefined;
     return item;
   }
 
@@ -29,7 +27,7 @@ export class TodoListItem implements Entity<TodoListItemSnapshot> {
       name: this._name,
       householdId: this._householdId,
       status: this._status,
-      dateCompleted: this._dateCompleted
+      dateCompleted: this._dateCompleted ?? null
     });
   }
 

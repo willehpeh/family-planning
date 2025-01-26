@@ -38,9 +38,7 @@ export class TodoListMapper {
     itemEntity.name = item.name();
     itemEntity.householdId = item.householdId();
     itemEntity.status = item.status();
-    if (item.done()) {
-      itemEntity.dateCompleted = item.dateCompleted();
-    }
+    itemEntity.dateCompleted = item.dateCompleted();
     return itemEntity;
   }
 
@@ -48,21 +46,13 @@ export class TodoListMapper {
     const itemId = TodoListItemId.fromString(item.id);
     const itemName = new TodoListItemName(item.name);
     const itemStatus = new TodoListItemStatus(item.status);
-    if (itemStatus.value() === 'done') {
-      const dateComplated = new Date(item.dateCompleted);
-      return new TodoListItemSnapshot({
-        id: itemId,
-        name: itemName,
-        householdId,
-        status: itemStatus,
-        dateCompleted: dateComplated
-      });
-    }
+    const dateComplated = item.dateCompleted ? new Date(item.dateCompleted) : null;
     return new TodoListItemSnapshot({
       id: itemId,
       name: itemName,
       householdId,
-      status: itemStatus
+      status: itemStatus,
+      dateCompleted: dateComplated
     });
   }
 }

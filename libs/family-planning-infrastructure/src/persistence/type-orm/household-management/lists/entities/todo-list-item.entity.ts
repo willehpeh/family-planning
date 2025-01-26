@@ -19,5 +19,5 @@ export class TodoListItem {
   status: 'pending' | 'done';
 
   @Column({ nullable: true })
-  dateCompleted: Date;
+  dateCompleted: Date | null;
 }

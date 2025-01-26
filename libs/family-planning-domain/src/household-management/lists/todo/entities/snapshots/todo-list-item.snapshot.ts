@@ -15,7 +15,7 @@ export class TodoListItemSnapshot implements EntitySnapshot {
     name: TodoListItemName,
     householdId: HouseholdId,
     status: TodoListItemStatus,
-    dateCompleted?: Date
+    dateCompleted: Date | null
   }) {
     this._id = snapshot.id;
     this._name = snapshot.name;
@@ -44,9 +44,9 @@ export class TodoListItemSnapshot implements EntitySnapshot {
     return this._status.value();
   }
 
-  dateCompleted(): Date {
+  dateCompleted(): Date | null {
     if (!this._dateCompleted) {
-      throw new Error('Item not completed');
+      return null;
     }
     return this._dateCompleted;
   }
