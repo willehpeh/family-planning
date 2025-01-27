@@ -1,4 +1,8 @@
-import { InMemoryTodoListsQueryRepository, RANDOM_EMPTY_TODO_LIST } from '../test-fixtures';
+import {
+  InMemoryTodoListItemsQueryRepository,
+  InMemoryTodoListsQueryRepository,
+  RANDOM_EMPTY_TODO_LIST
+} from '../test-fixtures';
 import { FindAllListsQuery, FindAllListsQueryHandler } from '.';
 import { TodoListReadModel, TodoListSnapshot } from '@family-planning/domain';
 
@@ -6,6 +10,7 @@ describe('Find all todo lists', () => {
   let query: FindAllListsQuery;
   let findAllListsQueryHandler: FindAllListsQueryHandler;
   let inMemoryTodoListsRepository: InMemoryTodoListsQueryRepository;
+  let inMemoryTodoListItemsRepository: InMemoryTodoListItemsQueryRepository;
 
   beforeEach(() => {
     query = new FindAllListsQuery();
@@ -14,7 +19,10 @@ describe('Find all todo lists', () => {
   describe('No lists in persistence', () => {
     beforeEach(() => {
       inMemoryTodoListsRepository = new InMemoryTodoListsQueryRepository();
-      findAllListsQueryHandler = new FindAllListsQueryHandler(inMemoryTodoListsRepository);
+      findAllListsQueryHandler = new FindAllListsQueryHandler(
+        inMemoryTodoListsRepository,
+        inMemoryTodoListItemsRepository
+      );
     });
 
     it('should return an empty array when there are no lists', async () => {
@@ -33,7 +41,10 @@ describe('Find all todo lists', () => {
         RANDOM_EMPTY_TODO_LIST()
       ];
       inMemoryTodoListsRepository = new InMemoryTodoListsQueryRepository().withSnapshots(snapshots);
-      findAllListsQueryHandler = new FindAllListsQueryHandler(inMemoryTodoListsRepository);
+      findAllListsQueryHandler = new FindAllListsQueryHandler(
+        inMemoryTodoListsRepository,
+        inMemoryTodoListItemsRepository
+      );
     });
 
     it('should return the lists in persistence as read models', async () => {

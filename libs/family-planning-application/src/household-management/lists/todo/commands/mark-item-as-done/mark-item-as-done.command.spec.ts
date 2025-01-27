@@ -43,7 +43,7 @@ describe('MarkItemAsDoneCommand', () => {
       await handler.execute(command);
       listSnapshot = inMemoryTodoListRepository.getListSnapshotById(TEST_TODO_LIST_ID.value());
       itemSnapshot = getItemSnapshotById(listSnapshot, TEST_TODO_LIST_ITEM_ID.value())!;
-      expect(new DateString(itemSnapshot.dateCompleted()).equals(DateString.now())).toBe(true);
+      expect(new DateString(itemSnapshot.dateCompleted()!).equals(DateString.now())).toBe(true);
     });
   });
 

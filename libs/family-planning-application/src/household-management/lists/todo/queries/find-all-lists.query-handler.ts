@@ -1,10 +1,11 @@
 import { IQueryHandler, QueryHandler } from '@nestjs/cqrs';
 import { FindAllListsQuery } from './find-all-lists.query';
-import { TodoListReadModel, TodoListsQueryRepository } from '@family-planning/domain';
+import { TodoListItemsQueryRepository, TodoListReadModel, TodoListsQueryRepository } from '@family-planning/domain';
 
 @QueryHandler(FindAllListsQuery)
 export class FindAllListsQueryHandler implements IQueryHandler<FindAllListsQuery> {
-  constructor(private readonly todoListsRepository: TodoListsQueryRepository) {
+  constructor(private readonly todoListsRepository: TodoListsQueryRepository,
+              private readonly todoListItemsRepository: TodoListItemsQueryRepository) {
   }
 
   execute(_: FindAllListsQuery): Promise<TodoListReadModel[]> {
