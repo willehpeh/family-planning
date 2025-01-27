@@ -1,12 +1,13 @@
-import { TodoListId, TodoListItemId, TodoListItemName, TodoListName } from '../value-objects';
+import { TodoListId, TodoListItemId, TodoListName } from '../value-objects';
 import { TodoListSnapshot } from './snapshots';
-import { Entity } from '../../../../common';
-import { TodoListItem } from './todo-list-item';
+import { DomainEvent, Entity, EventBus } from '../../../../common';
 import { HouseholdId } from '../../../households';
+import { TodoListItemCreatedEvent } from '../events/todo-list-item-created.event';
 
 export class TodoList implements Entity<TodoListSnapshot> {
 
-  private _items: TodoListItem[] = [];
+  private _itemIds: TodoListItemId[] = [];
+  private _events: DomainEvent[] = [];
 
   constructor(private readonly _id: TodoListId,
               private _name: TodoListName,
@@ -15,7 +16,7 @@ export class TodoList implements Entity<TodoListSnapshot> {
 
   static fromSnapshot(snapshot: TodoListSnapshot): TodoList {
     const list = new TodoList(TodoListId.fromString(snapshot.id()), new TodoListName(snapshot.name()), HouseholdId.fromString(snapshot.householdId()));
-    list._items = snapshot.items().map(itemSnapshot => TodoListItem.fromSnapshot(itemSnapshot));
+    list._itemIds = snapshot.itemIds().map(id => TodoListItemId.fromString(id));
     return list;
   }
 
@@ -23,39 +24,21 @@ export class TodoList implements Entity<TodoListSnapshot> {
     return new TodoListSnapshot({
       id: this._id,
       name: this._name,
-      items: this._items.map(item => item.snapshot()),
+      itemIds: this._itemIds,
       householdId: this.householdId
     });
   }
 
   addNewItem(itemName: string): void {
-    const item = this.createItem(itemName);
-    this._items.push(item);
+    this.raiseEvent(new TodoListItemCreatedEvent({ listId: this._id.value(), name: itemName }));
   }
 
-  markItemAsDone(itemId: TodoListItemId) {
-    const item = this.itemWithId(itemId);
-    if (!item) {
-      throw new Error('Item not found');
-    }
-    item.markAsDone();
+  private raiseEvent(event: DomainEvent): void {
+    this._events.push(event);
   }
 
-  markDoneItemAsPending(itemId: TodoListItemId) {
-    const item = this.itemWithId(itemId);
-    if (!item) {
-      throw new Error('Item not found');
-    }
-    item.markAsPending();
-  }
-
-  private itemWithId(itemId: TodoListItemId) {
-    return this._items.find(item => item.hasId(itemId));
-  }
-
-  private createItem(itemName: string): TodoListItem {
-    const id = TodoListItemId.new();
-    const name = new TodoListItemName(itemName);
-    return new TodoListItem(id, name, this.householdId);
+  publishEventsTo(eventBus: EventBus): void {
+    this._events.forEach(event => eventBus.publish(event));
+    this._events = [];
   }
 }

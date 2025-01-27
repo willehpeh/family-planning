@@ -1,6 +1,5 @@
-import { TodoListItemReadModel } from "../read-models";
-import { TodoListItemId } from "../value-objects";
+import { TodoListItemReadModel } from '../read-models';
 
 export abstract class TodoListItemsQueryRepository {
-  abstract findByIds(ids: TodoListItemId[]): Promise<TodoListItemReadModel[]>;
+  abstract findByListIds(ids: string[]): Promise<{ [listId: string]: TodoListItemReadModel[] }>;
 }

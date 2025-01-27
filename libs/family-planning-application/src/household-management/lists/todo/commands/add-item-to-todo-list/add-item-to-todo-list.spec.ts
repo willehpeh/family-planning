@@ -25,19 +25,7 @@ describe('Add item to todo list', () => {
 
     it('should add one item to the todo list', () => {
       const listSnapshot = inMemoryTodoListsRepository.listSnapshots()[0];
-      expect(listSnapshot.items().length).toBe(1);
-    });
-
-    it('should add the item with the provided name', () => {
-      const listSnapshot = inMemoryTodoListsRepository.listSnapshots()[0];
-      const itemSnapshot = listSnapshot.items()[0];
-      expect(itemSnapshot.name()).toBe(dto.itemDetails.name);
-    });
-
-    it('should add the item with a status of pending', () => {
-      const listSnapshot = inMemoryTodoListsRepository.listSnapshots()[0];
-      const itemSnapshot = listSnapshot.items()[0];
-      expect(itemSnapshot.pending()).toBe(true);
+      expect(listSnapshot.itemIds().length).toBe(1);
     });
   });
 
@@ -71,17 +59,9 @@ describe('Add item to todo list', () => {
 
     it('should add two items to the todo list', () => {
       const listSnapshot = inMemoryTodoListsRepository.listSnapshots()[0];
-      expect(listSnapshot.items().length).toBe(2);
+      expect(listSnapshot.itemIds().length).toBe(2);
     });
 
-    it('should add the second item with a date that is after that of the first item', () => {
-      const listSnapshot = inMemoryTodoListsRepository.listSnapshots()[0];
-      const firstItemSnapshot = listSnapshot.items()[0];
-      const secondItemSnapshot = listSnapshot.items()[1];
-      // const firstDate = new Date(firstItemSnapshot.createdAt());
-      // const secondDate = new Date(secondItemSnapshot.createdAt());
-      // expect(firstDate.getTime()).toBeLessThan(secondDate.getTime());
-    });
   });
 
 });

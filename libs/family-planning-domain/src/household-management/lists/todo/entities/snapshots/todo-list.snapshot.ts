@@ -1,25 +1,24 @@
-import { TodoListId, TodoListName } from '../../value-objects';
+import { TodoListId, TodoListItemId, TodoListName } from '../../value-objects';
 import { EntitySnapshot } from '../../../../../common';
-import { TodoListItemSnapshot } from './todo-list-item.snapshot';
 import { HouseholdId } from '../../../../households';
 
 export class TodoListSnapshot implements EntitySnapshot {
 
   private readonly _id: TodoListId;
   private readonly _name: TodoListName;
-  private readonly _items: TodoListItemSnapshot[];
   private readonly _householdId: HouseholdId;
+  private readonly _itemIds: TodoListItemId[];
 
   constructor(snapshot: {
     id: TodoListId,
     name: TodoListName,
-    items: TodoListItemSnapshot[],
-    householdId: HouseholdId
+    householdId: HouseholdId,
+    itemIds: TodoListItemId[]
   }) {
     this._id = snapshot.id;
     this._name = snapshot.name;
-    this._items = snapshot.items;
     this._householdId = snapshot.householdId;
+    this._itemIds = snapshot.itemIds ?? [];
   }
 
   id(): string {
@@ -30,11 +29,11 @@ export class TodoListSnapshot implements EntitySnapshot {
     return this._name.value();
   }
 
-  items() {
-    return this._items;
-  }
-
   householdId(): string {
     return this._householdId.value();
+  }
+
+  itemIds() {
+    return this._itemIds.map(id => id.value());
   }
 }

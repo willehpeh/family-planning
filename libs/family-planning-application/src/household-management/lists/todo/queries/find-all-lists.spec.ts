@@ -19,6 +19,7 @@ describe('Find all todo lists', () => {
   describe('No lists in persistence', () => {
     beforeEach(() => {
       inMemoryTodoListsRepository = new InMemoryTodoListsQueryRepository();
+      inMemoryTodoListItemsRepository = new InMemoryTodoListItemsQueryRepository();
       findAllListsQueryHandler = new FindAllListsQueryHandler(
         inMemoryTodoListsRepository,
         inMemoryTodoListItemsRepository
@@ -31,7 +32,7 @@ describe('Find all todo lists', () => {
     });
   });
 
-  describe('Lists in persistence', () => {
+  describe('Empty lists in persistence', () => {
     let snapshots: TodoListSnapshot[];
 
     beforeEach(() => {
@@ -52,13 +53,10 @@ describe('Find all todo lists', () => {
       expect(result).toEqual(snapshots.map(snapshot => ({
         id: snapshot.id(),
         name: snapshot.name(),
-        items: snapshot.items().map(item => ({
-          id: item.id(),
-          name: item.name(),
-          done: item.done(),
-        }))
+        items: []
       } as TodoListReadModel)));
     });
   });
+
 
 });

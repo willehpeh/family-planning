@@ -8,7 +8,14 @@ export class FindAllListsQueryHandler implements IQueryHandler<FindAllListsQuery
               private readonly todoListItemsRepository: TodoListItemsQueryRepository) {
   }
 
-  execute(_: FindAllListsQuery): Promise<TodoListReadModel[]> {
-    return this.todoListsRepository.findAll();
+  async execute(_: FindAllListsQuery): Promise<TodoListReadModel[]> {
+    const lists = await this.todoListsRepository.findAll();
+    const listIds = lists.map(list => list.id);
+    const items = await this.todoListItemsRepository.findByListIds(listIds);
+    return lists.map(list => ({
+      id: list.id,
+      name: list.name,
+      items: items[list.id] ?? []
+    }));
   }
 }

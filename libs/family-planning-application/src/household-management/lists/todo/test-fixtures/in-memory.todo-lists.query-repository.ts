@@ -1,19 +1,15 @@
-import { TodoListReadModel, TodoListSnapshot, TodoListsQueryRepository } from '@family-planning/domain';
+import { TodoListSnapshot, TodoListsQueryRepository } from '@family-planning/domain';
 
 export class InMemoryTodoListsQueryRepository implements TodoListsQueryRepository {
 
   private _listsObj: Record<string, TodoListSnapshot> = {};
 
-  findAll(): Promise<TodoListReadModel[]> {
+  findAll(): Promise<{ id: string, name: string, itemIds: string[] }[]> {
     return Promise.resolve(
       Object.values(this._listsObj).map(snapshot => ({
         id: snapshot.id(),
         name: snapshot.name(),
-        items: snapshot.items().map(item => ({
-          id: item.id(),
-          name: item.name(),
-          done: item.done(),
-        }))
+        itemIds: snapshot.itemIds()
       }))
     );
   }

@@ -1,5 +1,5 @@
-import { TodoListReadModel } from '../read-models';
+type RawTodoList = { id: string, name: string, itemIds: string[] }[];
 
 export abstract class TodoListsQueryRepository {
-  abstract findAll(): Promise<TodoListReadModel[]>;
+  abstract findAll(): Promise<RawTodoList>;
 }

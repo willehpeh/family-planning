@@ -1,6 +1,6 @@
 import { Entity } from '../../../../common';
 import { TodoListItemSnapshot } from './snapshots';
-import { TodoListItemId, TodoListItemName, TodoListItemStatus } from '../value-objects';
+import { TodoListId, TodoListItemId, TodoListItemName, TodoListItemStatus } from '../value-objects';
 import { HouseholdId } from '../../../households';
 
 export class TodoListItem implements Entity<TodoListItemSnapshot> {
@@ -10,12 +10,13 @@ export class TodoListItem implements Entity<TodoListItemSnapshot> {
 
   constructor(private readonly _id: TodoListItemId,
               private _name: TodoListItemName,
-              private readonly _householdId: HouseholdId) {
+              private readonly _householdId: HouseholdId,
+              private readonly _listId: TodoListId) {
     this._status = new TodoListItemStatus('pending');
   }
 
   static fromSnapshot(snapshot: TodoListItemSnapshot): TodoListItem {
-    const item = new TodoListItem(TodoListItemId.fromString(snapshot.id()), new TodoListItemName(snapshot.name()), HouseholdId.fromString(snapshot.householdId()));
+    const item = new TodoListItem(TodoListItemId.fromString(snapshot.id()), new TodoListItemName(snapshot.name()), HouseholdId.fromString(snapshot.householdId()), TodoListId.fromString(snapshot.listId()));
     item._status = snapshot.done() ? new TodoListItemStatus('done') : new TodoListItemStatus('pending');
     item._dateCompleted = snapshot.dateCompleted() ?? undefined;
     return item;
@@ -27,7 +28,8 @@ export class TodoListItem implements Entity<TodoListItemSnapshot> {
       name: this._name,
       householdId: this._householdId,
       status: this._status,
-      dateCompleted: this._dateCompleted ?? null
+      dateCompleted: this._dateCompleted ?? null,
+      listId: this._listId
     });
   }
 
