@@ -30,6 +30,7 @@ export const TODO_LIST_WITH_ONE_ITEM_SNAPSHOT = new TodoListSnapshot({
       name: new TodoListItemName('My Item'),
       householdId: TEST_HOUSEHOLD_ID,
       status: new TodoListItemStatus('pending'),
+      dateCompleted: null
     })
   ],
   householdId: TEST_HOUSEHOLD_ID
@@ -44,12 +45,14 @@ export const TODO_LIST_WITH_TWO_ITEMS_SNAPSHOT = new TodoListSnapshot({
       name: new TodoListItemName('My Item'),
       householdId: TEST_HOUSEHOLD_ID,
       status: new TodoListItemStatus('pending'),
+      dateCompleted: null
     }),
   new TodoListItemSnapshot({
     id: TEST_OTHER_TODO_LIST_ITEM_ID,
     name: new TodoListItemName('My Second Item'),
     householdId: TEST_HOUSEHOLD_ID,
     status: new TodoListItemStatus('pending'),
+    dateCompleted: null
   })
 ],
 householdId: TEST_HOUSEHOLD_ID
