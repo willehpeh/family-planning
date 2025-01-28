@@ -1,6 +1,7 @@
 import {
   HouseholdId,
   TodoListId,
+  TodoListItem,
   TodoListItemId,
   TodoListItemName,
   TodoListItemSnapshot,
@@ -17,21 +18,15 @@ export const TEST_OTHER_TODO_LIST_ITEM_ID = TodoListItemId.new();
 export const EMPTY_TODO_LIST_SNAPSHOT = new TodoListSnapshot({
   id: TEST_TODO_LIST_ID,
   name: new TodoListName('My List'),
-  items: [],
+  itemIds: [],
   householdId: TEST_HOUSEHOLD_ID
 });
 
 export const TODO_LIST_WITH_ONE_ITEM_SNAPSHOT = new TodoListSnapshot({
   id: TEST_TODO_LIST_ID,
   name: new TodoListName('My List'),
-  items: [
-    new TodoListItemSnapshot({
-      id: TEST_TODO_LIST_ITEM_ID,
-      name: new TodoListItemName('My Item'),
-      householdId: TEST_HOUSEHOLD_ID,
-      status: new TodoListItemStatus('pending'),
-      dateCompleted: null
-    })
+  itemIds: [
+    TEST_TODO_LIST_ITEM_ID,
   ],
   householdId: TEST_HOUSEHOLD_ID
 });
@@ -39,43 +34,43 @@ export const TODO_LIST_WITH_ONE_ITEM_SNAPSHOT = new TodoListSnapshot({
 export const TODO_LIST_WITH_TWO_ITEMS_SNAPSHOT = new TodoListSnapshot({
   id: TEST_TODO_LIST_ID,
   name: new TodoListName('My List'),
-  items: [
-    new TodoListItemSnapshot({
-      id: TEST_TODO_LIST_ITEM_ID,
-      name: new TodoListItemName('My Item'),
-      householdId: TEST_HOUSEHOLD_ID,
-      status: new TodoListItemStatus('pending'),
-      dateCompleted: null
-    }),
-  new TodoListItemSnapshot({
-    id: TEST_OTHER_TODO_LIST_ITEM_ID,
-    name: new TodoListItemName('My Second Item'),
-    householdId: TEST_HOUSEHOLD_ID,
-    status: new TodoListItemStatus('pending'),
-    dateCompleted: null
-  })
-],
-householdId: TEST_HOUSEHOLD_ID
+  itemIds: [
+    TEST_TODO_LIST_ITEM_ID,
+    TEST_OTHER_TODO_LIST_ITEM_ID
+  ],
+  householdId: TEST_HOUSEHOLD_ID
 });
+
+export const TEST_PENDING_TODO_LIST_ITEM = () => TodoListItem.fromSnapshot(new TodoListItemSnapshot({
+  id: TEST_TODO_LIST_ITEM_ID,
+  name: new TodoListItemName('My Item'),
+  householdId: TEST_HOUSEHOLD_ID,
+  status: new TodoListItemStatus('pending'),
+  dateCompleted: null,
+  listId: TEST_TODO_LIST_ID
+}));
+
+export const TEST_DONE_TODO_LIST_ITEM = () => TodoListItem.fromSnapshot(new TodoListItemSnapshot({
+  id: TEST_TODO_LIST_ITEM_ID,
+  name: new TodoListItemName('My Item'),
+  householdId: TEST_HOUSEHOLD_ID,
+  status: new TodoListItemStatus('done'),
+  dateCompleted: new Date(),
+  listId: TEST_TODO_LIST_ID
+}));
 
 export const TODO_LIST_WITH_ONE_COMPLETED_ITEM_SNAPSHOT = new TodoListSnapshot({
   id: TEST_TODO_LIST_ID,
   name: new TodoListName('My List'),
-  items: [
-    new TodoListItemSnapshot({
-      id: TEST_TODO_LIST_ITEM_ID,
-      name: new TodoListItemName('My Item'),
-      householdId: TEST_HOUSEHOLD_ID,
-      status: new TodoListItemStatus('done'),
-      dateCompleted: new Date()
-    })
-    ],
+  itemIds: [
+    TEST_TODO_LIST_ITEM_ID,
+  ],
   householdId: TEST_HOUSEHOLD_ID
 });
 
 export const RANDOM_EMPTY_TODO_LIST = () => new TodoListSnapshot({
   id: TodoListId.new(),
   name: new TodoListName('Random List'),
-  items: [],
+  itemIds: [],
   householdId: HouseholdId.new()
 });

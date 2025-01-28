@@ -1,7 +1,20 @@
-import { TodoListItemsCommandRepository, TodoListItemSnapshot } from '@family-planning/domain';
+import { TodoListItem, TodoListItemsCommandRepository } from '@family-planning/domain';
 
 export class InMemoryTodoListItemsCommandRepository implements TodoListItemsCommandRepository {
-  save(snapshot: TodoListItemSnapshot): Promise<void> {
-    return Promise.resolve(undefined);
+
+  items: Record<string, TodoListItem> = {};
+
+  save(item: TodoListItem): Promise<void> {
+    this.items[item.snapshot().id()] = item;
+    return Promise.resolve();
+  }
+
+  findById(id: string): Promise<TodoListItem> {
+    return Promise.resolve(this.items[id]);
+  }
+
+  withItems(items: TodoListItem[]): InMemoryTodoListItemsCommandRepository {
+    items.forEach(item => this.items[item.snapshot().id()] = item);
+    return this;
   }
 }

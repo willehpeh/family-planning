@@ -1,28 +1,19 @@
-import {
-  InMemoryTodoListsCommandRepository,
-  TEST_TODO_LIST_ID,
-  TEST_TODO_LIST_ITEM_ID,
-  TODO_LIST_WITH_TWO_ITEMS_SNAPSHOT
-} from '../../test-fixtures';
+import { TEST_PENDING_TODO_LIST_ITEM, TEST_TODO_LIST_ID, TEST_TODO_LIST_ITEM_ID } from '../../test-fixtures';
 import { MarkItemAsDoneCommand, MarkItemAsDoneCommandHandler, MarkItemAsDoneDto } from './';
-import { DateString, TodoListItemSnapshot, TodoListSnapshot } from '@family-planning/domain';
-
-function getItemSnapshotById(listSnapshot: TodoListSnapshot, itemId: string) {
-  return listSnapshot?.items().find(item => item.id() === itemId);
-}
+import { DateString } from '@family-planning/domain';
+import {
+  InMemoryTodoListItemsCommandRepository
+} from '../../test-fixtures/in-memory.todo-list-items.command-repository';
 
 describe('MarkItemAsDoneCommand', () => {
   let command: MarkItemAsDoneCommand;
   let handler: MarkItemAsDoneCommandHandler;
   let dto: MarkItemAsDoneDto;
-  let inMemoryTodoListRepository: InMemoryTodoListsCommandRepository;
-
-  let listSnapshot: TodoListSnapshot;
-  let itemSnapshot: TodoListItemSnapshot | undefined;
+  let repository: InMemoryTodoListItemsCommandRepository;
 
   beforeEach(() => {
-    inMemoryTodoListRepository = new InMemoryTodoListsCommandRepository().withSnapshots([TODO_LIST_WITH_TWO_ITEMS_SNAPSHOT]);
-    handler = new MarkItemAsDoneCommandHandler(inMemoryTodoListRepository);
+    repository = new InMemoryTodoListItemsCommandRepository().withItems([TEST_PENDING_TODO_LIST_ITEM()]);
+    handler = new MarkItemAsDoneCommandHandler(repository);
     dto = {
       todoListId: TEST_TODO_LIST_ID.value(),
       itemId: TEST_TODO_LIST_ITEM_ID.value(),
@@ -34,16 +25,14 @@ describe('MarkItemAsDoneCommand', () => {
 
     it('should mark the item as done', async () => {
       await handler.execute(command);
-      listSnapshot = inMemoryTodoListRepository.getListSnapshotById(TEST_TODO_LIST_ID.value());
-      itemSnapshot = getItemSnapshotById(listSnapshot, TEST_TODO_LIST_ITEM_ID.value())!;
-      expect(itemSnapshot.done()).toBe(true);
+      const item = repository.items[TEST_TODO_LIST_ITEM_ID.value()];
+      expect(item.snapshot().done()).toBe(true);
     });
 
     it('should mark the item as done today', async () => {
       await handler.execute(command);
-      listSnapshot = inMemoryTodoListRepository.getListSnapshotById(TEST_TODO_LIST_ID.value());
-      itemSnapshot = getItemSnapshotById(listSnapshot, TEST_TODO_LIST_ITEM_ID.value())!;
-      expect(new DateString(itemSnapshot.dateCompleted()!).equals(DateString.now())).toBe(true);
+      const item = repository.items[TEST_TODO_LIST_ITEM_ID.value()];
+      expect(new DateString(item.snapshot().dateCompleted()!).equals(DateString.now())).toBe(true);
     });
   });
 
@@ -57,5 +46,4 @@ describe('MarkItemAsDoneCommand', () => {
       await expect(handler.execute(command)).rejects.toThrow(new Error('Item already completed'));
     });
   });
-
 });

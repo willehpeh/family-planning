@@ -1,23 +1,17 @@
-import {
-  InMemoryTodoListsCommandRepository,
-  TEST_TODO_LIST_ID,
-  TEST_TODO_LIST_ITEM_ID,
-  TODO_LIST_WITH_ONE_COMPLETED_ITEM_SNAPSHOT
-} from '../../test-fixtures';
+import { TEST_TODO_LIST_ID, TEST_DONE_TODO_LIST_ITEM, TEST_TODO_LIST_ITEM_ID } from '../../test-fixtures';
 import { MarkDoneItemAsPendingCommand, MarkDoneItemAsPendingCommandHandler, MarkDoneItemAsPendingDto } from './';
-import { TodoListItemSnapshot, TodoListSnapshot } from '@family-planning/domain';
+import {
+  InMemoryTodoListItemsCommandRepository
+} from '../../test-fixtures/in-memory.todo-list-items.command-repository';
 
 describe('MarkDoneItemAsPendingCommand', () => {
   let command: MarkDoneItemAsPendingCommand;
   let commandHandler: MarkDoneItemAsPendingCommandHandler;
-  let repository: InMemoryTodoListsCommandRepository;
+  let repository: InMemoryTodoListItemsCommandRepository;
   let dto: MarkDoneItemAsPendingDto;
 
-  let listSnapshot: TodoListSnapshot;
-  let itemSnapshot: TodoListItemSnapshot | undefined;
-
   beforeEach(() => {
-    repository = new InMemoryTodoListsCommandRepository().withSnapshots([TODO_LIST_WITH_ONE_COMPLETED_ITEM_SNAPSHOT]);
+    repository = new InMemoryTodoListItemsCommandRepository().withItems([TEST_DONE_TODO_LIST_ITEM()]);
     commandHandler = new MarkDoneItemAsPendingCommandHandler(repository);
     dto = {
       itemId: TEST_TODO_LIST_ITEM_ID.value(),
@@ -28,8 +22,7 @@ describe('MarkDoneItemAsPendingCommand', () => {
 
   it('should mark the item as pending', async () => {
     await commandHandler.execute(command);
-    listSnapshot = repository.getListSnapshotById(TEST_TODO_LIST_ID.value());
-    itemSnapshot = listSnapshot.items().find(item => item.id() === TEST_TODO_LIST_ITEM_ID.value());
-    expect(itemSnapshot?.done()).toBe(false);
+    const item = repository.items[TEST_TODO_LIST_ITEM_ID.value()];
+    expect(item.snapshot().done()).toBe(false);
   });
 });

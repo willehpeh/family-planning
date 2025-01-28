@@ -1,18 +1,17 @@
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
 import { MarkDoneItemAsPendingCommand } from './mark-done-item-as-pending.command';
-import { TodoListItemId, TodoListsCommandRepository } from '@family-planning/domain';
+import { TodoListItemsCommandRepository } from '@family-planning/domain';
 
 @CommandHandler(MarkDoneItemAsPendingCommand)
 export class MarkDoneItemAsPendingCommandHandler implements ICommandHandler<MarkDoneItemAsPendingCommand> {
-  constructor(private readonly repository: TodoListsCommandRepository) {
+  constructor(private readonly repository: TodoListItemsCommandRepository) {
   }
 
   async execute(command: MarkDoneItemAsPendingCommand): Promise<void> {
-    const list = await this.repository.findById(command.dto.todoListId);
-    const itemId = TodoListItemId.fromString(command.dto.itemId);
+    const item = await this.repository.findById(command.dto.itemId);
     try {
-      list.markDoneItemAsPending(itemId);
-      await this.repository.save(list);
+      item.markAsPending();
+      await this.repository.save(item);
       return Promise.resolve();
     } catch (error) {
       return Promise.reject(error);
