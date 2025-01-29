@@ -1,12 +1,12 @@
 import { TodoListsCommandRepository } from '@family-planning/domain';
-import { AddItemToTodoListCommand } from './add-item-to-todo-list.command';
+import { CreateTodoListItemCommand } from './create-todo-list-item.command';
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
 
-@CommandHandler(AddItemToTodoListCommand)
-export class AddItemToTodoListCommandHandler implements ICommandHandler<AddItemToTodoListCommand> {
+@CommandHandler(CreateTodoListItemCommand)
+export class CreateTotoListItemCommandHandler implements ICommandHandler<CreateTodoListItemCommand> {
   constructor(private readonly todoListsRepository: TodoListsCommandRepository) {
   }
-  async execute({ listId, itemDetails }: AddItemToTodoListCommand): Promise<void> {
+  async execute({ listId, itemDetails }: CreateTodoListItemCommand): Promise<void> {
     const list = await this.todoListsRepository.findById(listId);
     list.addNewItem(itemDetails.name);
     return this.todoListsRepository.save(list);

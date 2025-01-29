@@ -6,11 +6,11 @@ export class TodoListItemCreatedEvent implements DomainEvent {
   private readonly _occurredOn = new Date();
 
   public readonly listId: string;
-  public readonly name: string;
+  public readonly itemId: string;
 
-  constructor(itemProps: { listId: string, name: string }) {
+  constructor(itemProps: { listId: string, itemId: string }) {
     this.listId = itemProps.listId;
-    this.name = itemProps.name;
+    this.itemId = itemProps.itemId;
   }
 
   eventName(): string {

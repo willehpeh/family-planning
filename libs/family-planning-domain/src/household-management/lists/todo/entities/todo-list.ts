@@ -2,7 +2,7 @@ import { TodoListId, TodoListItemId, TodoListName } from '../value-objects';
 import { TodoListSnapshot } from './snapshots';
 import { DomainEvent, Entity, EventBus } from '../../../../common';
 import { HouseholdId } from '../../../households';
-import { TodoListItemCreatedEvent } from '../events/todo-list-item-created.event';
+import { TodoListItemCreatedEvent } from '../events';
 
 export class TodoList implements Entity<TodoListSnapshot> {
 
@@ -30,7 +30,7 @@ export class TodoList implements Entity<TodoListSnapshot> {
   }
 
   addNewItem(itemName: string): void {
-    this.raiseEvent(new TodoListItemCreatedEvent({ listId: this._id.value(), name: itemName }));
+    this.raiseEvent(new TodoListItemCreatedEvent({ listId: this._id.value(), itemId: itemName }));
   }
 
   private raiseEvent(event: DomainEvent): void {

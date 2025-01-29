@@ -1,5 +1,5 @@
 import { Body, Controller, Get, Param, Post, Req } from '@nestjs/common';
-import { AddItemToTodoListDto, MarkDoneItemAsPendingDto, MarkItemAsDoneDto } from '@family-planning/application';
+import { CreateTotoListItemDto, MarkDoneItemAsPendingDto, MarkItemAsDoneDto } from '@family-planning/application';
 import { ListsService } from '../providers/lists.service';
 import { AuthenticatedHouseholdRequest } from '../../common/authenticated-household-request';
 import { POSTCreateTodoListDto } from '../dtos/POST.create-todo-list.dto';
@@ -24,7 +24,7 @@ export class ListsController {
 
   @Post('todo/:id/add-item')
   addItemToTodoList(@Param('id') listId: string, @Body() itemDetails: POSTAddItemToTodoListDto) {
-    const addItemToTodoListDto: AddItemToTodoListDto = { listId, itemDetails };
+    const addItemToTodoListDto: CreateTotoListItemDto = { listId, itemDetails };
     return this.listsService.addItemToTodoList(addItemToTodoListDto);
   }
 

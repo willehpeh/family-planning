@@ -1,4 +1,4 @@
-export type AddItemToTodoListDto = {
+export type CreateTotoListItemDto = {
   listId: string;
   itemDetails: {
     name: string;

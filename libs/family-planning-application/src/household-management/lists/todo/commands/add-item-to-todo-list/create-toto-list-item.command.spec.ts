@@ -1,17 +1,17 @@
 import { EMPTY_TODO_LIST_SNAPSHOT, InMemoryTodoListsCommandRepository } from '../../test-fixtures';
-import { AddItemToTodoListCommand, AddItemToTodoListCommandHandler } from '.';
-import { AddItemToTodoListDto } from './add-item-to-todo-list.dto';
+import { CreateTodoListItemCommand, CreateTotoListItemCommandHandler } from '.';
+import { CreateTotoListItemDto } from './create-toto-list-item.dto';
 
 describe('Add item to todo list', () => {
-  let addItemToTodoListCommandHandler: AddItemToTodoListCommandHandler;
+  let addItemToTodoListCommandHandler: CreateTotoListItemCommandHandler;
   let inMemoryTodoListsRepository: InMemoryTodoListsCommandRepository;
-  let command: AddItemToTodoListCommand;
-  let dto: AddItemToTodoListDto;
+  let command: CreateTodoListItemCommand;
+  let dto: CreateTotoListItemDto;
 
   describe('Given I add one item', () => {
     beforeEach(() => {
       inMemoryTodoListsRepository = new InMemoryTodoListsCommandRepository().withSnapshots([EMPTY_TODO_LIST_SNAPSHOT]);
-      addItemToTodoListCommandHandler = new AddItemToTodoListCommandHandler(inMemoryTodoListsRepository);
+      addItemToTodoListCommandHandler = new CreateTotoListItemCommandHandler(inMemoryTodoListsRepository);
 
       dto = {
         listId: EMPTY_TODO_LIST_SNAPSHOT.id(),
@@ -19,7 +19,7 @@ describe('Add item to todo list', () => {
           name: 'first item'
         }
       };
-      command = new AddItemToTodoListCommand(dto);
+      command = new CreateTodoListItemCommand(dto);
       addItemToTodoListCommandHandler.execute(command);
     });
 
@@ -31,12 +31,12 @@ describe('Add item to todo list', () => {
 
   describe('Given I add two items', () => {
 
-    let secondDto: AddItemToTodoListDto;
-    let secondCommand: AddItemToTodoListCommand;
+    let secondDto: CreateTotoListItemDto;
+    let secondCommand: CreateTodoListItemCommand;
 
     beforeEach(async () => {
       inMemoryTodoListsRepository = new InMemoryTodoListsCommandRepository().withSnapshots([EMPTY_TODO_LIST_SNAPSHOT]);
-      addItemToTodoListCommandHandler = new AddItemToTodoListCommandHandler(inMemoryTodoListsRepository);
+      addItemToTodoListCommandHandler = new CreateTotoListItemCommandHandler(inMemoryTodoListsRepository);
 
       dto = {
         listId: EMPTY_TODO_LIST_SNAPSHOT.id(),
@@ -51,8 +51,8 @@ describe('Add item to todo list', () => {
           name: 'second item'
         }
       };
-      command = new AddItemToTodoListCommand(dto);
-      secondCommand = new AddItemToTodoListCommand(secondDto);
+      command = new CreateTodoListItemCommand(dto);
+      secondCommand = new CreateTodoListItemCommand(secondDto);
       await addItemToTodoListCommandHandler.execute(command);
       await addItemToTodoListCommandHandler.execute(secondCommand);
     });
