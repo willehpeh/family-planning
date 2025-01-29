@@ -9,6 +9,10 @@ export class InMemoryTodoListItemsCommandRepository implements TodoListItemsComm
     return Promise.resolve();
   }
 
+  itemsArray(): TodoListItem[] {
+    return Object.values(this.items);
+  }
+
   findById(id: string): Promise<TodoListItem> {
     return Promise.resolve(this.items[id]);
   }

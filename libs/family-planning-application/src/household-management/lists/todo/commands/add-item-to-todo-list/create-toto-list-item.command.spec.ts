@@ -1,67 +1,57 @@
-import { EMPTY_TODO_LIST_SNAPSHOT, InMemoryTodoListsCommandRepository } from '../../test-fixtures';
-import { CreateTodoListItemCommand, CreateTotoListItemCommandHandler } from '.';
-import { CreateTotoListItemDto } from './create-toto-list-item.dto';
+import { EMPTY_TODO_LIST_SNAPSHOT, TEST_HOUSEHOLD_ID } from '../../test-fixtures';
+import { CreateTodoListItemCommand, CreateTodoListItemCommandHandler } from '.';
+import { CreateTodoListItemDto } from './create-todo-list-item.dto';
+import {
+  InMemoryTodoListItemsCommandRepository
+} from '../../test-fixtures/in-memory.todo-list-items.command-repository';
+import { TodoListItemSnapshot } from '@family-planning/domain';
 
 describe('Add item to todo list', () => {
-  let addItemToTodoListCommandHandler: CreateTotoListItemCommandHandler;
-  let inMemoryTodoListsRepository: InMemoryTodoListsCommandRepository;
+  let createTodoListItemCommandHandler: CreateTodoListItemCommandHandler;
+  let inMemoryTodoListItemsRepository: InMemoryTodoListItemsCommandRepository;
   let command: CreateTodoListItemCommand;
-  let dto: CreateTotoListItemDto;
+  let dto: CreateTodoListItemDto;
 
   describe('Given I add one item', () => {
     beforeEach(() => {
-      inMemoryTodoListsRepository = new InMemoryTodoListsCommandRepository().withSnapshots([EMPTY_TODO_LIST_SNAPSHOT]);
-      addItemToTodoListCommandHandler = new CreateTotoListItemCommandHandler(inMemoryTodoListsRepository);
+      inMemoryTodoListItemsRepository = new InMemoryTodoListItemsCommandRepository();
+      createTodoListItemCommandHandler = new CreateTodoListItemCommandHandler(inMemoryTodoListItemsRepository);
 
       dto = {
         listId: EMPTY_TODO_LIST_SNAPSHOT.id(),
+        householdId: TEST_HOUSEHOLD_ID.value(),
         itemDetails: {
           name: 'first item'
         }
       };
       command = new CreateTodoListItemCommand(dto);
-      addItemToTodoListCommandHandler.execute(command);
+      createTodoListItemCommandHandler.execute(command);
     });
 
-    it('should add one item to the todo list', () => {
-      const listSnapshot = inMemoryTodoListsRepository.listSnapshots()[0];
-      expect(listSnapshot.itemIds().length).toBe(1);
-    });
-  });
-
-  describe('Given I add two items', () => {
-
-    let secondDto: CreateTotoListItemDto;
-    let secondCommand: CreateTodoListItemCommand;
-
-    beforeEach(async () => {
-      inMemoryTodoListsRepository = new InMemoryTodoListsCommandRepository().withSnapshots([EMPTY_TODO_LIST_SNAPSHOT]);
-      addItemToTodoListCommandHandler = new CreateTotoListItemCommandHandler(inMemoryTodoListsRepository);
-
-      dto = {
-        listId: EMPTY_TODO_LIST_SNAPSHOT.id(),
-        itemDetails: {
-          name: 'first item'
-        }
-      };
-
-      secondDto = {
-        listId: EMPTY_TODO_LIST_SNAPSHOT.id(),
-        itemDetails: {
-          name: 'second item'
-        }
-      };
-      command = new CreateTodoListItemCommand(dto);
-      secondCommand = new CreateTodoListItemCommand(secondDto);
-      await addItemToTodoListCommandHandler.execute(command);
-      await addItemToTodoListCommandHandler.execute(secondCommand);
+    it('should create exactly one item', () => {
+      expect(inMemoryTodoListItemsRepository.itemsArray().length).toBe(1);
     });
 
-    it('should add two items to the todo list', () => {
-      const listSnapshot = inMemoryTodoListsRepository.listSnapshots()[0];
-      expect(listSnapshot.itemIds().length).toBe(2);
-    });
+    describe('Item details', () => {
 
+      let itemSnapshot: TodoListItemSnapshot;
+
+      beforeEach(() => {
+        itemSnapshot = inMemoryTodoListItemsRepository.itemsArray()[0].snapshot();
+      });
+
+      it('should have the right name', () => {
+        expect(itemSnapshot.name()).toBe(dto.itemDetails.name);
+      });
+
+      it('should have the right household ID', () => {
+        expect(itemSnapshot.householdId()).toBe(TEST_HOUSEHOLD_ID.value());
+      });
+
+      it('should have the right list ID', () => {
+        expect(itemSnapshot.listId()).toBe(dto.listId);
+      })
+    });
   });
 
 });

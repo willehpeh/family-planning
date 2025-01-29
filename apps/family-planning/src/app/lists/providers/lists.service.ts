@@ -2,7 +2,7 @@ import { BadRequestException, Injectable } from '@nestjs/common';
 import { CommandBus, QueryBus } from '@nestjs/cqrs';
 import {
   CreateTodoListItemCommand,
-  CreateTotoListItemDto,
+  CreateTodoListItemDto,
   CreateTodoListCommand,
   CreateTodoListDto,
   FindAllListsQuery,
@@ -27,7 +27,7 @@ export class ListsService {
     return this.commandBus.execute(new CreateTodoListCommand(dto, householdId));
   }
 
-  async addItemToTodoList(dto: CreateTotoListItemDto): Promise<void> {
+  async addItemToTodoList(dto: CreateTodoListItemDto): Promise<void> {
     return this.commandBus.execute(new CreateTodoListItemCommand(dto));
   }
 

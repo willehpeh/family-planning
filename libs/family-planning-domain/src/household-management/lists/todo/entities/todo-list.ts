@@ -1,13 +1,11 @@
 import { TodoListId, TodoListItemId, TodoListName } from '../value-objects';
 import { TodoListSnapshot } from './snapshots';
-import { DomainEvent, Entity, EventBus } from '../../../../common';
+import { Entity } from '../../../../common';
 import { HouseholdId } from '../../../households';
-import { TodoListItemCreatedEvent } from '../events';
 
 export class TodoList implements Entity<TodoListSnapshot> {
 
   private _itemIds: TodoListItemId[] = [];
-  private _events: DomainEvent[] = [];
 
   constructor(private readonly _id: TodoListId,
               private _name: TodoListName,
@@ -29,16 +27,7 @@ export class TodoList implements Entity<TodoListSnapshot> {
     });
   }
 
-  addNewItem(itemName: string): void {
-    this.raiseEvent(new TodoListItemCreatedEvent({ listId: this._id.value(), itemId: itemName }));
-  }
-
-  private raiseEvent(event: DomainEvent): void {
-    this._events.push(event);
-  }
-
-  publishEventsTo(eventBus: EventBus): void {
-    this._events.forEach(event => eventBus.publish(event));
-    this._events = [];
+  addItem(itemId: TodoListItemId): void {
+    this._itemIds.push(itemId);
   }
 }

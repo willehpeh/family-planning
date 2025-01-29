@@ -1,7 +1,7 @@
 import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
 import { TypeOrmListsPersistenceModule } from '@family-planning/infrastructure';
 import {
-  CreateTotoListItemCommandHandler,
+  CreateTodoListItemCommandHandler,
   CreateTodoListCommandHandler,
   FindAllListsQueryHandler,
   MarkDoneItemAsPendingCommandHandler,
@@ -20,7 +20,7 @@ import { TenantMiddleware } from '../middleware/tenant.middleware';
   ],
   providers: [
     CreateTodoListCommandHandler,
-    CreateTotoListItemCommandHandler,
+    CreateTodoListItemCommandHandler,
     FindAllListsQueryHandler,
     MarkItemAsDoneCommandHandler,
     MarkDoneItemAsPendingCommandHandler,

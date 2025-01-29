@@ -5,18 +5,42 @@ import { HouseholdId } from '../../../households';
 
 export class TodoListItem implements Entity<TodoListItemSnapshot> {
 
+  private readonly _id: TodoListItemId;
+  private _name: TodoListItemName;
+  private readonly _householdId: HouseholdId;
+  private _listId: TodoListId;
   private _status: TodoListItemStatus;
   private _dateCompleted: Date | undefined;
 
-  constructor(private readonly _id: TodoListItemId,
-              private _name: TodoListItemName,
-              private readonly _householdId: HouseholdId,
-              private readonly _listId: TodoListId) {
+  private constructor({ id, name, householdId, listId }: {
+    id: TodoListItemId,
+    name: TodoListItemName,
+    householdId: HouseholdId,
+    listId: TodoListId
+  }) {
+    this._id = id;
+    this._name = name;
+    this._householdId = householdId;
+    this._listId = listId;
     this._status = new TodoListItemStatus('pending');
   }
 
+  static new({ id, listId, householdId, name }: {
+    id: TodoListItemId,
+    listId: TodoListId,
+    householdId: HouseholdId,
+    name: TodoListItemName
+  }): TodoListItem {
+    return new TodoListItem({ id, name, householdId, listId });
+  }
+
   static fromSnapshot(snapshot: TodoListItemSnapshot): TodoListItem {
-    const item = new TodoListItem(TodoListItemId.fromString(snapshot.id()), new TodoListItemName(snapshot.name()), HouseholdId.fromString(snapshot.householdId()), TodoListId.fromString(snapshot.listId()));
+    const item = new TodoListItem({
+      id: TodoListItemId.fromString(snapshot.id()),
+      name: new TodoListItemName(snapshot.name()),
+      householdId: HouseholdId.fromString(snapshot.householdId()),
+      listId: TodoListId.fromString(snapshot.listId())
+    });
     item._status = snapshot.done() ? new TodoListItemStatus('done') : new TodoListItemStatus('pending');
     item._dateCompleted = snapshot.dateCompleted() ?? undefined;
     return item;
@@ -31,10 +55,6 @@ export class TodoListItem implements Entity<TodoListItemSnapshot> {
       dateCompleted: this._dateCompleted ?? null,
       listId: this._listId
     });
-  }
-
-  hasId(itemId: TodoListItemId) {
-    return this._id.equals(itemId);
   }
 
   markAsDone() {
