@@ -1,24 +1,27 @@
-import { EMPTY_TODO_LIST_SNAPSHOT, TEST_HOUSEHOLD_ID } from '../../test-fixtures';
+import { TEST_HOUSEHOLD_ID, TEST_TODO_LIST_ID } from '../../test-fixtures';
 import { CreateTodoListItemCommand, CreateTodoListItemCommandHandler } from '.';
 import { CreateTodoListItemDto } from './create-todo-list-item.dto';
 import {
   InMemoryTodoListItemsCommandRepository
 } from '../../test-fixtures/in-memory.todo-list-items.command-repository';
-import { TodoListItemSnapshot } from '@family-planning/domain';
+import { TodoListItemCreatedEvent, TodoListItemSnapshot } from '@family-planning/domain';
+import { FakeEventBus } from '../../../../../shared';
 
-describe('Add item to todo list', () => {
+describe('Create todo list item', () => {
   let createTodoListItemCommandHandler: CreateTodoListItemCommandHandler;
   let inMemoryTodoListItemsRepository: InMemoryTodoListItemsCommandRepository;
   let command: CreateTodoListItemCommand;
   let dto: CreateTodoListItemDto;
+  let fakeEventBus: FakeEventBus;
 
   describe('Given I add one item', () => {
     beforeEach(() => {
+      fakeEventBus = new FakeEventBus();
       inMemoryTodoListItemsRepository = new InMemoryTodoListItemsCommandRepository();
-      createTodoListItemCommandHandler = new CreateTodoListItemCommandHandler(inMemoryTodoListItemsRepository);
+      createTodoListItemCommandHandler = new CreateTodoListItemCommandHandler(inMemoryTodoListItemsRepository, fakeEventBus);
 
       dto = {
-        listId: EMPTY_TODO_LIST_SNAPSHOT.id(),
+        listId: TEST_TODO_LIST_ID.value(),
         householdId: TEST_HOUSEHOLD_ID.value(),
         itemDetails: {
           name: 'first item'
@@ -30,6 +33,14 @@ describe('Add item to todo list', () => {
 
     it('should create exactly one item', () => {
       expect(inMemoryTodoListItemsRepository.itemsArray().length).toBe(1);
+    });
+
+    it('should raise a TodoListItemCreated event', () => {
+      expect(fakeEventBus.events.filter(event => event.eventName() === 'TodoListItemCreated').length).toBe(1);
+    });
+
+    it('should raise an event with the correct list ID', () => {
+      expect((fakeEventBus.events[0] as TodoListItemCreatedEvent).listId.equals(TEST_TODO_LIST_ID)).toBe(true);
     });
 
     describe('Item details', () => {

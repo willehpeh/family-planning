@@ -1,4 +1,5 @@
 import {
+  EventBus,
   HouseholdId,
   TodoListId,
   TodoListItem,
@@ -11,7 +12,8 @@ import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
 
 @CommandHandler(CreateTodoListItemCommand)
 export class CreateTodoListItemCommandHandler implements ICommandHandler<CreateTodoListItemCommand> {
-  constructor(private readonly repository: TodoListItemsCommandRepository) {
+  constructor(private readonly repository: TodoListItemsCommandRepository,
+              private readonly eventBus: EventBus) {
   }
   async execute({ listId, itemDetails, householdId }: CreateTodoListItemCommand): Promise<void> {
     const id = TodoListItemId.new();
@@ -22,5 +24,7 @@ export class CreateTodoListItemCommandHandler implements ICommandHandler<CreateT
       listId: TodoListId.fromString(listId)
     });
     await this.repository.save(item);
+    item.events().forEach(event => this.eventBus.publish(event));
+    item.clearEvents();
   }
 }

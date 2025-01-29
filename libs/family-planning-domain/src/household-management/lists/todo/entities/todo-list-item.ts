@@ -1,9 +1,10 @@
-import { Entity } from '../../../../common';
+import { DomainEvent, Entity, EventAggregate } from '../../../../common';
 import { TodoListItemSnapshot } from './snapshots';
 import { TodoListId, TodoListItemId, TodoListItemName, TodoListItemStatus } from '../value-objects';
 import { HouseholdId } from '../../../households';
+import { TodoListItemCreatedEvent } from '../events';
 
-export class TodoListItem implements Entity<TodoListItemSnapshot> {
+export class TodoListItem implements Entity<TodoListItemSnapshot>, EventAggregate {
 
   private readonly _id: TodoListItemId;
   private _name: TodoListItemName;
@@ -11,6 +12,8 @@ export class TodoListItem implements Entity<TodoListItemSnapshot> {
   private _listId: TodoListId;
   private _status: TodoListItemStatus;
   private _dateCompleted: Date | undefined;
+
+  private _events: DomainEvent[] = [];
 
   private constructor({ id, name, householdId, listId }: {
     id: TodoListItemId,
@@ -31,7 +34,9 @@ export class TodoListItem implements Entity<TodoListItemSnapshot> {
     householdId: HouseholdId,
     name: TodoListItemName
   }): TodoListItem {
-    return new TodoListItem({ id, name, householdId, listId });
+    const item = new TodoListItem({ id, name, householdId, listId });
+    item._events.push(new TodoListItemCreatedEvent({ id, listId }));
+    return item;
   }
 
   static fromSnapshot(snapshot: TodoListItemSnapshot): TodoListItem {
@@ -44,6 +49,14 @@ export class TodoListItem implements Entity<TodoListItemSnapshot> {
     item._status = snapshot.done() ? new TodoListItemStatus('done') : new TodoListItemStatus('pending');
     item._dateCompleted = snapshot.dateCompleted() ?? undefined;
     return item;
+  }
+
+  events(): DomainEvent[] {
+    return this._events;
+  }
+
+  clearEvents() {
+    this._events = [];
   }
 
   snapshot(): TodoListItemSnapshot {

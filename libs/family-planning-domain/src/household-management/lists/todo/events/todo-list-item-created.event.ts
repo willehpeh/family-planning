@@ -1,16 +1,17 @@
 import { DomainEvent } from '../../../../common';
+import { TodoListId, TodoListItemId } from '../value-objects';
 
 export class TodoListItemCreatedEvent implements DomainEvent {
 
-  private readonly _eventName = 'TodoListItemCreatedEvent';
+  private readonly _eventName = 'TodoListItemCreated';
   private readonly _occurredOn = new Date();
 
-  public readonly listId: string;
-  public readonly itemId: string;
+  public readonly id: TodoListItemId;
+  public readonly listId: TodoListId;
 
-  constructor(itemProps: { listId: string, itemId: string }) {
+  constructor(itemProps: { id: TodoListItemId, listId: TodoListId }) {
+    this.id = itemProps.id;
     this.listId = itemProps.listId;
-    this.itemId = itemProps.itemId;
   }
 
   eventName(): string {
