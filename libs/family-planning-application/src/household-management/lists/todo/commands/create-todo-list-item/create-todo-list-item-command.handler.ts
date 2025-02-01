@@ -5,17 +5,21 @@ import {
   TodoListItem,
   TodoListItemId,
   TodoListItemName,
-  TodoListItemsCommandRepository
+  TodoListItemsCommandRepository,
+  TodoListsCommandRepository
 } from '@family-planning/domain';
 import { CreateTodoListItemCommand } from './create-todo-list-item.command';
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
 
 @CommandHandler(CreateTodoListItemCommand)
 export class CreateTodoListItemCommandHandler implements ICommandHandler<CreateTodoListItemCommand> {
-  constructor(private readonly repository: TodoListItemsCommandRepository,
+  constructor(private readonly listsRepository: TodoListsCommandRepository,
+              private readonly itemsRepository: TodoListItemsCommandRepository,
               private readonly eventBus: EventBus) {
   }
+
   async execute({ listId, itemDetails, householdId }: CreateTodoListItemCommand): Promise<void> {
+    await this.listsRepository.findById(listId);
     const id = TodoListItemId.new();
     const item = TodoListItem.new({
       id,
@@ -23,7 +27,7 @@ export class CreateTodoListItemCommandHandler implements ICommandHandler<CreateT
       householdId: HouseholdId.fromString(householdId),
       listId: TodoListId.fromString(listId)
     });
-    await this.repository.save(item);
+    await this.itemsRepository.save(item);
     item.events().forEach(event => this.eventBus.publish(event));
     item.clearEvents();
   }

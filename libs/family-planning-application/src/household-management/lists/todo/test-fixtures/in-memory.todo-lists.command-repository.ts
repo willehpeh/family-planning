@@ -12,7 +12,11 @@ export class InMemoryTodoListsCommandRepository implements TodoListsCommandRepos
   }
 
   async findById(listId: string): Promise<TodoList> {
-    return Promise.resolve(TodoList.fromSnapshot(this._lists[listId]));
+    const snapshot = this._lists[listId];
+    if (!snapshot) {
+      return Promise.reject(`Todo list with id ${listId} not found`);
+    }
+    return Promise.resolve(TodoList.fromSnapshot(snapshot));
   }
 
   totalLists(): number {
@@ -21,10 +25,6 @@ export class InMemoryTodoListsCommandRepository implements TodoListsCommandRepos
 
   listSnapshots(): TodoListSnapshot[] {
     return Object.values(this._lists);
-  }
-
-  getListSnapshotById(listId: string): TodoListSnapshot {
-    return this._lists[listId];
   }
 
   withSnapshots(snapshots: TodoListSnapshot[]): InMemoryTodoListsCommandRepository {

@@ -22,6 +22,13 @@ export const EMPTY_TODO_LIST_SNAPSHOT = new TodoListSnapshot({
   householdId: TEST_HOUSEHOLD_ID
 });
 
+export const TEST_EMPTY_LIST = () => new TodoListSnapshot({
+  id: TEST_TODO_LIST_ID,
+  name: new TodoListName('My List'),
+  itemIds: [],
+  householdId: TEST_HOUSEHOLD_ID
+});
+
 export const TODO_LIST_WITH_ONE_ITEM_SNAPSHOT = new TodoListSnapshot({
   id: TEST_TODO_LIST_ID,
   name: new TodoListName('My List'),
