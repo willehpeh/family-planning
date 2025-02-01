@@ -8,7 +8,11 @@ export class TodoListItemCreatedEventHandler {
 
   async handle(event: TodoListItemCreatedEvent) {
     const list = await this.listsRepository.findById(event.listId.value());
-    list.addItem(event.id);
+    try {
+      list.addItem(event.id);
+    } catch (error) {
+      return Promise.reject(error);
+    }
     await this.listsRepository.save(list);
   }
 }

@@ -28,6 +28,9 @@ export class TodoList implements Entity<TodoListSnapshot> {
   }
 
   addItem(itemId: TodoListItemId): void {
+    if (this._itemIds.find(id => id.equals(itemId))) {
+      throw new Error('Item already exists');
+    }
     this._itemIds.push(itemId);
   }
 }
