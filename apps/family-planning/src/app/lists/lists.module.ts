@@ -1,15 +1,18 @@
 import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
 import { TypeOrmListsPersistenceModule } from '@family-planning/infrastructure';
 import {
-  CreateTodoListItemCommandHandler,
   CreateTodoListCommandHandler,
+  CreateTodoListItemCommandHandler,
   FindAllListsQueryHandler,
   MarkDoneItemAsPendingCommandHandler,
-  MarkItemAsDoneCommandHandler
+  MarkItemAsDoneCommandHandler,
+  TodoListItemCreatedEventHandler
 } from '@family-planning/application';
 import { ListsService } from './providers/lists.service';
 import { ListsController } from './controllers/lists.controller';
 import { TenantMiddleware } from '../middleware/tenant.middleware';
+import { EventBus } from '@family-planning/domain';
+import { EventBus as NestEventBus } from '@nestjs/cqrs';
 
 @Module({
   controllers: [
@@ -25,6 +28,8 @@ import { TenantMiddleware } from '../middleware/tenant.middleware';
     MarkItemAsDoneCommandHandler,
     MarkDoneItemAsPendingCommandHandler,
     ListsService,
+    TodoListItemCreatedEventHandler,
+    { provide: EventBus, useExisting: NestEventBus }
   ]
 })
 export class ListsModule implements NestModule {

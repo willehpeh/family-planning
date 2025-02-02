@@ -23,8 +23,10 @@ export class ListsController {
   }
 
   @Post('todo/:id/add-item')
-  addItemToTodoList(@Param('id') listId: string, @Body() itemDetails: POSTAddItemToTodoListDto) {
-    const addItemToTodoListDto: CreateTodoListItemDto = { listId, itemDetails };
+  addItemToTodoList(@Param('id') listId: string,
+                    @Body() itemDetails: POSTAddItemToTodoListDto,
+                    @Req() { householdId }: AuthenticatedHouseholdRequest) {
+    const addItemToTodoListDto: CreateTodoListItemDto = { listId, itemDetails, householdId };
     return this.listsService.addItemToTodoList(addItemToTodoListDto);
   }
 

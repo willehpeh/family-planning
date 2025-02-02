@@ -1,4 +1,4 @@
-import { Column, Entity, ManyToOne, PrimaryColumn } from 'typeorm';
+import { Column, Entity, JoinColumn, ManyToOne, PrimaryColumn } from 'typeorm';
 import { TodoList } from './todo-list.entity';
 
 @Entity()
@@ -9,8 +9,9 @@ export class TodoListItem {
   @Column()
   name: string;
 
-  @ManyToOne(() => TodoList, (list) => list.items, { onDelete: 'CASCADE', onUpdate: 'CASCADE' })
-  list: TodoList;
+  @ManyToOne(() => TodoList)
+  @JoinColumn({ name: 'listId' })
+  listId: string;
 
   @Column()
   householdId: string;
@@ -18,6 +19,6 @@ export class TodoListItem {
   @Column({ default: 'pending' })
   status: 'pending' | 'done';
 
-  @Column({ nullable: true })
-  dateCompleted: Date | null;
+  @Column({ type: 'timestamp', nullable: true })
+  dateCompleted: string | null;
 }

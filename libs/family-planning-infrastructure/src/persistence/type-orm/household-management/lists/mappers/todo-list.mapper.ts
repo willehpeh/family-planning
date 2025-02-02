@@ -4,13 +4,9 @@ import {
   TodoList,
   TodoListId,
   TodoListItemId,
-  TodoListItemName,
-  TodoListItemSnapshot,
-  TodoListItemStatus,
   TodoListName,
   TodoListSnapshot
 } from '@family-planning/domain';
-import { TodoListItem, TodoListItem as TodoListItemEntity } from '../entities/todo-list-item.entity';
 
 export class TodoListMapper {
   static toPersistence(todoList: TodoList): TodoListEntity {
@@ -18,7 +14,7 @@ export class TodoListMapper {
     const snapshot = todoList.snapshot();
     entity.id = snapshot.id();
     entity.name = snapshot.name();
-    entity.items = snapshot.items().map(item => this.doaminItemToEntity(item));
+    entity.itemIds = snapshot.itemIds();
     entity.householdId = snapshot.householdId();
     return entity;
   }
@@ -27,32 +23,9 @@ export class TodoListMapper {
     const id = TodoListId.fromString(entity.id);
     const name = new TodoListName(entity.name);
     const householdId = HouseholdId.fromString(entity.householdId);
-    const items = entity.items.map(item => this.itemEntityToDomainItem(item, householdId));
-    const snapshot = new TodoListSnapshot({ id, name, items, householdId });
+    const itemIds = entity.itemIds.map(id => TodoListItemId.fromString(id));
+    const snapshot = new TodoListSnapshot({ id, name, itemIds, householdId });
     return TodoList.fromSnapshot(snapshot);
   }
 
-  private static doaminItemToEntity(item: TodoListItemSnapshot) {
-    const itemEntity = new TodoListItemEntity();
-    itemEntity.id = item.id();
-    itemEntity.name = item.name();
-    itemEntity.householdId = item.householdId();
-    itemEntity.status = item.status();
-    itemEntity.dateCompleted = item.dateCompleted();
-    return itemEntity;
-  }
-
-  private static itemEntityToDomainItem(item: TodoListItem, householdId: HouseholdId) {
-    const itemId = TodoListItemId.fromString(item.id);
-    const itemName = new TodoListItemName(item.name);
-    const itemStatus = new TodoListItemStatus(item.status);
-    const dateComplated = item.dateCompleted ? new Date(item.dateCompleted) : null;
-    return new TodoListItemSnapshot({
-      id: itemId,
-      name: itemName,
-      householdId,
-      status: itemStatus,
-      dateCompleted: dateComplated
-    });
-  }
 }
