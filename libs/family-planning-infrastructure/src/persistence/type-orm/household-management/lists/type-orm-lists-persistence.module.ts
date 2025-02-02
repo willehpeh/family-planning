@@ -10,10 +10,8 @@ import {
 } from '@family-planning/domain';
 import { OrmTodoListsCommandRepository } from './repositories/orm.todo-lists.command-repository';
 import { OrmTodoListsQueryRepository } from './repositories/orm.todo-lists.query-repository';
-import {
-  InMemoryTodoListItemsQueryRepository
-} from '../../../../../../family-planning-application/src/household-management/lists/todo/test-fixtures';
 import { OrmTodoListItemsCommandRepository } from './repositories/orm.todo-list-items.command-repository';
+import { OrmTodoListItemsQueryRepository } from './repositories/orm.todo-list-items.query-repository';
 
 @Module({
   imports: [
@@ -26,7 +24,7 @@ import { OrmTodoListItemsCommandRepository } from './repositories/orm.todo-list-
     { provide: TodoListsCommandRepository, useClass: OrmTodoListsCommandRepository },
     { provide: TodoListsQueryRepository, useClass: OrmTodoListsQueryRepository },
     { provide: TodoListItemsCommandRepository, useClass: OrmTodoListItemsCommandRepository },
-    { provide: TodoListItemsQueryRepository, useClass: InMemoryTodoListItemsQueryRepository },
+    { provide: TodoListItemsQueryRepository, useClass: OrmTodoListItemsQueryRepository },
   ],
   exports: [
     TodoListsCommandRepository,
