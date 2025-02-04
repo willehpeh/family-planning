@@ -19,9 +19,23 @@ export class ListsFacade {
   private readonly store = inject(Store);
   private readonly router = inject(Router);
 
+  private _listsLastLoaded = 0;
+  private readonly MAX_LISTS_AGE = 1000 * 60 * 5; // 5 minutes
+
   allLists(): Signal<TodoListReadModel[]> {
-    this.store.dispatch(LoadAllLists());
+    if (this.listsAreStale()) {
+      this.loadLists();
+    }
     return this.store.selectSignal(listsFeature.selectAllLists);
+  }
+
+  private loadLists() {
+    this._listsLastLoaded = Date.now();
+    this.store.dispatch(LoadAllLists());
+  }
+
+  private listsAreStale() {
+    return Date.now() - this._listsLastLoaded > this.MAX_LISTS_AGE;
   }
 
   listWithId(id: string): TodoListReadModel {

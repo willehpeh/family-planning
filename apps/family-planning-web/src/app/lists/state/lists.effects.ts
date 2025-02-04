@@ -1,17 +1,18 @@
 import { inject, Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import {
+  CreateList,
+  CreateListFailure,
   CreateListItem,
   CreateListItemFailure,
   CreateListItemSuccess,
-  CreateList,
-  CreateListFailure,
   CreateListSuccess,
   LoadAllLists,
   LoadAllListsFailure,
   LoadAllListsFromDetailView,
   LoadAllListsSuccess,
-  MarkDoneItemAsPending, MarkDoneItemAsPendingFailure,
+  MarkDoneItemAsPending,
+  MarkDoneItemAsPendingFailure,
   MarkDoneItemAsPendingSuccess,
   MarkItemAsDone,
   MarkItemAsDoneFailure,
@@ -43,7 +44,7 @@ export class ListsEffects {
   createNewList$ = createEffect(() => this.actions$.pipe(
     ofType(CreateList),
     switchMap(({ createListDto }) => this.listsService.createList(createListDto).pipe(
-      map(({ id }) => CreateListSuccess({ listId: id })),
+      map(({ id }) => CreateListSuccess({ list: { id, name: createListDto.name, items: [] } })),
       catchError((error: HttpErrorResponse) => of(CreateListFailure(error)))
     )),
   ));

@@ -29,7 +29,7 @@ export const CreateList = createAction(
 
 export const CreateListSuccess = createAction(
   '[Lists API] Create List Success',
-  props<{ listId: string }>()
+  props<{ list: TodoListReadModel }>()
 );
 
 export const CreateListFailure = createAction(
