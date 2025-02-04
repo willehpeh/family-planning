@@ -57,14 +57,9 @@ export class ListsEffects {
   addItemToList$ = createEffect(() => this.actions$.pipe(
     ofType(CreateListItem),
     mergeMap(({ listId, temporaryItem }) => this.listsService.createListItem(listId, { name: temporaryItem.name }).pipe(
-      map(({ id }) => CreateListItemSuccess({ listId, transactionId: temporaryItem.id, itemId: id })),
-      catchError((error: HttpErrorResponse) => of(CreateListItemFailure({ error, listId, transactionId: temporaryItem.id })))
+      map(({ id }) => CreateListItemSuccess({ listId, temporaryItemId: temporaryItem.id, createdItem: { id, name: temporaryItem.name, done: false } })),
+      catchError((error: HttpErrorResponse) => of(CreateListItemFailure({ error, listId, temporaryItemId: temporaryItem.id })))
     ))
-  ));
-
-  addItemToListSuccess$ = createEffect(() => this.actions$.pipe(
-    ofType(CreateListItemSuccess),
-    map(() => LoadAllListsFromDetailView())
   ));
 
   markItemAsDone$ = createEffect(() => this.actions$.pipe(

@@ -1,18 +1,19 @@
 import { inject, Injectable, Signal } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Router } from '@angular/router';
-import { NullTodoListReadModel } from '../models/serialized-todo-list';
+import { NullTodoListReadModel } from '../models/null-todo-list.read-model';
 import {
-  CreateListItem, CreateList,
+  CreateList,
+  CreateListItem,
   LoadAllLists,
-  LoadAllListsFromDetailView, MarkDoneItemAsPending,
+  LoadAllListsFromDetailView,
+  MarkDoneItemAsPending,
   MarkItemAsDone,
   ToggleDisplayCompletedItems
 } from './lists.actions';
 import { listsFeature } from './lists.reducer';
-import { CreateTodoListDto, ItemDetails } from '@family-planning/application';
-import { SerializedTodoListItemFactory } from '../models/factories/serialized-todo-list-item.factory';
-import { TodoListReadModel } from '@family-planning/domain';
+import { CreateTodoListDto, ItemProperties } from '@family-planning/application';
+import { TodoListItemReadModel, TodoListReadModel } from '@family-planning/domain';
 
 @Injectable()
 export class ListsFacade {
@@ -59,10 +60,10 @@ export class ListsFacade {
     this.router.navigate(['/lists/todo/new']);
   }
 
-  addItemToList(listId: string, item: ItemDetails): void {
+  addItemToList(listId: string, properties: ItemProperties): void {
     this.store.dispatch(CreateListItem({
       listId,
-      temporaryItem: SerializedTodoListItemFactory.temporaryItem(item)
+      temporaryItem: this.temporaryListItem(properties),
     }));
   }
 
@@ -88,5 +89,17 @@ export class ListsFacade {
 
   saving(): Signal<boolean> {
     return this.store.selectSignal(listsFeature.selectSaving);
+  }
+
+  private temporaryListItem({ name }: ItemProperties): TodoListItemReadModel {
+    return {
+      id: this.dummyItemId(),
+      name,
+      done: false
+    };
+  }
+
+  private dummyItemId(): string {
+    return Date.now().toString();
   }
 }

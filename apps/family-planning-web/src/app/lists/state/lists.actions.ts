@@ -1,8 +1,7 @@
 import { createAction, props } from '@ngrx/store';
 import { HttpErrorResponse } from '@angular/common/http';
 import { CreateTodoListDto } from '@family-planning/application';
-import { SerializedTodoListItem } from '../models/serialized-todo-list-item';
-import { TodoListReadModel } from '@family-planning/domain';
+import { TodoListItemReadModel, TodoListReadModel } from '@family-planning/domain';
 
 export const LoadAllLists = createAction(
   '[TodoListsListComponent] Load All Lists'
@@ -39,17 +38,17 @@ export const CreateListFailure = createAction(
 
 export const CreateListItem = createAction(
   '[TodoListsDetailComponent] Create List Item',
-  props<{ listId: string, temporaryItem: SerializedTodoListItem }>()
+  props<{ listId: string, temporaryItem: TodoListItemReadModel }>()
 );
 
 export const CreateListItemSuccess = createAction(
   '[Lists API] Create List Item Success',
-  props<{ listId: string, transactionId: string, itemId: string }>()
+  props<{ listId: string, temporaryItemId: string, createdItem: TodoListItemReadModel }>()
 );
 
 export const CreateListItemFailure = createAction(
   '[Lists API] Create List Item Failure',
-  props<{ error: HttpErrorResponse, listId: string, transactionId: string }>()
+  props<{ error: HttpErrorResponse, listId: string, temporaryItemId: string }>()
 );
 
 export const MarkItemAsDone = createAction(

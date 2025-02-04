@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component, computed, inject, input, OnDestroy,
 import { CommonModule } from '@angular/common';
 import { TodoListItemComponent } from './todo-list-item/todo-list-item.component';
 import { NewTodoListItemComponent } from './new-todo-list-item/new-todo-list-item.component';
-import { ItemDetails } from '@family-planning/application';
+import { ItemProperties } from '@family-planning/application';
 import { ListsFacade } from '../../state/lists.facade';
 import { CheckboxComponent } from '../../../ui-elements/checkbox/checkbox.component';
 import { TodoListItemReadModel } from '@family-planning/domain';
@@ -32,7 +32,7 @@ export class TodoListDetailComponent implements OnInit, OnDestroy {
     this.navFacade.setBackButtonPath(`lists/todo`);
   }
 
-  onCreateItem(itemDetails: ItemDetails): void {
+  onCreateItem(itemDetails: ItemProperties): void {
     this.listsFacade.addItemToList(this.id(), itemDetails);
   }
 

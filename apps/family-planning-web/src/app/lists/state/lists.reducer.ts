@@ -1,20 +1,25 @@
 import { createEntityAdapter, EntityState } from '@ngrx/entity';
-import { NullTodoListReadModel } from '../models/serialized-todo-list';
+import { NullTodoListReadModel } from '../models/null-todo-list.read-model';
 import { createFeature, createReducer, createSelector, on } from '@ngrx/store';
 import {
-  CreateListItem,
-  CreateListItemFailure,
   CreateList,
   CreateListFailure,
+  CreateListItem,
+  CreateListItemFailure,
+  CreateListItemSuccess,
   CreateListSuccess,
   LoadAllLists,
   LoadAllListsFailure,
   LoadAllListsFromDetailView,
-  LoadAllListsSuccess, MarkDoneItemAsPending, MarkDoneItemAsPendingFailure,
+  LoadAllListsSuccess,
+  MarkDoneItemAsPending,
+  MarkDoneItemAsPendingFailure,
   MarkItemAsDone,
-  MarkItemAsDoneFailure, ToggleDisplayCompletedItems
+  MarkItemAsDoneFailure,
+  ToggleDisplayCompletedItems
 } from './lists.actions';
 import { TodoListReadModel } from '@family-planning/domain';
+import { ListItemsAdapter } from './list-Items.adapter';
 
 export const featureKey = 'lists';
 
@@ -28,6 +33,8 @@ export const adapter = createEntityAdapter<TodoListReadModel>({
   selectId: list => list.id,
   sortComparer: (a, b) => a.name.localeCompare(b.name)
 });
+
+const listItemsAdapter = new ListItemsAdapter(adapter);
 
 export const initialState: ListsState = adapter.getInitialState({
   loading: false,
@@ -45,41 +52,11 @@ export const listsFeature = createFeature({
     on(CreateList, state => ({ ...state, saving: true })),
     on(CreateListSuccess, (state, { list }) => adapter.addOne(list, { ...state, saving: false })),
     on(CreateListFailure, state => ({ ...state, saving: false })),
-    on(CreateListItem, (state, { listId, temporaryItem }) => {
-      const previousListItems = state.entities[listId]?.items ?? [];
-      return adapter.updateOne({
-        id: listId,
-        changes: {
-          items: [...previousListItems, temporaryItem]
-        }
-      }, state);
-    }),
-    on(CreateListItemFailure, (state, { listId, transactionId }) => {
-      const revertedListItems = state.entities[listId]?.items
-        .filter(item => item.id !== transactionId);
-      return adapter.updateOne({
-        id: listId,
-        changes: {
-          items: revertedListItems
-        }
-      }, state);
-    }),
-    on(MarkItemAsDone, MarkDoneItemAsPendingFailure, (state, { listId, itemId }): ListsState => adapter.updateOne({
-      id: listId,
-      changes: {
-        items: state.entities[listId]?.items.map(item =>
-          item.id === itemId ? { ...item, done: true } : item
-        )
-      }
-    }, state)),
-    on(MarkItemAsDoneFailure, MarkDoneItemAsPending, (state, { listId, itemId }): ListsState => adapter.updateOne({
-      id: listId,
-      changes: {
-        items: state.entities[listId]?.items.map(item =>
-          item.id === itemId ? { ...item, done: false } : item
-        )
-      }
-    }, state)),
+    on(CreateListItem, (state, { listId, temporaryItem }) => listItemsAdapter.addTemporaryItemToList(listId, state, temporaryItem)),
+    on(CreateListItemSuccess, (state, { listId, temporaryItemId, createdItem }) => listItemsAdapter.makeItemPermanent(listId, state, temporaryItemId, createdItem)),
+    on(CreateListItemFailure, (state, { listId, temporaryItemId }) => listItemsAdapter.revertListItems(listId, state, temporaryItemId)),
+    on(MarkItemAsDone, MarkDoneItemAsPendingFailure, (state, { listId, itemId }): ListsState => listItemsAdapter.markItemAsDone(listId, state, itemId)),
+    on(MarkItemAsDoneFailure, MarkDoneItemAsPending, (state, { listId, itemId }): ListsState => listItemsAdapter.markItemAsPending(listId, state, itemId)),
     on(ToggleDisplayCompletedItems, state => ({ ...state, displayCompleted: !state.displayCompleted }))
   ),
   extraSelectors: ({ selectIds, selectEntities }) => ({

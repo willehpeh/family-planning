@@ -1,32 +1,32 @@
 import { ChangeDetectionStrategy, Component, input, OnInit, output } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { SerializedTodoListItem } from '../../../models/serialized-todo-list-item';
 import { CheckboxComponent } from '../../../../ui-elements/checkbox/checkbox.component';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { concat, debounceTime, delay, filter, map, Observable, of, Subject, tap } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { TodoListItemReadModel } from '@family-planning/domain';
 
 @Component({
-    selector: 'app-todo-list-item',
-    imports: [
-        CommonModule,
-        CheckboxComponent,
-    ],
-    changeDetection: ChangeDetectionStrategy.OnPush,
-    animations: [
-        trigger('listItem', [
-            state('in', style({ transform: 'scaleY(1)' })),
-            state('out', style({ transform: 'scaleY(0)' })),
-            transition('void => *', [
-                style({ transform: 'scaleY(0)' }),
-                animate('0.3s ease-in-out')
-            ]),
-            transition('* => out', [
-                animate('0.3s ease-in-out')
-            ])
-        ])
-    ],
-    template: `
+  selector: 'app-todo-list-item',
+  imports: [
+    CommonModule,
+    CheckboxComponent,
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  animations: [
+    trigger('listItem', [
+      state('in', style({ transform: 'scaleY(1)' })),
+      state('out', style({ transform: 'scaleY(0)' })),
+      transition('void => *', [
+        style({ transform: 'scaleY(0)' }),
+        animate('0.3s ease-in-out')
+      ]),
+      transition('* => out', [
+        animate('0.3s ease-in-out')
+      ])
+    ])
+  ],
+  template: `
 		<div class="bg-black bg-opacity-60 p-6 m-auto max-w-screen-md rounded-md flex gap-6 items-center"
 				 [tabIndex]="tabIndex()"
 				 [@listItem]="animationState$ | async">
@@ -36,7 +36,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
   `
 })
 export class TodoListItemComponent implements OnInit {
-  item = input.required<SerializedTodoListItem>();
+  item = input.required<TodoListItemReadModel>();
   tabIndex = input.required<number>();
 
   itemMarkedAsDone = output<string>();

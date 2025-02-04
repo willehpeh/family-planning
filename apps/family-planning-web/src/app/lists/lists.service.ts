@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { CreateTodoListDto, ItemDetails } from '@family-planning/application';
+import { CreateTodoListDto, ItemProperties } from '@family-planning/application';
 import { TodoListReadModel } from '@family-planning/domain';
 
 @Injectable({
@@ -18,7 +18,7 @@ export class ListsService {
     return this.http.post<{ id: string }>('api/lists/todo', createListDto);
   }
 
-  createListItem(listId: string, itemDetails: ItemDetails): Observable<{ id: string }> {
+  createListItem(listId: string, itemDetails: ItemProperties): Observable<{ id: string }> {
     return this.http.post<{ id: string }>(`api/lists/todo/${listId}/add-item`, itemDetails);
   }
 

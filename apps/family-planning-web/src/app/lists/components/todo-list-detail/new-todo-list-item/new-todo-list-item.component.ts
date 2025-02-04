@@ -2,7 +2,7 @@ import { Component, computed, input, OnInit, output, signal } from '@angular/cor
 import { CommonModule } from '@angular/common';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
-import { ItemDetails } from '@family-planning/application';
+import { ItemProperties } from '@family-planning/application';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ButtonComponent } from '../../../../ui-elements/button/button.component';
 
@@ -15,7 +15,7 @@ import { ButtonComponent } from '../../../../ui-elements/button/button.component
 export class NewTodoListItemComponent implements OnInit {
   protected readonly faPlus = faPlus;
   tabIndex = input<number>(0);
-  itemCreated = output<ItemDetails>();
+  itemCreated = output<ItemProperties>();
   editing = signal(false);
 
   newItemForm!: FormGroup;
