@@ -7,8 +7,9 @@ export class CreateTodoListCommandHandler implements ICommandHandler<CreateTodoL
   constructor(private readonly todoListsRepository: TodoListsCommandRepository) {
   }
 
-  execute({ name, householdId }: CreateTodoListCommand): Promise<void> {
+  async execute({ name, householdId }: CreateTodoListCommand): Promise<string> {
     const list = TodoList.new(new TodoListName(name), HouseholdId.fromString(householdId));
-    return this.todoListsRepository.save(list);
+    await this.todoListsRepository.save(list);
+    return list.snapshot().id();
   }
 }
