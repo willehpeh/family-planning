@@ -35,7 +35,7 @@ export class TodoListItem implements Entity<TodoListItemSnapshot>, EventAggregat
     name: TodoListItemName
   }): TodoListItem {
     const item = new TodoListItem({ id, name, householdId, listId });
-    item._events.push(new TodoListItemCreatedEvent({ id, listId }));
+    item.raiseEvent(new TodoListItemCreatedEvent({ id, listId }));
     return item;
   }
 
@@ -104,5 +104,9 @@ export class TodoListItem implements Entity<TodoListItemSnapshot>, EventAggregat
 
   private clearCompletionDate() {
     this._dateCompleted = undefined;
+  }
+
+  private raiseEvent(event: DomainEvent) {
+    this._events.push(event);
   }
 }
