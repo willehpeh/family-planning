@@ -7,15 +7,19 @@ export class TodoList implements Entity<TodoListSnapshot> {
 
   private _itemIds: TodoListItemId[] = [];
 
-  constructor(private readonly _id: TodoListId,
-              private _name: TodoListName,
-              private readonly householdId: HouseholdId) {
+  private constructor(private readonly _id: TodoListId,
+                      private _name: TodoListName,
+                      private readonly householdId: HouseholdId) {
   }
 
   static fromSnapshot(snapshot: TodoListSnapshot): TodoList {
     const list = new TodoList(TodoListId.fromString(snapshot.id()), new TodoListName(snapshot.name()), HouseholdId.fromString(snapshot.householdId()));
     list._itemIds = snapshot.itemIds().map(id => TodoListItemId.fromString(id));
     return list;
+  }
+
+  static new(name: TodoListName, householdId: HouseholdId): TodoList {
+    return new TodoList(TodoListId.new(), name, householdId);
   }
 
   snapshot(): TodoListSnapshot {
