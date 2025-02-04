@@ -18,7 +18,7 @@ export class CreateTodoListItemCommandHandler implements ICommandHandler<CreateT
               private readonly eventBus: EventBus) {
   }
 
-  async execute({ listId, itemDetails, householdId }: CreateTodoListItemCommand): Promise<void> {
+  async execute({ listId, itemDetails, householdId }: CreateTodoListItemCommand): Promise<{ id: string }> {
     await this.listsRepository.findById(listId);
     const id = TodoListItemId.new();
     const item = TodoListItem.new({
@@ -30,5 +30,6 @@ export class CreateTodoListItemCommandHandler implements ICommandHandler<CreateT
     await this.itemsRepository.save(item);
     item.events().forEach(event => this.eventBus.publish(event));
     item.clearEvents();
+    return { id: id.value() };
   }
 }

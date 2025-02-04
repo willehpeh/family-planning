@@ -13,6 +13,7 @@ import { ListsController } from './controllers/lists.controller';
 import { TenantMiddleware } from '../middleware/tenant.middleware';
 import { EventBus } from '@family-planning/domain';
 import { EventBus as NestEventBus } from '@nestjs/cqrs';
+import { ItemsService } from './providers/items.service';
 
 @Module({
   controllers: [
@@ -28,6 +29,7 @@ import { EventBus as NestEventBus } from '@nestjs/cqrs';
     MarkItemAsDoneCommandHandler,
     MarkDoneItemAsPendingCommandHandler,
     ListsService,
+    ItemsService,
     TodoListItemCreatedEventHandler,
     { provide: EventBus, useExisting: NestEventBus }
   ]

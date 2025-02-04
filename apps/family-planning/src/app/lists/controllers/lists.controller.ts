@@ -6,11 +6,13 @@ import { POSTCreateTodoListDto } from '../dtos/POST.create-todo-list.dto';
 import { POSTAddItemToTodoListDto } from '../dtos/POST.add-item-to-todo-list.dto';
 import { POSTMarkItemAsDoneDto } from '../dtos/POST.mark-item-as-done.dto';
 import { POSTMarkDoneItemAsPendingDto } from '../dtos/POST.mark-done-item-as-pending.dto';
+import { ItemsService } from '../providers/items.service';
 
 @Controller('lists')
 export class ListsController {
 
-  constructor(private readonly listsService: ListsService) {}
+  constructor(private readonly listsService: ListsService,
+              private readonly itemsService: ItemsService) {}
 
   @Get('todo')
   findAllLists() {
@@ -27,18 +29,18 @@ export class ListsController {
                     @Body() itemDetails: POSTAddItemToTodoListDto,
                     @Req() { householdId }: AuthenticatedHouseholdRequest) {
     const addItemToTodoListDto: CreateTodoListItemDto = { listId, itemDetails, householdId };
-    return this.listsService.addItemToTodoList(addItemToTodoListDto);
+    return this.itemsService.createTodoListItem(addItemToTodoListDto);
   }
 
   @Post('todo/:id/mark-item-as-done')
   markItemAsDone(@Param('id') todoListId: string, @Body() { itemId }: POSTMarkItemAsDoneDto) {
     const markItemAsDoneDto: MarkItemAsDoneDto = { itemId, todoListId };
-    return this.listsService.markItemAsDone(markItemAsDoneDto);
+    return this.itemsService.markItemAsDone(markItemAsDoneDto);
   }
 
   @Post('todo/:id/mark-done-item-as-pending')
   markDoneItemAsPending(@Param('id') todoListId: string, @Body() { itemId }: POSTMarkDoneItemAsPendingDto) {
     const markDoneItemAsPendingDto: MarkDoneItemAsPendingDto = { itemId, todoListId };
-    return this.listsService.markDoneItemAsPending(markDoneItemAsPendingDto);
+    return this.itemsService.markDoneItemAsPending(markDoneItemAsPendingDto);
   }
 }
