@@ -23,7 +23,7 @@ export class ListsService {
     return this.queryBus.execute(new FindAllListsQuery());
   }
 
-  async createTodoList(dto: CreateTodoListDto, householdId: string): Promise<string> {
+  async createTodoList(dto: CreateTodoListDto, householdId: string): Promise<{ id: string }> {
     return this.commandBus.execute(new CreateTodoListCommand(dto, householdId));
   }
 
