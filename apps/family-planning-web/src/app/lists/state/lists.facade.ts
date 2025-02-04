@@ -3,7 +3,7 @@ import { Store } from '@ngrx/store';
 import { Router } from '@angular/router';
 import { NullTodoListReadModel } from '../models/serialized-todo-list';
 import {
-  AddItemToList, CreateList,
+  CreateListItem, CreateList,
   LoadAllLists,
   LoadAllListsFromDetailView, MarkDoneItemAsPending,
   MarkItemAsDone,
@@ -46,7 +46,7 @@ export class ListsFacade {
   }
 
   addItemToList(listId: string, item: ItemDetails): void {
-    this.store.dispatch(AddItemToList({
+    this.store.dispatch(CreateListItem({
       listId,
       temporaryItem: SerializedTodoListItemFactory.temporaryItem(item)
     }));

@@ -29,6 +29,7 @@ export const CreateList = createAction(
 
 export const CreateListSuccess = createAction(
   '[Lists API] Create List Success',
+  props<{ listId: string }>()
 );
 
 export const CreateListFailure = createAction(
@@ -36,17 +37,18 @@ export const CreateListFailure = createAction(
   props<{ error: HttpErrorResponse }>()
 );
 
-export const AddItemToList = createAction(
-  '[TodoListsDetailComponent] Add Item to List',
+export const CreateListItem = createAction(
+  '[TodoListsDetailComponent] Create List Item',
   props<{ listId: string, temporaryItem: SerializedTodoListItem }>()
 );
 
-export const AddItemToListSuccess = createAction(
-  '[Lists API] Add Item to List Success',
+export const CreateListItemSuccess = createAction(
+  '[Lists API] Create List Item Success',
+  props<{ listId: string, transactionId: string, itemId: string }>()
 );
 
-export const AddItemToListFailure = createAction(
-  '[Lists API] Add Item to List Failure',
+export const CreateListItemFailure = createAction(
+  '[Lists API] Create List Item Failure',
   props<{ error: HttpErrorResponse, listId: string, transactionId: string }>()
 );
 

@@ -2,8 +2,8 @@ import { createEntityAdapter, EntityState } from '@ngrx/entity';
 import { NullTodoListReadModel } from '../models/serialized-todo-list';
 import { createFeature, createReducer, createSelector, on } from '@ngrx/store';
 import {
-  AddItemToList,
-  AddItemToListFailure,
+  CreateListItem,
+  CreateListItemFailure,
   CreateList,
   CreateListFailure,
   CreateListSuccess,
@@ -45,7 +45,7 @@ export const listsFeature = createFeature({
     on(CreateList, state => ({ ...state, saving: true })),
     on(CreateListSuccess, state => ({ ...state, saving: false })),
     on(CreateListFailure, state => ({ ...state, saving: false })),
-    on(AddItemToList, (state, { listId, temporaryItem }) => {
+    on(CreateListItem, (state, { listId, temporaryItem }) => {
       const previousListItems = state.entities[listId]?.items ?? [];
       return adapter.updateOne({
         id: listId,
@@ -54,7 +54,7 @@ export const listsFeature = createFeature({
         }
       }, state);
     }),
-    on(AddItemToListFailure, (state, { listId, transactionId }) => {
+    on(CreateListItemFailure, (state, { listId, transactionId }) => {
       const revertedListItems = state.entities[listId]?.items
         .filter(item => item.id !== transactionId);
       return adapter.updateOne({

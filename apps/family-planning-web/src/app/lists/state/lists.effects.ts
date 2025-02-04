@@ -1,9 +1,9 @@
 import { inject, Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import {
-  AddItemToList,
-  AddItemToListFailure,
-  AddItemToListSuccess,
+  CreateListItem,
+  CreateListItemFailure,
+  CreateListItemSuccess,
   CreateList,
   CreateListFailure,
   CreateListSuccess,
@@ -43,7 +43,7 @@ export class ListsEffects {
   createNewList$ = createEffect(() => this.actions$.pipe(
     ofType(CreateList),
     switchMap(({ createListDto }) => this.listsService.createList(createListDto).pipe(
-      map(() => CreateListSuccess()),
+      map(({ id }) => CreateListSuccess({ listId: id })),
       catchError((error: HttpErrorResponse) => of(CreateListFailure(error)))
     )),
   ));
@@ -54,15 +54,15 @@ export class ListsEffects {
   ), { dispatch: false });
 
   addItemToList$ = createEffect(() => this.actions$.pipe(
-    ofType(AddItemToList),
-    mergeMap(({ listId, temporaryItem }) => this.listsService.addItemToList(listId, { name: temporaryItem.name }).pipe(
-      map(() => AddItemToListSuccess()),
-      catchError((error: HttpErrorResponse) => of(AddItemToListFailure({ error, listId, transactionId: temporaryItem.id })))
+    ofType(CreateListItem),
+    mergeMap(({ listId, temporaryItem }) => this.listsService.createListItem(listId, { name: temporaryItem.name }).pipe(
+      map(({ id }) => CreateListItemSuccess({ listId, transactionId: temporaryItem.id, itemId: id })),
+      catchError((error: HttpErrorResponse) => of(CreateListItemFailure({ error, listId, transactionId: temporaryItem.id })))
     ))
   ));
 
   addItemToListSuccess$ = createEffect(() => this.actions$.pipe(
-    ofType(AddItemToListSuccess),
+    ofType(CreateListItemSuccess),
     map(() => LoadAllListsFromDetailView())
   ));
 

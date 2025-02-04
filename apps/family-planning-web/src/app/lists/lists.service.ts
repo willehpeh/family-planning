@@ -14,12 +14,12 @@ export class ListsService {
     return this.http.get<TodoListReadModel[]>('api/lists/todo');
   }
 
-  createList(createListDto: CreateTodoListDto): Observable<void> {
-    return this.http.post<void>('api/lists/todo', createListDto);
+  createList(createListDto: CreateTodoListDto): Observable<{ id: string }> {
+    return this.http.post<{ id: string }>('api/lists/todo', createListDto);
   }
 
-  addItemToList(listId: string, itemDetails: ItemDetails): Observable<void> {
-    return this.http.post<void>(`api/lists/todo/${listId}/add-item`, itemDetails);
+  createListItem(listId: string, itemDetails: ItemDetails): Observable<{ id: string }> {
+    return this.http.post<{ id: string }>(`api/lists/todo/${listId}/add-item`, itemDetails);
   }
 
   markItemAsDone(listId: string, itemId: string): Observable<void> {
