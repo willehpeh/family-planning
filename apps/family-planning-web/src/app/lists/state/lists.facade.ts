@@ -2,15 +2,7 @@ import { inject, Injectable, Signal } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Router } from '@angular/router';
 import { NullTodoListReadModel } from '../models/null-todo-list.read-model';
-import {
-  CreateList,
-  CreateListItem,
-  LoadAllLists,
-  LoadAllListsFromDetailView,
-  MarkDoneItemAsPending,
-  MarkItemAsDone,
-  ToggleDisplayCompletedItems
-} from './lists.actions';
+import * as ListActions from './lists.actions';
 import { listsFeature } from './lists.reducer';
 import { CreateTodoListDto, ItemProperties } from '@family-planning/application';
 import { TodoListItemReadModel, TodoListReadModel } from '@family-planning/domain';
@@ -32,7 +24,7 @@ export class ListsFacade {
 
   private loadLists() {
     this._listsLastLoaded = Date.now();
-    this.store.dispatch(LoadAllLists());
+    this.store.dispatch(ListActions.LoadAllLists());
   }
 
   private listsAreStale() {
@@ -42,7 +34,7 @@ export class ListsFacade {
   listWithId(id: string): TodoListReadModel {
     const list = this.store.selectSignal(listsFeature.selectListById(id));
     if (!list()) {
-      this.store.dispatch(LoadAllListsFromDetailView());
+      this.store.dispatch(ListActions.LoadAllListsFromDetailView());
       return NullTodoListReadModel;
     }
     return list();
@@ -61,22 +53,22 @@ export class ListsFacade {
   }
 
   addItemToList(listId: string, properties: ItemProperties): void {
-    this.store.dispatch(CreateListItem({
+    this.store.dispatch(ListActions.CreateListItem({
       listId,
       temporaryItem: this.temporaryListItem(properties),
     }));
   }
 
   markItemAsDone(listId: string, itemId: string): void {
-    this.store.dispatch(MarkItemAsDone({ listId, itemId }));
+    this.store.dispatch(ListActions.MarkItemAsDone({ listId, itemId }));
   }
 
   markDoneItemAsPending(listId: string, itemId: string): void {
-    this.store.dispatch(MarkDoneItemAsPending({ listId, itemId }));
+    this.store.dispatch(ListActions.MarkDoneItemAsPending({ listId, itemId }));
   }
 
   toggleDisplayCompletedItems(): void {
-    this.store.dispatch(ToggleDisplayCompletedItems());
+    this.store.dispatch(ListActions.ToggleDisplayCompletedItems());
   }
 
   completedItemsShouldBeDisplayed(): Signal<boolean> {
@@ -84,7 +76,7 @@ export class ListsFacade {
   }
 
   createList(createListDto: CreateTodoListDto): void {
-    this.store.dispatch(CreateList({ createListDto }));
+    this.store.dispatch(ListActions.CreateList({ createListDto }));
   }
 
   saving(): Signal<boolean> {
