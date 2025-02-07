@@ -1,10 +1,10 @@
-import { Component, inject, OnDestroy, OnInit, Signal } from '@angular/core';
+import { Component, inject, OnDestroy, Signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import { ListsFacade } from '../../state/lists.facade';
 import { TodoListGridCellComponent } from '../todo-list-grid-cell/todo-list-grid-cell.component';
-import { TodoListReadModel } from '@family-planning/domain';
 import { NavFacade } from '../../../layout/state/nav.facade';
+import { TodoList } from '../../models/todo-list';
 
 @Component({
     selector: 'app-todo-lists-list',
@@ -12,14 +12,14 @@ import { NavFacade } from '../../../layout/state/nav.facade';
     templateUrl: './todo-lists-list.component.html',
     styleUrl: './todo-lists-list.component.scss'
 })
-export class TodoListsListComponent implements OnInit, OnDestroy {
+export class TodoListsListComponent implements OnDestroy {
   private listsFacade = inject(ListsFacade);
   private navFacade = inject(NavFacade);
-  lists: Signal<TodoListReadModel[]> = this.listsFacade.allLists();
+  lists: Signal<TodoList[]> = this.listsFacade.allLists();
   loading = this.listsFacade.loading();
   readonly faPlus = faPlus;
 
-  ngOnInit() {
+  constructor() {
     this.navFacade.setBackButtonPath('command-centre');
   }
 
