@@ -2,17 +2,15 @@
 	<h1 class="text-3xl text-center mb-6">TODO LISTS</h1>
 	<div class="flex justify-center mb-6">
 		<!-- TODO: change this to its own component -->
-		<app-todo-list-grid-cell
-				(click)="onCreateList()"
-				listName="NEW LIST"
-				[highlight]="true"
-				[icon]="faPlus"/>
+		<app-todo-list-grid-cell (click)="onCreateList()"
+														 listName="NEW LIST"
+														 [highlight]="true"
+														 [icon]="faPlus"/>
 	</div>
 	@if (loading()) {
 		<p class="text-center">Loading...</p>
 	} @else {
 		@for (list of lists(); track list.id) {
-			<!-- TODO: refactor, rename…it's not a grid any more -->
 			<app-todo-list-grid-cell (click)="onClickList(list.id)"
 															 [index]="$index"
 															 [listName]="list.name"/>
