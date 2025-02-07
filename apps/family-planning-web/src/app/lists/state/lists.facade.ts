@@ -4,7 +4,6 @@ import { Router } from '@angular/router';
 import * as ListActions from './lists.actions';
 import { listsFeature } from './lists.reducer';
 import { CreateTodoListDto, ItemProperties } from '@family-planning/application';
-import { TodoListReadModel } from '@family-planning/domain';
 import { NullTodoList, TodoList } from '../models/todo-list';
 import { TodoListItem } from '../models/todo-list-item';
 
@@ -16,7 +15,7 @@ export class ListsFacade {
   private _listsLastLoaded = 0;
   private readonly MAX_LISTS_AGE = 1000 * 60 * 5; // 5 minutes
 
-  allLists(): Signal<TodoListReadModel[]> {
+  allLists(): Signal<TodoList[]> {
     if (this.listsAreStale()) {
       this.loadLists();
     }
