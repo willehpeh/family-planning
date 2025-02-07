@@ -1,19 +1,18 @@
 import { createEntityAdapter, EntityState } from '@ngrx/entity';
-import { NullTodoListReadModel } from '../models/null-todo-list.read-model';
 import { createFeature, createReducer, createSelector, on } from '@ngrx/store';
 import * as ListActions from './lists.actions';
-import { TodoListReadModel } from '@family-planning/domain';
 import { ListItemsAdapter } from './list-Items.adapter';
+import { NullTodoList, TodoList } from '../models/todo-list';
 
 export const featureKey = 'lists';
 
-export interface ListsState extends EntityState<TodoListReadModel> {
+export interface ListsState extends EntityState<TodoList> {
   loading: boolean;
   saving: boolean;
   displayCompleted: boolean;
 }
 
-export const adapter = createEntityAdapter<TodoListReadModel>({
+export const adapter = createEntityAdapter<TodoList>({
   selectId: list => list.id,
   sortComparer: (a, b) => a.name.localeCompare(b.name)
 });
@@ -51,7 +50,7 @@ export const listsFeature = createFeature({
     ),
     selectListById: (id: string) => createSelector(
       selectEntities,
-      entities => entities[id] ?? NullTodoListReadModel
+      entities => entities[id] ?? NullTodoList()
     ),
   })
 });

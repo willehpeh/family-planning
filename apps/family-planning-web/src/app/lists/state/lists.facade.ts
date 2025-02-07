@@ -1,11 +1,12 @@
 import { inject, Injectable, Signal } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Router } from '@angular/router';
-import { NullTodoListReadModel } from '../models/null-todo-list.read-model';
 import * as ListActions from './lists.actions';
 import { listsFeature } from './lists.reducer';
 import { CreateTodoListDto, ItemProperties } from '@family-planning/application';
-import { TodoListItemReadModel, TodoListReadModel } from '@family-planning/domain';
+import { TodoListReadModel } from '@family-planning/domain';
+import { NullTodoList, TodoList } from '../models/todo-list';
+import { TodoListItem } from '../models/todo-list-item';
 
 @Injectable()
 export class ListsFacade {
@@ -31,11 +32,11 @@ export class ListsFacade {
     return Date.now() - this._listsLastLoaded > this.MAX_LISTS_AGE;
   }
 
-  listWithId(id: string): TodoListReadModel {
+  listWithId(id: string): TodoList {
     const list = this.store.selectSignal(listsFeature.selectListById(id));
     if (!list()) {
       this.store.dispatch(ListActions.LoadAllListsFromDetailView());
-      return NullTodoListReadModel;
+      return NullTodoList();
     }
     return list();
   }
@@ -83,7 +84,7 @@ export class ListsFacade {
     return this.store.selectSignal(listsFeature.selectSaving);
   }
 
-  private temporaryListItem({ name }: ItemProperties): TodoListItemReadModel {
+  private temporaryListItem({ name }: ItemProperties): TodoListItem {
     return {
       id: this.dummyItemId(),
       name,

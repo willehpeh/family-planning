@@ -1,7 +1,8 @@
 import { createAction, props } from '@ngrx/store';
 import { HttpErrorResponse } from '@angular/common/http';
 import { CreateTodoListDto } from '@family-planning/application';
-import { TodoListItemReadModel, TodoListReadModel } from '@family-planning/domain';
+import { TodoList } from '../models/todo-list';
+import { TodoListItem } from '../models/todo-list-item';
 
 export const LoadAllLists = createAction(
   '[TodoListsListComponent] Load All Lists'
@@ -13,7 +14,7 @@ export const LoadAllListsFromDetailView = createAction(
 
 export const LoadAllListsSuccess = createAction(
   '[Lists API] Load All Lists Success',
-  props<{ lists: TodoListReadModel[] }>()
+  props<{ lists: TodoList[] }>()
 );
 
 export const LoadAllListsFailure = createAction(
@@ -28,7 +29,7 @@ export const CreateList = createAction(
 
 export const CreateListSuccess = createAction(
   '[Lists API] Create List Success',
-  props<{ list: TodoListReadModel }>()
+  props<{ list: TodoList }>()
 );
 
 export const CreateListFailure = createAction(
@@ -38,12 +39,12 @@ export const CreateListFailure = createAction(
 
 export const CreateListItem = createAction(
   '[TodoListsDetailComponent] Create List Item',
-  props<{ listId: string, temporaryItem: TodoListItemReadModel }>()
+  props<{ listId: string, temporaryItem: TodoListItem }>()
 );
 
 export const CreateListItemSuccess = createAction(
   '[Lists API] Create List Item Success',
-  props<{ listId: string, temporaryItemId: string, createdItem: TodoListItemReadModel }>()
+  props<{ listId: string, temporaryItemId: string, createdItem: TodoListItem }>()
 );
 
 export const CreateListItemFailure = createAction(
