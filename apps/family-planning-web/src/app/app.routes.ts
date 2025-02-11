@@ -17,6 +17,9 @@ export const appRoutes: Route[] = [
   {
     path: 'lists',
     canActivate: [AuthGuard],
+    data: {
+      backButtonPath: 'command-centre',
+    },
     providers: LISTS_PROVIDERS,
     loadChildren: () => import('./lists/lists.routes').then(m => m.listRoutes)
   },

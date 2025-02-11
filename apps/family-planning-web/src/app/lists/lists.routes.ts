@@ -7,10 +7,16 @@ export const listRoutes: Routes = [
   },
   {
     path: 'todo/new',
+    data: {
+      backButtonPath: 'lists/todo',
+    },
     loadComponent: () => import('./components/todo-lists-list/create-list-form/create-list-form.component').then(m => m.CreateListFormComponent)
   },
   {
     path: 'todo/:id',
+    data: {
+      backButtonPath: 'lists/todo',
+    },
     loadComponent: () => import('./components/todo-list-detail/todo-list-detail.component').then(m => m.TodoListDetailComponent)
   },
 ];
