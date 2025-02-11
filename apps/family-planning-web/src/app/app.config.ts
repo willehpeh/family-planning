@@ -13,7 +13,6 @@ import { withCredentialsInterceptor } from './auth/interceptors/with-credentials
 import { Title } from '@angular/platform-browser';
 import { provideAnimations } from '@angular/platform-browser/animations';
 import { provideServiceWorker } from '@angular/service-worker';
-import { BackButtonService } from './layout/back-button.service';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -26,7 +25,6 @@ export const appConfig: ApplicationConfig = {
     provideAnimations(),
     provideAppInitializer(() => {
       inject(Title).setTitle('Family Planning');
-      inject(BackButtonService).init();
     }),
     provideServiceWorker('ngsw-worker.js', {
       enabled: !isDevMode(),
